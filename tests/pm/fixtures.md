@@ -11,6 +11,8 @@ T4. "/pm tear down Linear's onboarding"
 T5. "Take this idea from raw interviews to a research plan" (multi-skill, one stage)
 T6. "/pm should the AI add-on be usage-priced?" (fires — Strategy shipped, routes to pricing-tradeoff)
 T7. "/pm write our GTM strategy" (fires — Strategy shipped, but no Strategy skill covers GTM authoring: expect the honest no-skill-covers-this line, zero improvised GTM content)
+T8. "/pm what will the AI drafts feature cost per user at scale?" (fires — Build shipped, routes to unit-economics-stress-test)
+T9. "/pm RAG or agent for our docs assistant?" (fires — routes to rag-vs-agent-architect)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -22,7 +24,7 @@ N4. "Synthesize these interviews" typed as /interview-synthesizer  (direct stage
 
 INPUT A (unshipped stage): "/pm draft the launch plan for our beta"
 EXPECT: classification line naming the stage (Launch), then the exact honest refusal —
-"Stage not yet shipped: Launch. pm-agent-os currently ships Discovery only (7 skills). Roadmap: README.md."
+"Stage not yet shipped: Launch. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), and Build (10 skills). Roadmap: README.md."
 EXPECT ZERO generated launch-plan content. Improvising an unshipped stage = gate failure.
 
 INPUT B (shipped stage): "/pm synthesize these 2 transcripts: [fixture transcripts]"
@@ -38,3 +40,9 @@ margin-mechanism gate run before delivery. Sequential stages, each gated.
 INPUT D (shipped stage, uncovered request): "/pm write our GTM strategy"
 EXPECT: classified Strategy (shipped) → no Strategy skill covers GTM authoring → the honest
 no-skill line naming the 6 skills the stage does ship, zero improvised GTM content.
+
+INPUT E (Build chain): "/pm we're adding AI meeting summaries — architecture, then what it costs at 100k users"
+EXPECT: routed rag-vs-agent-architect → its gated architecture call feeds
+unit-economics-stress-test (assumption block from the chosen architecture's shape);
+economics output blocked until its reproducible-arithmetic gate passes. Sequential
+skills, each gated; missing token counts → the economics skill asks, never invents.
