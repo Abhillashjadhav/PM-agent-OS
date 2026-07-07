@@ -1,6 +1,6 @@
 ---
 name: prd-first
-description: Forces a written PRD before any code generation. Use this skill the moment the user says "build", "create app", "make me a", "vibe code", "let's build", "I want an app that", "spin up a", "prototype a", "ship a", or any phrasing that signals they want code generated from a high-level idea. Also use when the user references an existing project but the conversation has no PRD context (no /prds/ file referenced, no clear success metric). The skill blocks code generation until a 5-field PRD exists as a markdown file in the repo. Do NOT use when the user is asking factual questions, debugging existing code, editing a specific file they've named, or working in a repo where a PRD for this feature already exists at /prds/. Skip when user explicitly says "skip the PRD" or "just code it" — but flag the risk once before proceeding.
+description: Forces a written PRD before any code generation. Use this skill when the user says "build", "create app", "make me a", "vibe code", "let's build", "I want an app that", "spin up a", "prototype a", "ship a", or any phrasing that signals they want code generated from a high-level idea. Also use when the user references an existing project but the conversation has no PRD context (no /prds/ file referenced, no clear success metric). The skill blocks code generation until a 5-field PRD exists as a markdown file in the repo. Do NOT use when the user is asking factual questions, debugging existing code, editing a specific file they've named, or working in a repo where a PRD for this feature already exists at /prds/. Skip when user explicitly says "skip the PRD" or "just code it" — but flag the risk once before proceeding.
 ---
 
 # PRD-First Discipline
@@ -103,6 +103,13 @@ When the user approves the PRD, do three things:
 - Not a corporate PRD template with stakeholders, timelines, and OKRs. This is a personal thinking artifact.
 - Not enforced on every chat message. Only when the trigger words appear *and* code generation is the next likely step.
 - Not a research exercise. If the user can't answer Q3 because they genuinely don't know the metric yet, accept "I'll figure this out after I see it working" and mark the field as "TBD — define after first prototype."
+
+## Limitations
+
+- The PRD is a thinking contract, not a guarantee — a well-formed PRD can still describe the wrong product; the skill enforces the ritual, not the judgment.
+- Trigger detection is phrase-based; a build request worded unusually can slip past, and the user can always override with "skip the PRD" (flagged once, then honored).
+- The 5-question protocol assumes the user can answer interactively; in fully autonomous runs the task description itself must serve as the PRD-equivalent, noted in DECISIONS.md.
+- Applies to new things being built — it does not gate edits, bug fixes, or debugging of existing code.
 
 ## The self-check before generating any code
 
