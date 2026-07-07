@@ -31,7 +31,7 @@ None of this asks to be trusted. The repo's own git history is the proof: open a
                               │
    ┌───────────┬───────────┬──┴────────┬───────────┐
    │ Discovery │ Strategy  │  Build    │  Launch   │  Iterate
-   │ 7 skills  │ planned   │  planned  │  planned  │  planned
+   │ 7 skills  │ 6 skills  │  planned  │  planned  │  planned
    └───────────┴───────────┴──┬────────┴───────────┘
                               │
                     reliability spine
@@ -57,12 +57,12 @@ Skills follow the open SKILL.md standard — works with Codex, Cursor, Windsurf,
 | Stage | Skills | Status |
 |---|---|---|
 | Discovery | interview-synthesizer · feedback-pattern-miner · assumption-mapper · competitor-teardown · opportunity-sizer · jtbd-framer · research-brief | **Shipped** |
-| Strategy | planned | Not started |
+| Strategy | strategy-review · roadmap-reality-check · ai-feature-go-no-go · north-star-designer · build-buy-partner · pricing-tradeoff | **Shipped** |
 | Build | planned | Not started |
 | Launch | planned | Not started |
 | Iterate | planned | Not started |
 
-Target: 40 skills across the five stages, every one gated, fixtured, and PR-reviewed before it ships. `/pm` routes to Discovery today and says "stage not yet shipped" for the rest — it does not improvise stages that don't exist.
+Target: 40 skills across the five stages, every one gated, fixtured, and PR-reviewed before it ships. `/pm` routes to Discovery and Strategy today and says "stage not yet shipped" for the rest — it does not improvise stages that don't exist.
 
 ## Credits
 

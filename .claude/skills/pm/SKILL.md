@@ -17,7 +17,7 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 | Stage | Status | Skills |
 |---|---|---|
 | Discovery | **Shipped** | interview-synthesizer · feedback-pattern-miner · assumption-mapper · competitor-teardown · opportunity-sizer · jtbd-framer · research-brief (all under `.claude/skills/<name>/SKILL.md`) |
-| Strategy | Not shipped | — |
+| Strategy | **Shipped** | strategy-review · roadmap-reality-check · ai-feature-go-no-go · north-star-designer · build-buy-partner · pricing-tradeoff |
 | Build | Not shipped | — |
 | Launch | Not shipped | — |
 | Iterate | Not shipped | — |
@@ -28,10 +28,11 @@ Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions
 
 ## Step 2 — Route
 
+- **Shipped stage, no matching skill:** if the request lands in a shipped stage but none of its skills covers it (e.g. "write our GTM strategy" — Strategy ships no GTM author), say so honestly, name the skills the stage does ship, and generate nothing. A shipped stage is not a license to improvise its gaps.
 - **Shipped stage:** invoke the matching stage skill(s). Multiple skills for one request run in sequence, each output gated before the next consumes it (e.g. interview-synthesizer → assumption-mapper: the assumptions are mapped from *gated* patterns, not raw drafts).
 - **Unshipped stage:** return exactly this, with the stage named — and generate nothing for it:
 
-  > Stage not yet shipped: <Stage>. pm-agent-os currently ships Discovery only (7 skills). Roadmap: README.md.
+  > Stage not yet shipped: <Stage>. pm-agent-os currently ships Discovery (7 skills) and Strategy (6 skills). Roadmap: README.md.
 
 - **Mixed request:** execute the shipped parts, return the unshipped line for the rest. Deliver the shipped output; never hold it hostage to the unshipped stage.
 
@@ -42,13 +43,13 @@ Before relaying any stage skill output: run that skill's verification gates as w
 ## Hard rules
 
 1. No output returns to the user until its verification gate passes. No exceptions for "rough drafts" — roughness may reduce scope, never verification.
-2. Never simulate an unshipped stage. The honest "stage not yet shipped" line is the only permitted response for Strategy, Build, Launch, and Iterate.
+2. Never simulate an unshipped stage — the honest "stage not yet shipped" line is the only permitted response for Build, Launch, and Iterate — and never improvise a shipped stage's gaps: a request no stage skill covers gets the no-skill line, not generated output.
 3. Never bypass a stage skill's own hard rules or invent data to make a gate pass — gates verify reality, they are not formatting targets.
 4. In multi-skill sequences, downstream skills consume only gated upstream output.
 
 ## Limitations
 
-- This is the stage-1 skeleton: only Discovery routes to real skills; the other four stages return the not-shipped line by design.
+- Discovery and Strategy route to real skills; Build, Launch, and Iterate return the not-shipped line by design. Within shipped stages, only the listed skills exist — uncovered requests get the no-skill line.
 - Classification is a judgment call; borderline requests (e.g. "is this worth building?" spans Discovery and Strategy) get one clarifying question.
 - Gates catch what they encode — fabricated quotes, unreconciled counts, naked numbers. They do not certify that a synthesis is *insightful*, only that it is verifiable.
 - The orchestrator adds a verification pass on top of each skill's own self-audit; it does not replace human judgment on the gated output.
