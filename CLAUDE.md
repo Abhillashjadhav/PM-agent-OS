@@ -1,42 +1,41 @@
-# pm-claude-skills
+# pm-agent-os
 
 ## What this repo is
-Four Claude Code skills built for AI product managers. Each solves a real problem in the AI PM workflow — inference economics, eval design, context reliability, and output compression.
+An agentic PM operating system for Claude Code. One `/pm` command (`.claude/skills/pm/SKILL.md`) classifies any product request into lifecycle stage(s) — discovery, strategy, build, launch, iterate — and routes to stage skills. Stage 1 (Discovery, 7 skills) is shipped; the other four stages return "stage not yet shipped". The core rule of the whole system: no output returns to the user until its verification gate passes.
 
 ## PR rules (non-negotiable)
-- Every change to a SKILL.md goes through a PR. No direct pushes to main.
-- Every PR is reviewed using `/pr-review` before merge.
+- No direct pushes to main. Every change lands through a PR.
+- Every PR is reviewed with `/pr-review` before merge. No APPROVE, no merge.
+- Lint before verdict: the reviewer runs `python3 tests/lint_skill.py <path>` on every changed SKILL.md and reports the result before issuing a verdict. Any lint FAIL is an automatic REQUEST CHANGES.
 - One concern per PR. Schema changes, logic changes, and doc changes are separate PRs.
 - PR description must state: what changed, why, and how to test the change.
 
-## Skill quality bar
+## Verification-first skill discipline
+Gates and fixtures come before instructions. For every new skill, `tests/<skill>/fixtures.md` (the gates and known-answer fixtures) is written and committed *before* `.claude/skills/<skill>/SKILL.md` — the commit order in the PR is the evidence.
+
 A skill ships when:
-1. The SKILL.md has valid frontmatter (name, description, argument-hint)
-2. The skill body has at least 3 explicit hard rules
-3. A test input + expected output exists in the skill's README section
-4. The PR review returns APPROVE
+1. Frontmatter passes `tests/lint_skill.py` (name, description with fire + no-fire triggers, Limitations section, ≤500 lines).
+2. The body states its binary verification gates in a dedicated section, above the instructions.
+3. The body has at least 3 explicit hard rules.
+4. `tests/<skill>/fixtures.md` covers the three-gate harness (below).
+5. The PR review returns APPROVE.
+
+## Three-gate harness
+Every skill's `tests/<skill>/fixtures.md` covers:
+- **Gate 1 — Lint.** `python3 tests/lint_skill.py .claude/skills/<skill>/SKILL.md` exits 0.
+- **Gate 2 — Trigger accuracy.** SHOULD-FIRE and SHOULD-NOT-FIRE phrasings; the skill's description must route all of them correctly.
+- **Gate 3 — Known-answer.** A concrete fixture input with the expected output properties, including at least one case where a verification gate must catch a planted failure.
 
 ## What we do not ship
-- Skills that duplicate official Anthropic surfaces
-- Skills that produce unverifiable output (fabricated metrics, invented pricing)
-- Skills without explicit failure guardrails
+- Skills that produce unverifiable output: invented quotes, fabricated metrics, naked numbers with no source or estimate label.
+- Skills without explicit failure guardrails.
+- Skills that duplicate official Anthropic surfaces.
 
-## Skill routing (fallback for not-yet-enabled sessions)
-Plugin skills fire natively once `.claude/settings.json` (marketplace + `enabledPlugins`) is committed to the repo and the session trusts project settings. Sessions started before that commit, or where the plugin was installed mid-session rather than picked up from committed settings, won't have it in their invocable set yet. For those sessions, when a request matches one of the descriptions below, read that skill's SKILL.md from `pm-tactical/skills/` and follow it exactly, as if it had fired natively:
-
-- Model choice / "which model should I use" / cost-per-task → `pm-tactical/skills/model-complexity-router/SKILL.md`
-- Generate an artifact and validate it against a spec / self-QA → `pm-tactical/skills/builder-validator/SKILL.md`
-- Improve or tune an existing prompt → `pm-tactical/skills/prompt-optimizer-loop/SKILL.md`
-- Audit MCP connectors / context filling up too fast → `pm-tactical/skills/cli-over-mcp-auditor/SKILL.md`
-- Set up project memory / remember stakeholders across sessions → `pm-tactical/skills/pm-context-system/SKILL.md`
-
-## Session header protocol
-On the first substantial prompt of a session, run whichever of model-complexity-router, cli-over-mcp-auditor, and pm-context-system have something to say *at that moment* and combine their lines into ONE compact header (max 4 lines) above the task response, instead of three separate interruptions. Each skill stays silent when it has nothing useful to say — an empty check contributes zero lines to the header, not a placeholder line.
-
-This header is a formatting convenience for the first prompt only, not a firing-frequency limit. Each skill keeps following its own SKILL.md trigger rules afterward, independently of the header and of each other:
-- model-complexity-router keeps firing its own compact line on every later distinct task handoff (not just the first).
-- pm-context-system keeps proposing its one-line "Log to memory" entry whenever a later decision or fact worth keeping surfaces (not just the first).
-- cli-over-mcp-auditor's proactive check is genuinely once per session — its Step 0 doesn't re-fire after the first prompt.
+## Layout
+- `.claude/skills/` — the `/pm` orchestrator and all stage skills (flat, one dir per skill)
+- `tests/` — `lint_skill.py` plus per-skill `fixtures.md`
+- `.claude/commands/pr-review.md` — the PR review command; `.claude/commands/review-pr.md` + `.github/workflows/pr-review.yml` — the CI reviewer agent (charter in `prds/2026-05-24-pr-review-agent.md`)
+- `reviews/`, `LESSONS.md` — the reviewer agent's audit trail and pattern log
 
 ## Repo owner
 Abhillash Jadhav — github.com/Abhillashjadhav
