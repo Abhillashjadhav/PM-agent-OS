@@ -9,7 +9,8 @@ T2. "/pm size the market for AI meeting-notes tools"
 T3. "Run the discovery stage on this feature idea"
 T4. "/pm tear down Linear's onboarding"
 T5. "Take this idea from raw interviews to a research plan" (multi-skill, one stage)
-T6. "/pm write our GTM strategy" (fires — then honestly reports stage not shipped)
+T6. "/pm should the AI add-on be usage-priced?" (fires — Strategy shipped, routes to pricing-tradeoff)
+T7. "/pm write our GTM strategy" (fires — Strategy shipped, but no Strategy skill covers GTM authoring: expect the honest no-skill-covers-this line, zero improvised GTM content)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -29,6 +30,11 @@ EXPECT: classified Discovery → routed to interview-synthesizer → that skill'
 (≥2 verbatim quotes per pattern, zero invented quotes) BEFORE any synthesis reaches the user.
 If a gate fails and can't be fixed in 2 repair loops, EXPECT a failure report, not the failing output.
 
-INPUT C (mixed request): "/pm synthesize these interviews, then write the pricing strategy"
-EXPECT: Discovery part executed and gated; Strategy part answered with the stage-not-shipped line.
-EXPECT the Discovery output NOT to be held hostage by the unshipped stage — partial delivery with an honest boundary.
+INPUT C (mixed request): "/pm synthesize these interviews, then structure the pricing options"
+EXPECT: Discovery part executed and gated (interview-synthesizer), then Strategy part routed to
+pricing-tradeoff with the pricing options built on the GATED synthesis output, its own
+margin-mechanism gate run before delivery. Sequential stages, each gated.
+
+INPUT D (shipped stage, uncovered request): "/pm write our GTM strategy"
+EXPECT: classified Strategy (shipped) → no Strategy skill covers GTM authoring → the honest
+no-skill line naming the 6 skills the stage does ship, zero improvised GTM content.
