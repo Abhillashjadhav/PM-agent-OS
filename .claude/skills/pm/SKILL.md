@@ -20,21 +20,17 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 | Strategy | **Shipped** | strategy-review · roadmap-reality-check · ai-feature-go-no-go · north-star-designer · build-buy-partner · pricing-tradeoff |
 | Build | **Shipped** | model-complexity-router · builder-validator · prompt-optimizer-loop · context-auditor · pm-context-system · prd-to-eval · prototype-first-workflow · rag-vs-agent-architect · latency-ux-tradeoff · unit-economics-stress-test |
 | Launch | **Shipped** | launch-checklist · gtm-brief · stakeholder-update · announcement-drafter · launch-retro (+ 7 reviewer personas in `.claude/agents/`) |
-| Iterate | Not shipped | — |
+| Iterate | **Shipped** | eval-engine · llm-as-judge-designer · judge-calibration-auditor · golden-dataset-builder · failure-to-eval-capture · guardrail-designer · loop-designer · regression-gatekeeper · model-upgrade-evaluator · eval-vs-abtest-router · drift-monitor-designer · mcp-migration-auditor |
 
 ## Step 1 — Classify
 
-Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Metrics reviews, retention, experiments → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
+Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Evals, judges, golden sets, failure capture, guardrails, loops, regression gates, model upgrades, eval-vs-experiment routing, drift monitoring, MCP migration → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
 
 ## Step 2 — Route
 
 - **Shipped stage, no matching skill:** if the request lands in a shipped stage but none of its skills covers it (e.g. "write our GTM strategy" — Strategy ships no GTM author), say so honestly, name the skills the stage does ship, and generate nothing. A shipped stage is not a license to improvise its gaps.
 - **Shipped stage:** invoke the matching stage skill(s). Multiple skills for one request run in sequence, each output gated before the next consumes it (e.g. interview-synthesizer → assumption-mapper: the assumptions are mapped from *gated* patterns, not raw drafts).
-- **Unshipped stage:** return exactly this, with the stage named — and generate nothing for it:
-
-  > Stage not yet shipped: <Stage>. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), Build (10 skills), and Launch (5 skills + 7 reviewer personas). Roadmap: README.md.
-
-- **Mixed request:** execute the shipped parts, return the unshipped line for the rest. Deliver the shipped output; never hold it hostage to the unshipped stage.
+- **Mixed / multi-stage request:** run the stages in lifecycle order, each stage's output gated before the next consumes it. Parts no skill covers get the no-skill line; the covered parts still deliver.
 
 ## Step 3 — Enforce gates
 
@@ -51,13 +47,13 @@ Any output — from a stage skill or provided by the user — can be routed thro
 ## Hard rules
 
 1. No output returns to the user until its verification gate passes. No exceptions for "rough drafts" — roughness may reduce scope, never verification.
-2. Never simulate an unshipped stage — the honest "stage not yet shipped" line is the only permitted response for Iterate — and never improvise a shipped stage's gaps: a request no stage skill covers gets the no-skill line, not generated output.
+2. Never improvise a stage's gaps: all five stages ship, but a request no stage skill covers gets the honest no-skill line naming what the stage does ship — never generated output. A complete lifecycle is not a license to freelance.
 3. Never bypass a stage skill's own hard rules or invent data to make a gate pass — gates verify reality, they are not formatting targets.
 4. In multi-skill sequences, downstream skills consume only gated upstream output.
 
 ## Limitations
 
-- Discovery, Strategy, Build, and Launch route to real skills; Iterate returns the not-shipped line by design. Within shipped stages, only the listed skills exist — uncovered requests get the no-skill line.
+- All five stages route to real skills (40 total + 7 reviewer personas). Only the listed skills exist — uncovered requests get the no-skill line.
 - Classification is a judgment call; borderline requests (e.g. "is this worth building?" spans Discovery and Strategy) get one clarifying question.
 - Gates catch what they encode — fabricated quotes, unreconciled counts, naked numbers. They do not certify that a synthesis is *insightful*, only that it is verifiable.
 - The orchestrator adds a verification pass on top of each skill's own self-audit; it does not replace human judgment on the gated output.
