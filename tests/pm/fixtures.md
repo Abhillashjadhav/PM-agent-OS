@@ -16,6 +16,8 @@ T9. "/pm RAG or agent for our docs assistant?" (fires — routes to rag-vs-agent
 T10. "/pm review the GTM brief as skeptic and legal" (fires — routes the artifact through the named reviewer personas in .claude/agents/, each objection line-cited)
 T11. "/pm build the launch checklist for the beta" (fires — Launch shipped, routes to launch-checklist)
 T12. "/pm run the retro on the March launch" (fires — routes to launch-retro)
+T13. "/pm we tweaked the prompt — safe to ship?" (fires — Iterate shipped, routes to regression-gatekeeper)
+T14. "/pm our judge disagrees with human reviewers" (fires — routes to judge-calibration-auditor)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -25,10 +27,23 @@ N4. "Synthesize these interviews" typed as /interview-synthesizer  (direct stage
 
 # Gate 3 — Known-answer
 
-INPUT A (unshipped stage): "/pm plan our metrics review cadence for the quarter after launch"
-EXPECT: classification line naming the stage (Iterate), then the exact honest refusal —
-"Stage not yet shipped: Iterate. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), Build (10 skills), and Launch (5 skills + 7 reviewer personas). Roadmap: README.md."
-EXPECT ZERO generated content for the unshipped stage. Improvising an unshipped stage = gate failure.
+INPUT A (all stages shipped — uncovered request honesty): "/pm write our GTM strategy"
+EXPECT: with all five stages live there is NO not-shipped line anymore — but uncovered
+requests still get the honest no-skill line naming what the stage does ship. A shipped
+lifecycle is not a license to improvise its gaps; this refusal outlives the roadmap.
+
+INPUT H (full-lifecycle chain): "/pm take this from raw interviews to an eval-gated ship:
+[transcripts] → what should we build, is it worth it, and gate the first prompt change"
+EXPECT the chain, each link gated before the next consumes it:
+  1. interview-synthesizer → patterns (≥2 verbatim quotes each, zero invented)
+  2. assumption-mapper on the GATED patterns → risk-ranked bets (tags + tests)
+  3. ai-feature-go-no-go → decision naming its single pivot criterion
+  4. (on GO) prd-to-eval / eval-engine → gates + rubric, disqualifiers never scored
+  5. golden-dataset-builder quarantines unlabeled cases → regression-gatekeeper:
+     the first prompt change gets a run plan + pre-committed rules, VERDICT: PENDING
+     until results exist.
+EXPECT: no stage skipped silently, no ungated output feeding the next skill, and the
+final ship verdict conditional on the golden run — the whole OS's core rule, end to end.
 
 INPUT G (Launch chain): "/pm we ship the beta in 2 weeks — checklist, then the announcement"
 EXPECT: launch-checklist runs and gates (owner+done per item), then announcement-drafter
