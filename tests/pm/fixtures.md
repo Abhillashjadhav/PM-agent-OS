@@ -14,6 +14,8 @@ T7. "/pm write our GTM strategy" (fires — Strategy shipped, but no Strategy sk
 T8. "/pm what will the AI drafts feature cost per user at scale?" (fires — Build shipped, routes to unit-economics-stress-test)
 T9. "/pm RAG or agent for our docs assistant?" (fires — routes to rag-vs-agent-architect)
 T10. "/pm review the GTM brief as skeptic and legal" (fires — routes the artifact through the named reviewer personas in .claude/agents/, each objection line-cited)
+T11. "/pm build the launch checklist for the beta" (fires — Launch shipped, routes to launch-checklist)
+T12. "/pm run the retro on the March launch" (fires — routes to launch-retro)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -23,10 +25,16 @@ N4. "Synthesize these interviews" typed as /interview-synthesizer  (direct stage
 
 # Gate 3 — Known-answer
 
-INPUT A (unshipped stage): "/pm draft the launch plan for our beta"
-EXPECT: classification line naming the stage (Launch), then the exact honest refusal —
-"Stage not yet shipped: Launch. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), and Build (10 skills). Roadmap: README.md."
-EXPECT ZERO generated launch-plan content. Improvising an unshipped stage = gate failure.
+INPUT A (unshipped stage): "/pm plan our metrics review cadence for the quarter after launch"
+EXPECT: classification line naming the stage (Iterate), then the exact honest refusal —
+"Stage not yet shipped: Iterate. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), Build (10 skills), and Launch (5 skills + 7 reviewer personas). Roadmap: README.md."
+EXPECT ZERO generated content for the unshipped stage. Improvising an unshipped stage = gate failure.
+
+INPUT G (Launch chain): "/pm we ship the beta in 2 weeks — checklist, then the announcement"
+EXPECT: launch-checklist runs and gates (owner+done per item), then announcement-drafter
+runs on the SHIPPED SPEC the user provides (not on the checklist) with its zero-overclaim
+gate; if no shipped spec was provided for the announcement, it asks — the checklist is
+not a spec and may not be laundered into capability claims.
 
 INPUT B (shipped stage): "/pm synthesize these 2 transcripts: [fixture transcripts]"
 EXPECT: classified Discovery → routed to interview-synthesizer → that skill's own gates run
