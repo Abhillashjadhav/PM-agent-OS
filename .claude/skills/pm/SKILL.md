@@ -19,12 +19,12 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 | Discovery | **Shipped** | interview-synthesizer · feedback-pattern-miner · assumption-mapper · competitor-teardown · opportunity-sizer · jtbd-framer · research-brief (all under `.claude/skills/<name>/SKILL.md`) |
 | Strategy | **Shipped** | strategy-review · roadmap-reality-check · ai-feature-go-no-go · north-star-designer · build-buy-partner · pricing-tradeoff |
 | Build | **Shipped** | model-complexity-router · builder-validator · prompt-optimizer-loop · context-auditor · pm-context-system · prd-to-eval · prototype-first-workflow · rag-vs-agent-architect · latency-ux-tradeoff · unit-economics-stress-test |
-| Launch | Not shipped | — |
+| Launch | **Shipped** | launch-checklist · gtm-brief · stakeholder-update · announcement-drafter · launch-retro (+ 7 reviewer personas in `.claude/agents/`) |
 | Iterate | Not shipped | — |
 
 ## Step 1 — Classify
 
-Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch plans, comms → Launch. Metrics reviews, retention, experiments → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
+Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Metrics reviews, retention, experiments → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
 
 ## Step 2 — Route
 
@@ -32,7 +32,7 @@ Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions
 - **Shipped stage:** invoke the matching stage skill(s). Multiple skills for one request run in sequence, each output gated before the next consumes it (e.g. interview-synthesizer → assumption-mapper: the assumptions are mapped from *gated* patterns, not raw drafts).
 - **Unshipped stage:** return exactly this, with the stage named — and generate nothing for it:
 
-  > Stage not yet shipped: <Stage>. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), and Build (10 skills). Roadmap: README.md.
+  > Stage not yet shipped: <Stage>. pm-agent-os currently ships Discovery (7 skills), Strategy (6 skills), Build (10 skills), and Launch (5 skills + 7 reviewer personas). Roadmap: README.md.
 
 - **Mixed request:** execute the shipped parts, return the unshipped line for the rest. Deliver the shipped output; never hold it hostage to the unshipped stage.
 
@@ -51,13 +51,13 @@ Any output — from a stage skill or provided by the user — can be routed thro
 ## Hard rules
 
 1. No output returns to the user until its verification gate passes. No exceptions for "rough drafts" — roughness may reduce scope, never verification.
-2. Never simulate an unshipped stage — the honest "stage not yet shipped" line is the only permitted response for Launch and Iterate — and never improvise a shipped stage's gaps: a request no stage skill covers gets the no-skill line, not generated output.
+2. Never simulate an unshipped stage — the honest "stage not yet shipped" line is the only permitted response for Iterate — and never improvise a shipped stage's gaps: a request no stage skill covers gets the no-skill line, not generated output.
 3. Never bypass a stage skill's own hard rules or invent data to make a gate pass — gates verify reality, they are not formatting targets.
 4. In multi-skill sequences, downstream skills consume only gated upstream output.
 
 ## Limitations
 
-- Discovery, Strategy, and Build route to real skills; Launch and Iterate return the not-shipped line by design. Within shipped stages, only the listed skills exist — uncovered requests get the no-skill line.
+- Discovery, Strategy, Build, and Launch route to real skills; Iterate returns the not-shipped line by design. Within shipped stages, only the listed skills exist — uncovered requests get the no-skill line.
 - Classification is a judgment call; borderline requests (e.g. "is this worth building?" spans Discovery and Strategy) get one clarifying question.
 - Gates catch what they encode — fabricated quotes, unreconciled counts, naked numbers. They do not certify that a synthesis is *insightful*, only that it is verifiable.
 - The orchestrator adds a verification pass on top of each skill's own self-audit; it does not replace human judgment on the gated output.
