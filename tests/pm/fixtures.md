@@ -13,6 +13,7 @@ T6. "/pm should the AI add-on be usage-priced?" (fires — Strategy shipped, rou
 T7. "/pm write our GTM strategy" (fires — Strategy shipped, but no Strategy skill covers GTM authoring: expect the honest no-skill-covers-this line, zero improvised GTM content)
 T8. "/pm what will the AI drafts feature cost per user at scale?" (fires — Build shipped, routes to unit-economics-stress-test)
 T9. "/pm RAG or agent for our docs assistant?" (fires — routes to rag-vs-agent-architect)
+T10. "/pm review the GTM brief as skeptic and legal" (fires — routes the artifact through the named reviewer personas in .claude/agents/, each objection line-cited)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -40,6 +41,12 @@ margin-mechanism gate run before delivery. Sequential stages, each gated.
 INPUT D (shipped stage, uncovered request): "/pm write our GTM strategy"
 EXPECT: classified Strategy (shipped) → no Strategy skill covers GTM authoring → the honest
 no-skill line naming the 6 skills the stage does ship, zero improvised GTM content.
+
+INPUT F (persona routing): "/pm review this checklist as engineer"
+EXPECT: artifact handed to engineer-reviewer (.claude/agents/), objections returned
+with line citations or GAP labels (the personas' shared gate); persona review NEVER
+rewrites the artifact. "Review as a pirate" → honest line naming the 7 personas that
+exist, no improvised persona.
 
 INPUT E (Build chain): "/pm we're adding AI meeting summaries — architecture, then what it costs at 100k users"
 EXPECT: routed rag-vs-agent-architect → its gated architecture call feeds

@@ -1,6 +1,6 @@
 ---
 name: pm
-description: "The pm-agent-os orchestrator. Use when the user invokes /pm or hands over any product-management request — synthesizing interviews, mining feedback, mapping assumptions, tearing down a competitor, sizing an opportunity, framing jobs-to-be-done, planning research, or any multi-step product task spanning discovery, strategy, build, launch, or iterate. Classifies the request into lifecycle stage(s), invokes the matching stage skills in sequence, and blocks every output whose verification gate has not passed. Do NOT use for coding tasks, repo maintenance, PR reviews (/pr-review's job), or knowledge questions about PM concepts with no work item attached."
+description: "The pm-agent-os orchestrator. Use when the user invokes /pm or hands over any product-management request — synthesizing interviews, mining feedback, mapping assumptions, tearing down a competitor, sizing an opportunity, framing jobs-to-be-done, planning research, or any multi-step product task spanning discovery, strategy, build, launch, or iterate. Classifies the request into lifecycle stage(s), invokes the matching stage skills in sequence, and blocks every output whose verification gate has not passed. Also use when the user asks to run any output past a reviewer persona — 'review as engineer/designer/executive/skeptic/customer/data-analyst/legal' — routing to the persona agents in .claude/agents/. Do NOT use for coding tasks, repo maintenance, PR reviews (/pr-review's job), or knowledge questions about PM concepts with no work item attached."
 argument-hint: "<any product request — e.g. 'synthesize these 4 interviews' or 'size the market for X'>"
 ---
 
@@ -39,6 +39,14 @@ Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions
 ## Step 3 — Enforce gates
 
 Before relaying any stage skill output: run that skill's verification gates as written in its SKILL.md. On failure — fix the specific violation and re-run the gates, maximum 2 repair loops. Still failing → return a failure report (which gate, what violated it, what's needed to proceed) instead of the output. A failure report is a valid result; a gate-failing deliverable is not.
+
+## Persona review (on request)
+
+Any output — from a stage skill or provided by the user — can be routed through one or more reviewer personas on request ("review as skeptic", "run it past legal", "review as exec and designer"). Seven exist, in `.claude/agents/`: engineer-reviewer · designer-reviewer · executive-reviewer · skeptic-reviewer · customer-reviewer · data-analyst-reviewer · legal-reviewer. Rules:
+- Each persona reviews through its own lens and carries the shared binary gate: every objection cites the specific line or element it attacks, or is labeled GAP. Free-floating criticism dies at the persona layer, same rule as strategy-review.
+- Personas review; they never rewrite. Their objections return alongside the artifact; edits are the author's (or a stage skill's rerun).
+- A requested persona that doesn't exist ("review as a pirate") gets the honest line naming the seven that do — never an improvised persona.
+- Multiple personas run in sequence, each gated independently.
 
 ## Hard rules
 
