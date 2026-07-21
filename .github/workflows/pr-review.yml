@@ -9,28 +9,22 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  id-token: write
+  contents: read
 
 jobs:
   review:
+    name: Deterministic PR quality gate
     if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-
-      - name: Run Claude Code PR review
-        uses: anthropics/claude-code-action@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          claude_code_oauth_token: ${{ secrets.CLAUDESECRET }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          prompt: "/review-pr"
-          claude_args: '--max-turns 30 --allowedTools "Read,Edit,Write,Glob,Grep,LS,mcp__github_file_ops__commit_files,mcp__github_file_ops__delete_files,mcp__github_comment__update_claude_comment"'
-          use_commit_signing: true
+          python-version: '3.x'
+      - name: Run deterministic PR quality gate
+        run: python tests/pr_quality_gate.py --base-ref "origin/${{ github.base_ref }}"

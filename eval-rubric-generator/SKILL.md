@@ -7,6 +7,7 @@ description: >
   a spec and asks what success looks like. Produces a binary pass/fail checklist — not vague metrics,
   not suggestions — a rubric you can run against model outputs today. This is the skill AI PMs need
   before anything ships to production.
+  Do NOT use to execute an evaluation or invent requirements absent from the supplied specification.
 argument-hint: "<feature spec or requirement>"
 ---
 
@@ -67,3 +68,8 @@ If the spec is missing information needed to write a complete rubric (e.g. no ac
 - Do not add criteria the spec did not ask for. Scope to what was specified.
 - Label every criterion. Unlabelled criteria are not rubrics — they are suggestions.
 - If the spec is a vague one-liner, say so and ask for the missing detail before generating.
+
+
+## Limitations
+
+- Do NOT use to execute an evaluation or invent requirements absent from the supplied specification.

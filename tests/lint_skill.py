@@ -13,7 +13,7 @@ if fm:
         desc = meta.get("description","")
         checks["has_description"] = bool(desc)
         checks["desc_under_1024_chars"] = len(desc) <= 1024
-        checks["desc_has_trigger_phrases"] = "Use this skill when" in desc or "Use when" in desc
+        checks["desc_has_trigger_phrases"] = "Use this skill" in desc or "Use when" in desc
         checks["desc_has_negative_trigger"] = "Do NOT" in desc or "Do not" in desc
     except Exception as e:
         pass

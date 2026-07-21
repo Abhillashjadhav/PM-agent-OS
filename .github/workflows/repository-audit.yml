@@ -1,0 +1,27 @@
+name: Repository audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run offline repository audit
+        run: python tests/audit_repository.py
+      - name: Lint all skills
+        run: |
+          while IFS= read -r skill; do
+            python tests/lint_skill.py "$skill"
+          done < <(find . -name SKILL.md -not -path './.git/*' -print)
+      - name: Compile Python checks
+        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py
