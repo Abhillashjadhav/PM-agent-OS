@@ -7,6 +7,7 @@ description: >
   or when a user pastes a context file and wants it reviewed. Scans for the four known context failure
   modes — poisoning, distraction, confusion, and clash — and returns a severity-rated diagnostic.
   This is the pre-flight check for agent reliability that Anthropic does not ship a tool for.
+  Do NOT use to author or rewrite context files; it only diagnoses supplied context.
 argument-hint: "<paste your CLAUDE.md or system prompt>"
 ---
 
@@ -86,3 +87,8 @@ Overall verdict: [SHIP / REVIEW BEFORE SHIPPING / DO NOT SHIP]
 - Do not flag vague concerns. Every CRITICAL or WARNING must have a citation.
 - Do not rewrite the context. Diagnose only. The human decides what to change.
 - If the context is empty or too short to audit meaningfully (<100 tokens), say so and stop.
+
+
+## Limitations
+
+- Do NOT use to author or rewrite context files; it only diagnoses supplied context.
