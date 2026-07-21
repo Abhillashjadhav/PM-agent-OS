@@ -7,6 +7,7 @@ description: >
   a user pastes a long model response and asks for a tighter version. Rewrites the input at the same
   information density, shorter — then reports the exact before/after token count and percentage reduction.
   Not a summary. A rewrite. Every piece of meaning is preserved.
+  Do NOT use when a summary, factual correction, or a change in the author's position is requested.
 argument-hint: "<paste verbose text to compress>"
 ---
 
@@ -63,3 +64,8 @@ Bloat patterns removed:
 - Do not change the author's position. Compression is not editing for opinion.
 - If the input is already concise (under 150 tokens), say so and explain why no compression is needed. Do not pad it out to justify running the skill.
 - Report real token counts. Do not estimate loosely. Use your best token-counting ability and state if it is approximate.
+
+
+## Limitations
+
+- Do NOT use when a summary, factual correction, or a change in the author's position is requested.

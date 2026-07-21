@@ -6,6 +6,7 @@ description: >
   "estimate tokens", "pre-flight check", or when a user pastes a prompt and asks about inference economics.
   Takes a prompt and a list of candidate models, then returns a projected cost and latency comparison
   across all models before a single token runs. Essential for any AI PM who owns inference budgets.
+  Do NOT use as a substitute for current provider pricing or measured production latency.
 argument-hint: "<your prompt text> | models: <model-a, model-b>"
 ---
 
@@ -67,3 +68,8 @@ Recommendation: claude-sonnet-4-6 — 9× cheaper than Opus with comparable outp
 
 Flag: Output length will vary. Re-run this estimate if prompt changes significantly.
 ```
+
+
+## Limitations
+
+- Do NOT use as a substitute for current provider pricing or measured production latency.

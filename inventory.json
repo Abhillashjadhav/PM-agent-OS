@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "validation_levels": {
+    "structural-and-fixture-specification": "Inventory path checks plus static skill and fixture-specification checks; not behavioural execution evidence.",
+    "inventory-path": "Inventory path existence check; not behavioural execution evidence."
+  },
+  "lifecycle_skills": [
+    {
+      "name": "interview-synthesizer",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/interview-synthesizer/SKILL.md",
+      "fixture_path": "tests/interview-synthesizer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "feedback-pattern-miner",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/feedback-pattern-miner/SKILL.md",
+      "fixture_path": "tests/feedback-pattern-miner/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "assumption-mapper",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/assumption-mapper/SKILL.md",
+      "fixture_path": "tests/assumption-mapper/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "competitor-teardown",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/competitor-teardown/SKILL.md",
+      "fixture_path": "tests/competitor-teardown/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "opportunity-sizer",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/opportunity-sizer/SKILL.md",
+      "fixture_path": "tests/opportunity-sizer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "jtbd-framer",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/jtbd-framer/SKILL.md",
+      "fixture_path": "tests/jtbd-framer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "research-brief",
+      "lifecycle_stage": "discovery",
+      "skill_path": ".claude/skills/research-brief/SKILL.md",
+      "fixture_path": "tests/research-brief/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "strategy-review",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/strategy-review/SKILL.md",
+      "fixture_path": "tests/strategy-review/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "roadmap-reality-check",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/roadmap-reality-check/SKILL.md",
+      "fixture_path": "tests/roadmap-reality-check/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "ai-feature-go-no-go",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/ai-feature-go-no-go/SKILL.md",
+      "fixture_path": "tests/ai-feature-go-no-go/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "north-star-designer",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/north-star-designer/SKILL.md",
+      "fixture_path": "tests/north-star-designer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "build-buy-partner",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/build-buy-partner/SKILL.md",
+      "fixture_path": "tests/build-buy-partner/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "pricing-tradeoff",
+      "lifecycle_stage": "strategy",
+      "skill_path": ".claude/skills/pricing-tradeoff/SKILL.md",
+      "fixture_path": "tests/pricing-tradeoff/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "model-complexity-router",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/model-complexity-router/SKILL.md",
+      "fixture_path": "tests/model-complexity-router/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "builder-validator",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/builder-validator/SKILL.md",
+      "fixture_path": "tests/builder-validator/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "prompt-optimizer-loop",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/prompt-optimizer-loop/SKILL.md",
+      "fixture_path": "tests/prompt-optimizer-loop/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "context-auditor",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/context-auditor/SKILL.md",
+      "fixture_path": "tests/context-auditor/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "pm-context-system",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/pm-context-system/SKILL.md",
+      "fixture_path": "tests/pm-context-system/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "prd-to-eval",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/prd-to-eval/SKILL.md",
+      "fixture_path": "tests/prd-to-eval/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "prototype-first-workflow",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/prototype-first-workflow/SKILL.md",
+      "fixture_path": "tests/prototype-first-workflow/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "rag-vs-agent-architect",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/rag-vs-agent-architect/SKILL.md",
+      "fixture_path": "tests/rag-vs-agent-architect/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "latency-ux-tradeoff",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/latency-ux-tradeoff/SKILL.md",
+      "fixture_path": "tests/latency-ux-tradeoff/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "unit-economics-stress-test",
+      "lifecycle_stage": "build",
+      "skill_path": ".claude/skills/unit-economics-stress-test/SKILL.md",
+      "fixture_path": "tests/unit-economics-stress-test/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "launch-checklist",
+      "lifecycle_stage": "launch",
+      "skill_path": ".claude/skills/launch-checklist/SKILL.md",
+      "fixture_path": "tests/launch-checklist/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "gtm-brief",
+      "lifecycle_stage": "launch",
+      "skill_path": ".claude/skills/gtm-brief/SKILL.md",
+      "fixture_path": "tests/gtm-brief/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "stakeholder-update",
+      "lifecycle_stage": "launch",
+      "skill_path": ".claude/skills/stakeholder-update/SKILL.md",
+      "fixture_path": "tests/stakeholder-update/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "announcement-drafter",
+      "lifecycle_stage": "launch",
+      "skill_path": ".claude/skills/announcement-drafter/SKILL.md",
+      "fixture_path": "tests/announcement-drafter/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "launch-retro",
+      "lifecycle_stage": "launch",
+      "skill_path": ".claude/skills/launch-retro/SKILL.md",
+      "fixture_path": "tests/launch-retro/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "eval-engine",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/eval-engine/SKILL.md",
+      "fixture_path": "tests/eval-engine/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "llm-as-judge-designer",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/llm-as-judge-designer/SKILL.md",
+      "fixture_path": "tests/llm-as-judge-designer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "judge-calibration-auditor",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/judge-calibration-auditor/SKILL.md",
+      "fixture_path": "tests/judge-calibration-auditor/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "golden-dataset-builder",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/golden-dataset-builder/SKILL.md",
+      "fixture_path": "tests/golden-dataset-builder/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "failure-to-eval-capture",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/failure-to-eval-capture/SKILL.md",
+      "fixture_path": "tests/failure-to-eval-capture/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "guardrail-designer",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/guardrail-designer/SKILL.md",
+      "fixture_path": "tests/guardrail-designer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "loop-designer",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/loop-designer/SKILL.md",
+      "fixture_path": "tests/loop-designer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "regression-gatekeeper",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/regression-gatekeeper/SKILL.md",
+      "fixture_path": "tests/regression-gatekeeper/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "model-upgrade-evaluator",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/model-upgrade-evaluator/SKILL.md",
+      "fixture_path": "tests/model-upgrade-evaluator/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "eval-vs-abtest-router",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/eval-vs-abtest-router/SKILL.md",
+      "fixture_path": "tests/eval-vs-abtest-router/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "drift-monitor-designer",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/drift-monitor-designer/SKILL.md",
+      "fixture_path": "tests/drift-monitor-designer/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "mcp-migration-auditor",
+      "lifecycle_stage": "iterate",
+      "skill_path": ".claude/skills/mcp-migration-auditor/SKILL.md",
+      "fixture_path": "tests/mcp-migration-auditor/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    }
+  ],
+  "reviewer_personas": [
+    {
+      "name": "engineer",
+      "path": ".claude/agents/engineer-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "designer",
+      "path": ".claude/agents/designer-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "executive",
+      "path": ".claude/agents/executive-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "skeptic",
+      "path": ".claude/agents/skeptic-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "customer",
+      "path": ".claude/agents/customer-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "data-analyst",
+      "path": ".claude/agents/data-analyst-reviewer.md",
+      "validation_level": "inventory-path"
+    },
+    {
+      "name": "legal",
+      "path": ".claude/agents/legal-reviewer.md",
+      "validation_level": "inventory-path"
+    }
+  ]
+}
