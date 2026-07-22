@@ -18,12 +18,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Verify public installation layout
-        run: |
-          test -f .claude/skills/pm/SKILL.md
-          test -f inventory.json
-          mkdir -p "$RUNNER_TEMP/claude-skills"
-          cp -r .claude/skills/* "$RUNNER_TEMP/claude-skills/"
-          test -f "$RUNNER_TEMP/claude-skills/pm/SKILL.md"
-      - name: Run documented structural audit
+
+      - name: Run documented repository audit
         run: python3 tests/audit_repository.py
+
+      - name: Install into a clean Claude home
+        run: |
+          python3 scripts/install.py --target "$RUNNER_TEMP/claude-home"
+          test -f "$RUNNER_TEMP/claude-home/skills/pm/SKILL.md"
+          test -d "$RUNNER_TEMP/claude-home/agents"
+
+      - name: Prove silent overwrite is blocked
+        run: |
+          if python3 scripts/install.py --target "$RUNNER_TEMP/claude-home"; then
+            echo "installer unexpectedly overwrote existing entries"
+            exit 1
+          fi
+
+      - name: Prove explicit replacement works
+        run: |
+          python3 scripts/install.py --target "$RUNNER_TEMP/claude-home" --force
+          test -f "$RUNNER_TEMP/claude-home/skills/pm/SKILL.md"
