@@ -1,0 +1,29 @@
+name: Public smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-quickstart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify public installation layout
+        run: |
+          test -f .claude/skills/pm/SKILL.md
+          test -f inventory.json
+          mkdir -p "$RUNNER_TEMP/claude-skills"
+          cp -r .claude/skills/* "$RUNNER_TEMP/claude-skills/"
+          test -f "$RUNNER_TEMP/claude-skills/pm/SKILL.md"
+      - name: Run documented structural audit
+        run: python3 tests/audit_repository.py
