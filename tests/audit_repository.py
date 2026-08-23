@@ -143,6 +143,11 @@ def main() -> int:
             if not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
                 fail(errors, f"Limitations section missing for {skill_path}")
 
+    for field in ("name", "skill_path", "fixture_path"):
+        values = [item.get(field) for item in supporting if isinstance(item, dict)]
+        if len(values) != len(set(values)):
+            fail(errors, f"supporting skill {field} values must be unique")
+
     if len(supporting) != 3:
         fail(errors, f"supporting skill total is {len(supporting)}, expected 3")
 
