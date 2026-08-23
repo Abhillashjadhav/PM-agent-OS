@@ -33,8 +33,10 @@ Write one UTF-8 JSON object:
 ```json
 {
   "contract_id": "PMOS-<stable-id>",
-  "contract_status": "APPROVED",
-  "approved_by": "<human identity>",
+  "contract_version": 1,
+  "contract_status": "DRAFT",
+  "approved_by": "",
+  "approved_at": "",
   "decision_source": "<path or immutable reference>",
   "functional_requirements": {
     "FR-001": {"statement": "<approved observable behavior>"}
@@ -49,6 +51,8 @@ Write one UTF-8 JSON object:
   }
 }
 ```
+
+This is the pre-approval shape. The approval publisher changes only the three approval fields and emits the digest-bound receipt after the human approves the exact draft digest.
 
 Preserve additional PMOS decision context only as JSON values; never place credentials, provider commands, executable shell, or deployment instructions in the contract.
 
