@@ -126,7 +126,21 @@ def main() -> int:
             frontmatter = FRONTMATTER.match(text)
             if not frontmatter:
                 fail(errors, f"YAML frontmatter missing for {skill_path}")
-            elif not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
+                continue
+            try:
+                metadata = yaml.safe_load(frontmatter.group(1))
+            except yaml.YAMLError as exc:
+                fail(errors, f"YAML frontmatter does not parse for {skill_path}: {exc}")
+                continue
+            if not isinstance(metadata, dict):
+                fail(errors, f"YAML frontmatter is not a mapping for {skill_path}")
+                continue
+            metadata_name = metadata.get("name")
+            if not isinstance(metadata_name, str) or not KEBAB_CASE.fullmatch(metadata_name):
+                fail(errors, f"frontmatter name is not kebab-case for {skill_path}")
+            if not isinstance(metadata.get("description"), str) or not metadata["description"].strip():
+                fail(errors, f"frontmatter description missing for {skill_path}")
+            if not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
                 fail(errors, f"Limitations section missing for {skill_path}")
 
     if len(supporting) != 3:
