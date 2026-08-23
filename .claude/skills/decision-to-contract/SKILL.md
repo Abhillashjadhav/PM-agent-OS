@@ -9,22 +9,22 @@ Produce one deterministic JSON contract that preserves approved product intent w
 
 ## Ownership boundary
 
-PM Agent OS owns the problem, hypothesis, audience, outcome metric, leading indicators, guardrails, trade-offs, scope, non-goals, acceptance intent, decision status, and accountable approver.
+PM Agent OS owns the problem, hypothesis, audience, outcome metric, leading indicators, guardrails, trade-offs, scope, non-goals, stable requirement and acceptance IDs, contract-shaped acceptance intent, decision status, and accountable approver.
 
-Production Engineering OS owns contract compilation, executable coverage, meaningful-RED, implementation, sandboxed execution, verification, evidence, and the transition to `RELEASE_READY` or `HALTED`. A human owns release.
+Production Engineering OS owns contract compilation, meaningful-RED, implementation, sandboxed execution, verification of executable coverage, evidence, and the transition to `RELEASE_READY` or `HALTED`. A human owns release.
 
 ## Admission gate
 
 Before writing a contract, require all of:
 
 - one approved product-decision artifact or approved PRD;
-- `contract_status: APPROVED`;
-- a non-empty `approved_by` matching the accountable human named by the user;
+- explicit approval recorded either as `contract_status: APPROVED` or PRD `Status: Approved`;
+- a non-empty accountable identity recorded as `approved_by` or PRD `Approved by`, exactly matching the human named by the user;
 - no unresolved product-critical question;
 - stable IDs for every functional requirement and acceptance criterion;
-- every requirement covered by at least one executable criterion.
+- every requirement covered by at least one explicit acceptance-intent criterion.
 
-If any item is missing, return `CONTRACT_BLOCKED` with the missing fields. Do not repair approval or product intent by inference.
+Normalize only these equivalent labels deterministically: PRD `Status: Approved` → `contract_status: APPROVED`, PRD `Approved by` → `approved_by`, and ordered `FR-*`/`AC-*` sections → the corresponding JSON maps without changing their text or IDs. If a required field or executable binding is absent, return `CONTRACT_BLOCKED` with the missing fields and ask for that bounded input. Do not infer approval, product intent, actions, paths, operators, or expected values.
 
 ## Contract shape
 
@@ -71,7 +71,7 @@ Before delivery:
 
 1. prove every `FR-*` has at least one criterion;
 2. prove every `AC-*` references existing requirements;
-3. prove every criterion selects exactly one executable form;
+3. prove every explicit acceptance-intent criterion was either mapped without semantic change to exactly one executable form or reported as blocked;
 4. prove action, measure, operator, path, and test bindings are explicit;
 5. run the Production Engineering OS compiler compatibility check when available;
 6. return the contract only when the check passes unmodified.
