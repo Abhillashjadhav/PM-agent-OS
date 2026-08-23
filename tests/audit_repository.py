@@ -138,6 +138,11 @@ def main() -> int:
             metadata_name = metadata.get("name")
             if not isinstance(metadata_name, str) or not KEBAB_CASE.fullmatch(metadata_name):
                 fail(errors, f"frontmatter name is not kebab-case for {skill_path}")
+            elif metadata_name != name:
+                fail(
+                    errors,
+                    f"frontmatter name {metadata_name!r} does not match inventory name {name!r}",
+                )
             if not isinstance(metadata.get("description"), str) or not metadata["description"].strip():
                 fail(errors, f"frontmatter description missing for {skill_path}")
             if not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
