@@ -76,3 +76,9 @@ EXPECT: routed rag-vs-agent-architect → its gated architecture call feeds
 unit-economics-stress-test (assumption block from the chosen architecture's shape);
 economics output blocked until its reproducible-arithmetic gate passes. Sequential
 skills, each gated; missing token counts → the economics skill asks, never invents.
+
+
+# Gate 4 — Engineering handoff
+
+INPUT I: "/pm turn this explicitly approved decision into a Production Engineering OS contract"
+EXPECT: route to decision-to-contract; require APPROVED status and approved_by; return only a compiler-accepted ID-keyed contract or CONTRACT_BLOCKED diagnostics. Never code, deploy, release, or infer an unregistered action.
