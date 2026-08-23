@@ -5,7 +5,7 @@ description: Convert an explicitly approved PM Agent OS product decision or PRD 
 
 # Decision to Contract
 
-Produce one deterministic JSON contract that preserves approved product intent without inventing engineering semantics.
+Produce one deterministic JSON contract plus a digest-bound approval receipt that preserves approved product intent without inventing engineering semantics.
 
 ## Ownership boundary
 
@@ -65,16 +65,23 @@ For the current frozen `barebones-1` template, the only registered action is `he
 
 Use only registered operators: `eq`, `ne`, `lt`, `lte`, `gt`, `gte`, `contains`, `not_contains`, `matches`, `is_true`, `is_false`, `is_null`, and `not_null`.
 
+## Digest-bound contract approval
+
+Product-decision approval authorizes conversion; it does not authorize later edits to the generated contract. First emit the contract as `DRAFT` with blank `approved_by` and `approved_at`, compute its canonical digest, and ask the accountable human to approve that exact digest. Only then use the Production Engineering OS `approve_contract_draft` publisher to set `APPROVED`, approver, and RFC 3339 timestamp and to create the receipt. Never hand-author receipt digests.
+
+Any edit after receipt creation invalidates approval. Delivery requires `verify_contract_approval(contract, receipt, expected_approver=...)` to return the receipt digest before compiler validation. A missing, malformed, mismatched, or stale receipt is `CONTRACT_BLOCKED: APPROVAL_RECEIPT_INVALID`.
+
 ## Verification gate
 
 Before delivery:
 
-1. prove every `FR-*` has at least one criterion;
-2. prove every `AC-*` references existing requirements;
-3. prove every explicit acceptance-intent criterion was either mapped without semantic change to exactly one executable form or reported as blocked;
-4. prove action, measure, operator, path, and test bindings are explicit;
-5. run the Production Engineering OS compiler compatibility check when available;
-6. return the contract only when the check passes unmodified.
+1. verify the approval receipt binds the exact complete contract and expected human;
+2. prove every `FR-*` has at least one criterion;
+3. prove every `AC-*` references existing requirements;
+4. prove every explicit acceptance-intent criterion was either mapped without semantic change to exactly one executable form or reported as blocked;
+5. prove action, measure, operator, path, and test bindings are explicit;
+6. run the Production Engineering OS compiler compatibility check when available;
+7. return the contract and receipt only when both checks pass unmodified.
 
 On failure, return the compiler diagnostic codes and stop. Never translate rejected prose by guessing.
 
@@ -82,8 +89,9 @@ On failure, return the compiler diagnostic codes and stop. Never translate rejec
 
 Return:
 
-- the contract path;
-- its canonical SHA-256 digest when the host can compute it;
+- the approved contract path;
+- the approval-receipt path and receipt digest;
+- the approved contract's canonical SHA-256 digest;
 - structured-criteria count;
 - human-test count;
 - approval identity;
