@@ -2,7 +2,7 @@
 
 **A reusable product-management skill system for Claude Code—start with one decision, not a catalogue of prompts.**
 
-PM-agent-OS helps product managers make AI product decisions explicit, reviewable, and evidence-aware across discovery, strategy, build, launch, and iteration. It contains 40 lifecycle skills, seven reviewer personas, and a `/pm` orchestrator, but new users should begin with one of the three starter workflows below.
+PM-agent-OS helps product managers make AI product decisions explicit, reviewable, and evidence-aware across discovery, strategy, build, launch, and iteration. It contains 40 lifecycle skills, seven reviewer personas, and three supporting skills: the `/pm` orchestrator, `prd-first`, and `decision-to-contract`. New users should begin with one of the workflows below.
 
 ## Install safely
 
@@ -65,6 +65,19 @@ The `model-upgrade-evaluator` converts release notes into hypotheses, reruns the
 
 **First useful result:** `MIGRATE`, `STAY`, `RESURRECT`, `STILL DEAD`, or `UNTESTED`—each tied to explicit evidence.
 
+### 4. Hand an approved decision to engineering
+
+Ask:
+
+```text
+Convert this explicitly approved product decision into a machine-checkable
+Production Engineering OS contract. Do not infer missing actions or approval.
+```
+
+The `decision-to-contract` workflow preserves PMOS ownership of product intent while emitting an ID-keyed draft, obtaining human approval of its exact digest, and publishing a receipt-bound contract that the Production Engineering OS approval verifier and compiler can accept or reject without guessing.
+
+**First useful result:** either an unmodified, receipt-bound, compiler-accepted contract with approval identity and coverage counts, or `CONTRACT_BLOCKED` with exact diagnostics.
+
 ## What makes this different
 
 A generic prompt library gives you frameworks. PM-agent-OS tries to preserve the decision discipline around them:
@@ -121,6 +134,7 @@ They are review perspectives, not an automatic consensus mechanism. The accounta
 | Path | Purpose |
 |---|---|
 | `.claude/skills/pm/` | Lifecycle orchestrator |
+| `.claude/skills/decision-to-contract/` | Approved product-decision handoff to Production Engineering OS |
 | `.claude/skills/` | Individual decision skills |
 | `.claude/agents/` | Reviewer perspectives |
 | `tests/<skill>/fixtures.md` | Expected inputs, outputs, and failure cases |
@@ -148,7 +162,8 @@ Validated mechanically:
 - fixture specifications exist;
 - README links and inventory totals are consistent;
 - the public installation layout works from a clean checkout;
-- installation refuses silent overwrites unless `--force` is explicitly supplied.
+- installation refuses silent overwrites unless `--force` is explicitly supplied;
+- the committed decision-contract fixture is accepted unmodified by a pinned Production Engineering OS compiler, while planted prose is rejected.
 
 Not yet certified:
 
@@ -157,7 +172,7 @@ Not yet certified:
 - independent enforcement of every instruction-level gate;
 - production outcomes from the complete 40-skill catalogue.
 
-Fixture documents specify expected behaviour; they are not recorded behavioural model tests. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
+Fixture documents specify expected behaviour; they are not recorded behavioural model tests. The decision-contract compiler check proves cross-repository contract compatibility, not that a live model will always author a correct contract. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
 
 ## Verify without installing
 

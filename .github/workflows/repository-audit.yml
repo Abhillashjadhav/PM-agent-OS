@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
       - name: Run offline repository audit
         run: python tests/audit_repository.py
       - name: Lint all skills
@@ -23,5 +23,9 @@ jobs:
           while IFS= read -r skill; do
             python tests/lint_skill.py "$skill"
           done < <(find . -name SKILL.md -not -path './.git/*' -print)
+      - name: Install pinned Production Engineering OS compiler
+        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@6714d3d85f16fe04868f768c504b3b816d845306"
+      - name: Execute PMOS to PEOS contract compatibility
+        run: python tests/decision-to-contract/validate_contract.py
       - name: Compile Python checks
-        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py
+        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py tests/decision-to-contract/validate_contract.py

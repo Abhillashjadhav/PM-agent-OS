@@ -22,6 +22,10 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 | Launch | **Shipped** | launch-checklist · gtm-brief · stakeholder-update · announcement-drafter · launch-retro (+ 7 reviewer personas in `.claude/agents/`) |
 | Iterate | **Shipped** | eval-engine · llm-as-judge-designer · judge-calibration-auditor · golden-dataset-builder · failure-to-eval-capture · guardrail-designer · loop-designer · regression-gatekeeper · model-upgrade-evaluator · eval-vs-abtest-router · drift-monitor-designer · mcp-migration-auditor |
 
+## Engineering handoff
+
+When the user supplies an explicitly approved product decision and asks to hand it to Production Engineering OS, route to `decision-to-contract`. Require approval identity and executable acceptance bindings. A compiler rejection returns `CONTRACT_BLOCKED`; never convert rejected prose by guessing. PMOS does not code, deploy, release, or claim `RELEASE_READY`.
+
 ## Step 1 — Classify
 
 Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Evals, judges, golden sets, failure capture, guardrails, loops, regression gates, model upgrades, eval-vs-experiment routing, drift monitoring, MCP migration → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
@@ -50,6 +54,7 @@ Any output — from a stage skill or provided by the user — can be routed thro
 2. Never improvise a stage's gaps: all five stages ship, but a request no stage skill covers gets the honest no-skill line naming what the stage does ship — never generated output. A complete lifecycle is not a license to freelance.
 3. Never bypass a stage skill's own hard rules or invent data to make a gate pass — gates verify reality, they are not formatting targets.
 4. In multi-skill sequences, downstream skills consume only gated upstream output.
+5. Engineering handoff uses `decision-to-contract`; only a contract accepted unmodified by the Production Engineering OS compiler may be returned as executable.
 
 ## Limitations
 

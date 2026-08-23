@@ -1,0 +1,18 @@
+{
+  "contract_id": "PMOS-E1-PROSE-ONLY",
+  "contract_status": "APPROVED",
+  "approved_by": "fixture-human",
+  "functional_requirements": {
+    "FR-001": {
+      "statement": "The local service reports an OK health status."
+    }
+  },
+  "acceptance_criteria": {
+    "AC-001": {
+      "requirement_refs": [
+        "FR-001"
+      ],
+      "criterion": "Given a running service, when health is checked, then it should be OK."
+    }
+  }
+}

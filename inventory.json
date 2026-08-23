@@ -2,7 +2,8 @@
   "schema_version": 1,
   "validation_levels": {
     "structural-and-fixture-specification": "Inventory path checks plus static skill and fixture-specification checks; not behavioural execution evidence.",
-    "inventory-path": "Inventory path existence check; not behavioural execution evidence."
+    "inventory-path": "Inventory path existence check; not behavioural execution evidence.",
+    "executable-compiler-compatibility": "Static contract fixtures executed against a pinned Production Engineering OS compiler; not live-model behavioural evidence."
   },
   "lifecycle_skills": [
     {
@@ -321,6 +322,26 @@
       "name": "legal",
       "path": ".claude/agents/legal-reviewer.md",
       "validation_level": "inventory-path"
+    }
+  ],
+  "supporting_skills": [
+    {
+      "name": "pm",
+      "skill_path": ".claude/skills/pm/SKILL.md",
+      "fixture_path": "tests/pm/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "prd-first",
+      "skill_path": ".claude/skills/prd-first/SKILL.md",
+      "fixture_path": "tests/prd-first/fixtures.md",
+      "validation_level": "structural-and-fixture-specification"
+    },
+    {
+      "name": "decision-to-contract",
+      "skill_path": ".claude/skills/decision-to-contract/SKILL.md",
+      "fixture_path": "tests/decision-to-contract/fixtures.md",
+      "validation_level": "executable-compiler-compatibility"
     }
   ]
 }
