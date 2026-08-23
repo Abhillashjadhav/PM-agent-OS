@@ -18,13 +18,13 @@ Production Engineering OS owns contract compilation, meaningful-RED, implementat
 Before writing a contract, require all of:
 
 - one approved product-decision artifact or approved PRD;
-- explicit approval recorded either as `contract_status: APPROVED` or PRD `Status: Approved`;
+- `contract_status: APPROVED`; for a PRD, both `Status: Approved` and `Contract status: APPROVED` must be present and agree—any contradiction is `CONTRACT_BLOCKED: APPROVAL_STATUS_CONFLICT`;
 - a non-empty accountable identity recorded as `approved_by` or PRD `Approved by`, exactly matching the human named by the user;
 - no unresolved product-critical question;
 - stable IDs for every functional requirement and acceptance criterion;
 - every requirement covered by at least one explicit acceptance-intent criterion.
 
-Normalize only these equivalent labels deterministically: PRD `Status: Approved` → `contract_status: APPROVED`, PRD `Approved by` → `approved_by`, and ordered `FR-*`/`AC-*` sections → the corresponding JSON maps without changing their text or IDs. If a required field or executable binding is absent, return `CONTRACT_BLOCKED` with the missing fields and ask for that bounded input. Do not infer approval, product intent, actions, paths, operators, or expected values.
+Normalize only these equivalent labels deterministically after the approval fields agree: PRD `Contract status` → `contract_status`, PRD `Approved by` → `approved_by`, and ordered compiler-shaped `FR-*`/`AC-*` sections → the corresponding JSON maps without changing their text, IDs, actions, paths, operators, or values. If a required field or executable binding is absent, return `CONTRACT_BLOCKED` with the missing fields and ask for that bounded input. Do not infer approval, product intent, actions, paths, operators, or expected values.
 
 ## Contract shape
 
