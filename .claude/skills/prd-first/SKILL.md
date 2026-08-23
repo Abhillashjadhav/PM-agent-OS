@@ -79,8 +79,15 @@ After all 5 questions answered, write the PRD to /prds/YYYY-MM-DD-<slug>.md usin
     ## Functional requirements
     - **FR-001:** <one observable v1 behavior; add stable IDs in order>
 
-    ## Acceptance intent
-    - **AC-001** (covers FR-001): Given <explicit state>, when <explicit action>, then <observable outcome>.
+    ## Engineering acceptance contract (required for PEOS handoff)
+    - **AC-001**
+      - requirement_refs: [FR-001]
+      - form: given_when_then
+      - given: [{path: service.running, operator: eq, value: true}]
+      - when: {action: health, arguments: {}}
+      - then: [{path: result.status, operator: eq, value: ok}]
+
+    Replace the example values only with fields the user explicitly approves. For the current `barebones-1` PEOS template, `health` is the only registered action; if the product needs another action, keep the PRD Draft and record `ACTION_NOT_REGISTERED` rather than inventing a binding.
 
     ## Unresolved product-critical questions
     - None | <question that blocks approval>
@@ -130,7 +137,7 @@ Before writing a single line of code or vibe-code prompt after the trigger fires
 
 1. Does a PRD file exist at /prds/YYYY-MM-DD-<slug>.md? If no → ask the 5 questions.
 2. Has the user explicitly approved it? If no → show the PRD, ask for approval.
-3. If this is an engineering handoff, are `Contract status`, `Approved by`, `FR-*`, and `AC-*` present with no unresolved product-critical question? If no → complete those PM-owned fields or keep the PRD Draft.
+3. If this is an engineering handoff, are agreeing `Status: Approved` and `Contract status: APPROVED`, `Approved by`, `FR-*`, and compiler-shaped `AC-*` bindings present with no unresolved product-critical question? If no → complete those PM-owned fields or keep the PRD Draft.
 4. Does the prompt I'm about to write reference the PRD path? If no → add it as the first line.
 5. Is there a /DECISIONS.md in the repo root? If no → create it with a header.
 
