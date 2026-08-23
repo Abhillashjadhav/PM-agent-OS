@@ -145,7 +145,8 @@ def main() -> int:
 
     for field in ("name", "skill_path", "fixture_path"):
         values = [item.get(field) for item in supporting if isinstance(item, dict)]
-        if len(values) != len(set(values)):
+        string_values = [value for value in values if isinstance(value, str)]
+        if len(string_values) != len(set(string_values)):
             fail(errors, f"supporting skill {field} values must be unique")
 
     if len(supporting) != 3:
