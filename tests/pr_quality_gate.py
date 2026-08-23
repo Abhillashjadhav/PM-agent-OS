@@ -42,6 +42,7 @@ def main() -> int:
                 raise RuntimeError(f"unrelated generated/runtime output changed: {path}")
         inventory = json.loads((ROOT / "inventory.json").read_text(encoding="utf-8"))
         protected_paths = [entry["skill_path"] for entry in inventory["lifecycle_skills"]]
+        protected_paths += [entry["skill_path"] for entry in inventory["supporting_skills"]]
         protected_paths += [entry["path"] for entry in inventory["reviewer_personas"]]
         deleted = set(run(["git", "diff", "--diff-filter=D", "--name-only", f"{args.base_ref}...HEAD"], capture=True).splitlines())
         for path in protected_paths:
