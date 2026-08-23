@@ -1,0 +1,11 @@
+{
+  "approved_at": "2026-08-23T00:00:00Z",
+  "approved_by": "fixture-human",
+  "approved_contract_digest": "sha256:ee197551f3e8d9411d41db986fb637357103413a85ad9eb30d360a260847d837",
+  "contract_id": "PMOS-E1-HEALTH",
+  "contract_version": 1,
+  "decision": "APPROVED",
+  "draft_digest": "sha256:abc41a0c7e78a72f02088c8bc877f8dd6230602e0e17f9c29b5e1db4f8f4ab83",
+  "schema_version": "1.0.0",
+  "receipt_digest": "sha256:e9fe9ff71759ba6ba9e6afb50d6dd0eec02e6f12e905b68a7339f01f3f53c163"
+}
