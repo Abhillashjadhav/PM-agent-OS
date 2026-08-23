@@ -50,6 +50,8 @@ After all 5 questions answered, write the PRD to /prds/YYYY-MM-DD-<slug>.md usin
 
     **Date:** YYYY-MM-DD
     **Status:** Draft | Approved | Built | Shipped | Killed
+    **Contract status:** DRAFT | APPROVED
+    **Approved by:** <exact accountable human identity; blank while Draft>
 
     ## Problem
     <Q1 answer, 1-3 sentences>
@@ -74,6 +76,15 @@ After all 5 questions answered, write the PRD to /prds/YYYY-MM-DD-<slug>.md usin
     - <failure mode 1>
     - <failure mode 2 if applicable>
 
+    ## Functional requirements
+    - **FR-001:** <one observable v1 behavior; add stable IDs in order>
+
+    ## Acceptance intent
+    - **AC-001** (covers FR-001): Given <explicit state>, when <explicit action>, then <observable outcome>.
+
+    ## Unresolved product-critical questions
+    - None | <question that blocks approval>
+
     ## Decisions log
     (Append one line per architectural choice as we build. Format: "Chose X over Y because Z.")
 
@@ -81,13 +92,15 @@ Show the user the PRD. Ask: "Approve, edit, or kill?" Wait for explicit approval
 
 ## After approval
 
-When the user approves the PRD, do three things:
+When the user approves the PRD, do four things:
 
-1. **Reference the PRD path in every subsequent code prompt.** The vibe-code prompt's first line must be: "Implement /prds/YYYY-MM-DD-<slug>.md. Code must satisfy the success metric and respect the scope cuts."
+1. **Record accountable approval.** Change `Status` to `Approved`, change `Contract status` to `APPROVED`, and write the exact human identity into `Approved by`. If the identity is not known, ask; never infer it. Approval is invalid while a product-critical question remains unresolved.
 
-2. **Create or update /DECISIONS.md in the repo root.** This is the running architectural log. Every meaningful choice (framework, library, schema, auth pattern, deployment target) gets one line appended. Format: "2026-05-24: Chose Supabase over Firebase because — auth + Postgres in one, free tier covers v1 user count."
+2. **Reference the PRD path in every subsequent code prompt.** The vibe-code prompt's first line must be: "Implement /prds/YYYY-MM-DD-<slug>.md. Code must satisfy the success metric and respect the scope cuts."
 
-3. **At end of each coding session, ask the user one question:** "Anything we decided today that should go in DECISIONS.md?" Append what they say. This is how context compounds across sessions instead of evaporating.
+3. **Create or update /DECISIONS.md in the repo root.** This is the running architectural log. Every meaningful choice (framework, library, schema, auth pattern, deployment target) gets one line appended. Format: "2026-05-24: Chose Supabase over Firebase because — auth + Postgres in one, free tier covers v1 user count."
+
+4. **At end of each coding session, ask the user one question:** "Anything we decided today that should go in DECISIONS.md?" Append what they say. This is how context compounds across sessions instead of evaporating.
 
 ## Edge cases
 
@@ -117,7 +130,8 @@ Before writing a single line of code or vibe-code prompt after the trigger fires
 
 1. Does a PRD file exist at /prds/YYYY-MM-DD-<slug>.md? If no → ask the 5 questions.
 2. Has the user explicitly approved it? If no → show the PRD, ask for approval.
-3. Does the prompt I'm about to write reference the PRD path? If no → add it as the first line.
-4. Is there a /DECISIONS.md in the repo root? If no → create it with a header.
+3. If this is an engineering handoff, are `Contract status`, `Approved by`, `FR-*`, and `AC-*` present with no unresolved product-critical question? If no → complete those PM-owned fields or keep the PRD Draft.
+4. Does the prompt I'm about to write reference the PRD path? If no → add it as the first line.
+5. Is there a /DECISIONS.md in the repo root? If no → create it with a header.
 
-If all four pass, proceed. If not, stop and fix the gap.
+If all five pass, proceed. If not, stop and fix the gap.
