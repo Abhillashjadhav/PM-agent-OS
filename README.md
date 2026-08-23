@@ -74,9 +74,9 @@ Convert this explicitly approved product decision into a machine-checkable
 Production Engineering OS contract. Do not infer missing actions or approval.
 ```
 
-The `decision-to-contract` workflow preserves PMOS ownership of product intent while emitting an ID-keyed contract that the Production Engineering OS compiler can accept or reject without guessing.
+The `decision-to-contract` workflow preserves PMOS ownership of product intent while emitting an ID-keyed draft, obtaining human approval of its exact digest, and publishing a receipt-bound contract that the Production Engineering OS approval verifier and compiler can accept or reject without guessing.
 
-**First useful result:** either an unmodified compiler-accepted contract with approval identity and coverage counts, or `CONTRACT_BLOCKED` with exact diagnostics.
+**First useful result:** either an unmodified, receipt-bound, compiler-accepted contract with approval identity and coverage counts, or `CONTRACT_BLOCKED` with exact diagnostics.
 
 ## What makes this different
 
