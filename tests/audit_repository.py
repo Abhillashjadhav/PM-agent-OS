@@ -51,12 +51,16 @@ def main() -> int:
 
     skills = inventory.get("lifecycle_skills")
     personas = inventory.get("reviewer_personas")
+    supporting = inventory.get("supporting_skills")
     if not isinstance(skills, list):
         fail(errors, "inventory lifecycle_skills must be a list")
         skills = []
     if not isinstance(personas, list):
         fail(errors, "inventory reviewer_personas must be a list")
         personas = []
+    if not isinstance(supporting, list):
+        fail(errors, "inventory supporting_skills must be a list")
+        supporting = []
 
     stage_totals = {stage: 0 for stage in EXPECTED_STAGE_TOTALS}
     for skill in skills:
@@ -102,6 +106,32 @@ def main() -> int:
         if not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
             fail(errors, f"Limitations section missing for {skill_path}")
 
+    for skill in supporting:
+        if not isinstance(skill, dict):
+            fail(errors, "supporting skill entry must be an object")
+            continue
+        name = skill.get("name")
+        skill_path = skill.get("skill_path")
+        fixture_path = skill.get("fixture_path")
+        validation_level = skill.get("validation_level")
+        if not isinstance(name, str) or not KEBAB_CASE.fullmatch(name):
+            fail(errors, f"invalid supporting skill name: {name!r}")
+        if not isinstance(validation_level, str) or not validation_level:
+            fail(errors, f"missing validation level for supporting skill {name}")
+        for label, relative_path in (("skill", skill_path), ("fixture", fixture_path)):
+            if not isinstance(relative_path, str) or not (ROOT / relative_path).is_file():
+                fail(errors, f"{label} path missing for supporting skill {name}: {relative_path!r}")
+        if isinstance(skill_path, str) and (ROOT / skill_path).is_file():
+            text = (ROOT / skill_path).read_text(encoding="utf-8")
+            frontmatter = FRONTMATTER.match(text)
+            if not frontmatter:
+                fail(errors, f"YAML frontmatter missing for {skill_path}")
+            elif not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):
+                fail(errors, f"Limitations section missing for {skill_path}")
+
+    if len(supporting) != 3:
+        fail(errors, f"supporting skill total is {len(supporting)}, expected 3")
+
     for stage, expected in EXPECTED_STAGE_TOTALS.items():
         if stage_totals[stage] != expected:
             fail(errors, f"{stage} total is {stage_totals[stage]}, expected {expected}")
@@ -120,7 +150,7 @@ def main() -> int:
         for error in errors:
             print(f"FAIL {error}")
         return 1
-    print("PASS repository audit: 40 lifecycle skills, 7 reviewer personas")
+    print("PASS repository audit: 40 lifecycle skills, 3 supporting skills, 7 reviewer personas")
     return 0
 
 
