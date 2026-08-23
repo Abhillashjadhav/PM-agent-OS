@@ -15,4 +15,7 @@ Expected behavior: ask for the underlying pain once; do not silently promote the
 ## Boundary
 
 This document specifies expected behavior. It is not recorded model-run evidence.
-\n## Case: approved engineering handoff metadata\n\nGiven a PRD is explicitly approved for PEOS handoff, the skill records `Status: Approved`, `Contract status: APPROVED`, an exact non-empty `Approved by`, stable `FR-*` and `AC-*` IDs, and no unresolved product-critical question. It must not infer the approver or mark a vague/TBD PRD approved.\n
+
+## Case: approved engineering handoff metadata
+
+Given a PRD is explicitly approved for PEOS handoff, the skill records `Status: Approved`, `Contract status: APPROVED`, an exact non-empty `Approved by`, stable `FR-*` and `AC-*` IDs, and no unresolved product-critical question. It must not infer the approver or mark a vague/TBD PRD approved.
