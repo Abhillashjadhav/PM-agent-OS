@@ -87,7 +87,7 @@ After all 5 questions answered, write the PRD to /prds/YYYY-MM-DD-<slug>.md usin
       - when: {action: health, arguments: {}}
       - then: [{path: result.status, operator: eq, value: ok}]
 
-    Replace the example values only with fields the user explicitly approves. For the current `barebones-1` PEOS template, `health` is the only registered action; if the product needs another action, keep the PRD Draft and record `ACTION_NOT_REGISTERED` rather than inventing a binding.
+    For a PEOS handoff, replace the example values only with fields the user explicitly approves. The current `barebones-1` PEOS template registers only `health`; if the handoff needs another action, keep the engineering contract Draft and record `ACTION_NOT_REGISTERED` rather than inventing a binding. An ordinary non-PEOS build may omit this section and is not restricted to the PEOS action registry; its product PRD may still be approved.
 
     ## Unresolved product-critical questions
     - None | <question that blocks approval>
