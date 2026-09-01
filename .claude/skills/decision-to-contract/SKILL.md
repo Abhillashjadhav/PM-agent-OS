@@ -41,7 +41,7 @@ Prepare one UTF-8 publisher-input JSON object. It must include the complete PM-o
   "scope": ["<included v1 behavior>"],
   "out_of_scope": ["<explicit exclusion>"],
   "functional_requirements": [
-    {"id": "FR-001", "title": "<behavior>", "description": "<observable behavior>"}
+    {"id": "FR-001", "title": "<behavior>", "description": "<observable behavior>", "capability": "<stable capability>"}
   ],
   "acceptance_criteria": [
     {
@@ -61,7 +61,8 @@ Prepare one UTF-8 publisher-input JSON object. It must include the complete PM-o
   "guardrails": ["<must-not-worsen constraint>"],
   "non_functional_requirements": [{"id": "NFR-001", "category": "quality", "requirement": "<constraint>"}],
   "known_risks": [{"description": "<risk>", "level": "low|medium|high"}],
-  "required_approvals": [{"role": "<role>", "for": "<action>"}]
+  "required_approvals": [{"role": "<role>", "for": "<action>"}],
+  "approved_product_decisions": [{"id": "APD-001", "decision": "<explicit approved decision>"}]
 }
 ```
 
