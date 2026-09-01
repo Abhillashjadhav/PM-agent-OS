@@ -24,7 +24,7 @@ jobs:
             python tests/lint_skill.py "$skill"
           done < <(find . -name SKILL.md -not -path './.git/*' -print)
       - name: Install pinned Production Engineering OS compiler
-        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@6714d3d85f16fe04868f768c504b3b816d845306"
+        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9"
       - name: Execute PMOS to PEOS contract compatibility
         run: python tests/decision-to-contract/validate_contract.py
       - name: Compile Python checks
