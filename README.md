@@ -67,6 +67,8 @@ The `model-upgrade-evaluator` converts release notes into hypotheses, reruns the
 
 ### 4. Hand an approved decision to engineering
 
+For a raw idea, ask `/pm` to turn it into an Engineering OS contract. PMOS first runs the `prd-first` definition and approval flow; only the approved result enters the contract publisher.
+
 Ask:
 
 ```text
@@ -122,10 +124,10 @@ Seven reviewer agents provide distinct perspectives:
 - engineering;
 - design;
 - executive;
-- legal;
-- data;
-- marketing;
-- growth.
+- skeptic;
+- customer;
+- data analysis;
+- legal.
 
 They are review perspectives, not an automatic consensus mechanism. The accountable PM still owns the decision.
 
@@ -163,7 +165,7 @@ Validated mechanically:
 - README links and inventory totals are consistent;
 - the public installation layout works from a clean checkout;
 - installation refuses silent overwrites unless `--force` is explicitly supplied;
-- the committed decision-contract fixture is accepted unmodified by a pinned Production Engineering OS compiler, while planted prose is rejected.
+- committed PMOS answers are deterministically published into an exact approved contract and receipt, accepted unmodified by the pinned Production Engineering OS loader/compiler, and admitted into an engineering run, while planted prose is rejected.
 
 Not yet certified:
 
@@ -172,7 +174,7 @@ Not yet certified:
 - independent enforcement of every instruction-level gate;
 - production outcomes from the complete 40-skill catalogue.
 
-Fixture documents specify expected behaviour; they are not recorded behavioural model tests. The decision-contract compiler check proves cross-repository contract compatibility, not that a live model will always author a correct contract. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
+Fixture documents specify expected behaviour; they are not recorded behavioural model tests. The executable decision-contract check proves the deterministic cross-repository authoring and admission seam, not that a live model will always author a correct contract. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
 
 ## Verify without installing
 

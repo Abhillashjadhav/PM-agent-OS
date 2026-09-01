@@ -2,9 +2,9 @@
 
 ## Valid planted case
 
-Input: an explicitly approved PMOS decision for the frozen health behavior.
+Input: `valid-answers.json`, a complete PMOS product-decision payload for the frozen health behavior.
 
-Expected output: `valid-contract.json` and `valid-approval-receipt.json` pass `verify_contract_approval` and the contract is accepted unmodified by the pinned Production Engineering OS `compile_acceptance_plan` using the `barebones-1` template.
+Expected output: the pinned Production Engineering OS publisher deterministically reproduces `valid-contract.json` and `valid-approval-receipt.json`; the exact receipt verifies; the canonical contract loader accepts the artifact as runnable; the compiler accepts it unmodified using `barebones-1`; and a receipt-bound engineering run starts at `assessment`.
 
 Required properties:
 
@@ -29,4 +29,4 @@ Expected result: the Production Engineering OS compiler rejects it with `CRITERI
 
 ## Boundary
 
-This executable compatibility fixture proves contract shape, not live-model behavioural performance or product-generation breadth.
+This executable compatibility fixture proves the deterministic answers → draft → approval → loader → compiler → engineering-admission seam. It does not prove live-model behavioural performance or arbitrary-product generation breadth.

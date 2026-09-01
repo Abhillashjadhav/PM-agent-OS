@@ -16,9 +16,9 @@ Fixtures are **specifications**, not executed behavioural tests. Their presence 
 
 ## 3. Executable cross-repository compatibility
 
-`tests/decision-to-contract/validate_contract.py` runs committed PMOS fixtures through a pinned revision of the real Production Engineering OS acceptance compiler. CI requires the approved health contract to compile unmodified and a prose-only planted failure to be rejected with `CRITERION_FORM_INVALID`.
+`tests/decision-to-contract/validate_contract.py` runs committed PMOS answers through a pinned revision of the real Production Engineering OS authoring publisher, approval verifier, canonical contract loader, acceptance compiler, and engineering admission API. CI requires deterministic reproduction of the approved health contract and receipt, a receipt-bound engineering run to start without artifact rewriting, and a prose-only planted failure to be rejected with `CRITERION_FORM_INVALID`.
 
-This proves one deterministic contract boundary. It does not prove live-model authoring quality, arbitrary-product coverage, or a real-provider engineering run.
+This proves one deterministic end-to-end handoff boundary. It does not prove live-model authoring quality, arbitrary-product coverage, or a real-provider engineering run.
 
 ## 4. Recorded behavioural model-run evidence
 

@@ -24,8 +24,6 @@
       }
     }
   ],
-  "approved_at": "2026-08-23T00:00:00Z",
-  "approved_by": "fixture-human",
   "approved_product_decisions": [
     {
       "decision": "The first proof is connector-free and local.",
@@ -39,7 +37,6 @@
     }
   ],
   "contract_id": "PMOS-E1-HEALTH",
-  "contract_status": "APPROVED",
   "contract_version": 1,
   "desired_outcome": "An operator can verify that the service is alive with one call.",
   "functional_requirements": [
@@ -94,7 +91,5 @@
       "scale": "1-5"
     }
   ],
-  "source_digest": "sha256:37eb8f219a2f090be578d1289ae5ef82ea5ad124754d6fcfca4aa5289e82c23d",
-  "target_user": "Operators monitoring small self-hosted services.",
-  "unresolved_questions": []
+  "target_user": "Operators monitoring small self-hosted services."
 }

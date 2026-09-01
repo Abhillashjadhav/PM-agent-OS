@@ -1,7 +1,7 @@
 # pm-agent-os
 
 ## What this repo is
-An agentic PM operating system for Claude Code. One `/pm` command (`.claude/skills/pm/SKILL.md`) classifies any product request into lifecycle stage(s) — discovery, strategy, build, launch, iterate — and routes to stage skills. Stage 1 (Discovery, 7 skills) is shipped; the other four stages return "stage not yet shipped". The core rule of the whole system: no output returns to the user until its verification gate passes.
+An agentic PM operating system for Claude Code. One `/pm` command (`.claude/skills/pm/SKILL.md`) classifies any product request into lifecycle stage(s) — discovery, strategy, build, launch, iterate — and routes to the 40 shipped lifecycle skills. A request that no listed skill covers gets an explicit no-skill response rather than improvised output. The core rule of the whole system: no output returns to the user until its verification gate passes.
 
 ## PR rules (non-negotiable)
 - No direct pushes to main. Every change lands through a PR.
