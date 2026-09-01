@@ -82,3 +82,6 @@ skills, each gated; missing token counts → the economics skill asks, never inv
 
 INPUT I: "/pm turn this explicitly approved decision into a Production Engineering OS contract"
 EXPECT: route to decision-to-contract; require APPROVED status and approved_by; return only a compiler-accepted ID-keyed contract or CONTRACT_BLOCKED diagnostics. Never code, deploy, release, or infer an unregistered action.
+
+INPUT J: "/pm I have an idea for a product; turn it into a contract Engineering OS can build"
+EXPECT: route first to prd-first and ask its product-definition questions one at a time. Do not invoke decision-to-contract, publish a contract, or start engineering until the resulting PRD has an explicit accountable approval. After approval, route to decision-to-contract and collect only the remaining bounded contract truth.
