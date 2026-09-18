@@ -77,8 +77,10 @@ def observe(
 
 
 def missing_acknowledged_records() -> dict:
-    """Count distinct acknowledged records absent after all creator processes exit.
+    """Count missing records after ten strictly sequential creator processes.
 
+    Each process exits before the next starts; concurrent creation is out of scope.
+    The blocking _call below preserves this order. No parallel writers are tested.
     The approved workload is ten records. sample_size counts distinct valid creation
     acknowledgements, preventing an implementation that creates nothing from passing.
     This is a deterministic record-count measurement, not a statistical quality score.

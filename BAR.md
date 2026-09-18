@@ -33,3 +33,31 @@ measure. Default health bindings reject the new behavior; the same contract
 compiles with the existing Template API and the proposed declarative bindings.
 All 212 proposed artifact digests match, evaluator syntax and Ruff checks pass,
 and no receipt or product code was generated. Approval remains pending.
+
+## Unit — owner amendments before the Phase 2 freeze
+
+Branch: `docs/task-tracker-acceptance`, from local
+`b7d9307dc3a0e0b8a69731070aafdcdd7fe3952e`. Extend the existing unapproved
+packet in PR #58; the owner approved the identifier, duplicate and repeated-
+completion rules and requested a final one-line confirmation of the amended grid.
+
+1. **Yes, restructured.** Extend the existing scenarios, publisher input and review packet; the observer already calls each process synchronously.
+2. **Yes.** The owner requires explicitly sequential AC-013, critical AC-014 for rejected-create ID continuity, named create non-idempotency and the closed sandbox decision.
+3. **No.** Only the unapproved proposal and observer documentation change; no existing publisher, engine, provider or product behavior changes.
+4. **Yes.** Run a focused pre-change assertion for sequential AC-013 wording, the exact critical AC-014 observations and the named limitations; rerun it after regeneration alongside publisher/manifest checks.
+5. **Yes.** One follow-up proposal commit reverts these amendments without altering implementation or previous evidence.
+6. **No.** No setting, dependency, extension, sandbox attempt or signing repair is added.
+
+The expected pre-change RED is prerequisite evidence, not an implementation
+attempt. Freeze, approval receipt creation and product generation wait for the
+owner's requested one-line confirmation of the re-issued grid.
+
+Validation attempt 1 passed. The five focused pre-change assertions failed as
+expected, then passed after amendment. AC-001 through AC-012 are byte-equivalent
+as JSON values; AC-013 retains its measure, threshold and sample minimum. AC-014
+has the exact three observations and critical severity. The evaluator's executable
+AST is unchanged; only its sequential-workload documentation changed. The existing
+publisher and Template compiler validate fourteen criteria; all 212 artifact
+digests match, with only the seven intended proposal artifact hashes changed.
+Ruff, format and diff checks pass. No product, receipt or sandbox was executed or
+created. Final confirmation and the freeze remain pending.
