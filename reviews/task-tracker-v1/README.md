@@ -1,6 +1,6 @@
 # Task-tracker Phase 2 review packet
 
-Status: **OWNER CONFIRMED — artifacts frozen; product implementation pending.**
+Status: **DEMONSTRATED FOR THE APPROVED FEATURE under the owner-authorized fallback.**
 
 Read [ACCEPTANCE.md](ACCEPTANCE.md) first. It contains the three approved semantic
 decisions, CLI/error rules and all 14 scenarios, observation methods,
@@ -50,8 +50,9 @@ At proposal validation, no product execution, generation or approval call occurr
 The owner has now confirmed the amended grid. The existing publisher produced
 contract.approved.json and approval-receipt.json; compiled-plan.json and all
 218 bound file hashes are recorded in freeze-manifest.json.
-The loader, per-check digest enforcement and behavioral validation remain work
-after owner approval. A passing compilation is not product-delivery evidence.
+The initial proposal left loading, per-check digest enforcement and behavioral
+validation pending. Those steps have now completed in PEOS PR #203; see the
+live evidence below. Compilation alone remains insufficient delivery evidence.
 If that work changes a bound source file, obtain approval of the new bytes before
 product generation; this packet cannot approve future source code.
 
@@ -117,3 +118,20 @@ The digest snapshot includes contract, receipt, plan, grid, evaluator, bindings,
 profile, renderer, review manifest and all previously bound source bytes.
 The new Phase 3 entry script will be recorded separately as engineering evidence;
 existing bound source and approved outcomes must remain unchanged.
+
+## Completed handoff
+
+[PEOS PR #203](https://github.com/Abhillashjadhav/production-engineering-os/pull/203)
+contains the file entry, actual in-session model build, unchanged acceptance
+results, meaningful baseline, two rejected behavior mutations, two rejected
+tamper probes and a separate new-action fixture. The live candidate passed all
+14 criteria on build attempt 1, with no manual product repair. AC-013 measured
+ten distinct acknowledgements and zero missing records; AC-014 retained ID 1
+after rejection. Clean installation and retained-artifact replay also passed.
+
+[Full evidence report](https://github.com/Abhillashjadhav/production-engineering-os/blob/feat/contract-file-run/docs/evidence/task-tracker-live-20260918/REPORT.md).
+The real-sandbox leg remains environment-blocked. Root authority, forgeable
+receipts, active-session generation, non-idempotent create and excluded concurrency
+remain limitations. No broad platform-readiness, headless generation or release
+claim is made. The approved contract, grid, evaluator and freeze manifest are
+unchanged by this status update.
