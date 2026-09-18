@@ -61,3 +61,22 @@ publisher and Template compiler validate fourteen criteria; all 212 artifact
 digests match, with only the seven intended proposal artifact hashes changed.
 Ruff, format and diff checks pass. No product, receipt or sandbox was executed or
 created. Final confirmation and the freeze remain pending.
+
+## Unit — regenerate the complete proposal and freeze owner approval
+
+Start: local `aaf478c53150a03e384aca767e3f061abfb50567`, remote
+`00ccd29ab12deac4aec8538d344834af6f8b9ae2`, branch `docs/task-tracker-acceptance`.
+Owner explicitly confirmed the amended grid and required full-body regeneration
+and agreement verification before recording the freeze.
+
+1. **Yes, restructured.** Reuse the approved scenarios, publisher and observer; generate the complete document from those sources.
+2. **Yes.** Owner's current instruction requires 14 criteria, strictly sequential AC-013, critical AC-014, and a consistent freeze before Phases 3–4.
+3. **No.** Documentation generation and approval artifacts only; no existing engine, publisher or evaluator behavior changes.
+4. **Yes.** First check for complete generated criterion sections, count and a reproducible renderer; these are absent in the hand-maintained proposal. Then verify exact publisher/scenario/evaluator agreement and every manifest entry before freeze.
+5. **Yes.** One approval-document commit can be reverted independently of PEOS infrastructure and candidate generation.
+6. **No.** No product setting, dependency, extension, sandbox attempt or signing repair.
+
+Freeze validation attempt 1 passed: full regeneration produced 14 rows and 14 detailed
+criterion sections; exact contract/scenario/binding equality and sequential observer
+source verified before recording. Existing publisher issued the approved contract
+and receipt. All 218 frozen artifact hashes match; no product generation occurred.

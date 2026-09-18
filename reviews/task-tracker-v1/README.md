@@ -1,6 +1,6 @@
 # Task-tracker Phase 2 review packet
 
-Status: **INCOMPLETE — awaiting the requested one-line confirmation of the amended grid; no product generated.**
+Status: **OWNER CONFIRMED — artifacts frozen; product implementation pending.**
 
 Read [ACCEPTANCE.md](ACCEPTANCE.md) first. It contains the three approved semantic
 decisions, CLI/error rules and all 14 scenarios, observation methods,
@@ -26,10 +26,10 @@ Draft digest:
 `sha256:0684ae3efbc62aef686e36b9acc871e92451c458ed0a53bb951cebc44748fe89`.
 
 Canonical review-bundle digest:
-`sha256:4eaa1d95828f3e1fbf2a9646eb25ec3185c5b4669e5ac98c4668756b958468b6`.
+`sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711`.
 The bundle digest uses existing RFC 8785 `canonical_digest` over the manifest;
-individual file entries use SHA-256 over raw bytes. The digest is a proposed review
-anchor, not a signed receipt or proof of human approval.
+individual file entries use SHA-256 over raw bytes. The digest records the confirmed review bundle; the owner conversation supplies
+approval, not a cryptographic signature.
 
 ## Validation performed
 
@@ -46,7 +46,10 @@ AC-001 through AC-012 retain their exact scenario values. AC-013 retains the sam
 measure, threshold and sample minimum; its sequential ordering is now explicit.
 Only the evaluator's documentation changed; its executable AST is unchanged.
 
-No product execution, model generation, approval call or receipt creation occurred.
+At proposal validation, no product execution, generation or approval call occurred.
+The owner has now confirmed the amended grid. The existing publisher produced
+contract.approved.json and approval-receipt.json; compiled-plan.json and all
+218 bound file hashes are recorded in freeze-manifest.json.
 The loader, per-check digest enforcement and behavioral validation remain work
 after owner approval. A passing compilation is not product-delivery evidence.
 If that work changes a bound source file, obtain approval of the new bytes before
@@ -102,3 +105,15 @@ The engine and authority findings, amended sandbox argv and fallback probe are i
 New actions already work through the Python API. Historical live-model evidence
 already exists in PEOS and remains unverified by this run. These correct the earlier
 review; neither correction establishes this task tracker's delivery.
+
+## Freeze record
+
+Full proposal regenerated from all 14 scenarios by `python reviews/task-tracker-v1/render-proposal.py`.
+Contract, grid, evaluator and prepared manifest agreed before recording the freeze.
+
+Canonical freeze digest: `sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e2322c7e463ef9a6e37f2`.
+Approval source: the owner’s “Confirmed — freeze the amended grid and proceed.”
+The digest snapshot includes contract, receipt, plan, grid, evaluator, bindings,
+profile, renderer, review manifest and all previously bound source bytes.
+The new Phase 3 entry script will be recorded separately as engineering evidence;
+existing bound source and approved outcomes must remain unchanged.

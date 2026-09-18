@@ -1,140 +1,1465 @@
-# Local task tracker — amended acceptance grid v1
+# Local task tracker — approved acceptance proposal
 
-**DRAFT — awaiting the owner's requested one-line confirmation before freeze.**
-The owner approved the grid with two amendments: explicitly sequential AC-013
-and critical AC-014 for ID continuity after a rejected create. Both are included
-below. The identifier, duplicate-creation and repeated-completion rules are
-approved exactly as previously proposed. The publisher-created contract is `contract.draft.json`;
-`scenarios.json` contains every command and expected JSON observation.
+This proposal contains **14 criteria** across 6 functional requirements.
+The owner confirmed the amended grid before generation. This document is
+regenerated in full from publisher-input.json, scenarios.json and execution-profile.json.
+The contract is produced by the existing PMOS → PEOS publisher.
 
-The intended outcome is that a person can create, complete and find their tasks
-after reopening the CLI, without losing acknowledged changes or repairing data.
+## Problem
 
-## Product decisions
+A person needs a dependable local list of tasks whose completion state survives closing and reopening the CLI.
 
-| Decision | Rule | Trade-off |
-| --- | --- | --- |
-| Identifiers | Positive integer IDs, starting at 1 in a new store, increasing by one per successful creation and preserved across restarts. A rejected create must not advance the next-ID counter. | Simple to read and type; one local store and one writer. |
-| Duplicate creation | The same title may be created twice; each successful create receives a new ID. | Legitimate repeated tasks work. Retrying create after an uncertain acknowledgement can create a duplicate; automatic create-retry deduplication is out of scope. |
-| Repeated completion | Completing an already completed task returns success with the same ID and status, and preserves the task list. | Callers can retry completion safely; no toggle or duplicate record. |
-| Titles and listing | Reject blank titles; otherwise preserve text exactly. `list` defaults to all; filters are `open`, `completed`, `all`; results are ordered by ID. | Predictable behavior without search or title normalization. |
-| Persistence | A successful command must save before acknowledging. Data and the next ID survive orderly CLI process exit and restart. | Concurrent creation is out of scope; no parallel-writer tests, power-loss or crash-during-write guarantee in this experiment. |
-| Errors | Invalid requests and unknown IDs return a documented error and no business-state change. Storage failure never returns success; malformed storage is preserved. | Fail visibly instead of silently discarding data. |
+## Target user
 
-Each command runs as a new process and uses an explicit shared `--store PATH`.
-The CLI surface for this feature is:
+A single person managing tasks on one machine through a CLI.
 
-```text
-python product.py --store PATH create TITLE
-python product.py --store PATH complete ID
-python product.py --store PATH list [--status all|open|completed]
-```
+## Desired outcome
 
-Success exits 0 and emits JSON: `{ "task": { "id", "title", "status" } }` for
-create/complete, `{ "tasks": [...] }` for list. Invalid input or an unknown ID
-exits 2; storage failure exits 1. Errors emit `{ "error": "CODE" }`. The exact
-codes and machine-checkable results are in the scenarios and contract.
+The user can create, complete and find the intended tasks with correct durable state, without manually repairing software or stored data.
+
+## Scope
+
+- Local CLI: python product.py --store PATH create TITLE; complete ID; list [--status all|open|completed]. The store path is required; list defaults to all. Every command is a fresh process.
+- Owner-approved IDs: positive JSON integers, starting at 1 per empty store and increasing by one on each successful create; IDs and the next ID persist across process restarts. A rejected create must not advance the next-ID counter.
+- Proposed titles: reject empty or whitespace-only text, otherwise preserve exactly including Unicode and surrounding spaces.
+- Owner-approved duplicates: each successful create is a new task even for an identical title. Create is not retry-idempotent. Duplicate-on-retry is approved behavior, not a defect; no create retry-safety claim.
+- Owner-approved completion: existing open task becomes completed; repeating completion succeeds with the same task and no state mutation.
+- Proposed JSON CLI protocol: create/complete return {task:{id,title,status}}; list returns {tasks:[...]}, ordered by ascending ID. Errors return {error:CODE}. Exit codes: 0 success, 2 invalid input or unknown ID, 1 storage failure.
+- Persist acknowledgements before exit; malformed stores fail without replacement. Proposed durability covers orderly process exit and restart, not power-loss durability.
+- AC-013 runs ten strictly sequential creates, each process exiting before the next starts; a new list process then checks all acknowledged records. Concurrent creation is out of scope; do not test parallel writers.
+
+## Out of scope
+
+- Concurrent creation and other concurrent writers; no parallel-writer tests. Deletion, editing titles, due dates, login, sync, HTTP APIs and databases.
+- Deduplicating repeated creates or guaranteeing idempotent create retries after an uncertain acknowledgement.
+- Crash during a write, power failure, network isolation guarantees, adversarial root containment, signing-authority repair and production-readiness claims.
+
+## Requirements
+
+- **FR-001 — Create tasks with stable identity:** Create a nonblank task as open, assign a persistent increasing integer ID and preserve its title. A rejected create must not advance the next-ID counter.
+- **FR-002 — Complete tasks:** Complete the addressed task while preserving all other tasks.
+- **FR-003 — Find tasks by status:** List all tasks or the exact open/completed subset ordered by ID.
+- **FR-004 — Preserve acknowledged state across restart:** Preserve tasks, completion state and next ID across orderly process restart; do not acknowledge failed storage or overwrite malformed stores.
+- **FR-005 — Reject invalid requests without state changes:** Reject invalid titles, IDs and filters with documented errors and unchanged state.
+- **FR-006 — Make repeated operations predictable:** Identical titles may create distinct tasks; repeated completion is idempotent.
 
 ## Acceptance grid
 
-Every row must pass. **Critical** means data loss, false acknowledgement, a
-durability failure or advancing the ID counter on rejection; **major** means incorrect user-visible functionality. Severity
-does not authorize skipping a row. CLI observations come from the proposed
-`evaluator.py`, which invokes actual candidate processes and returns their outputs;
-the expected outcomes are encoded in the contract, not supplied by the candidate.
+Every criterion must pass; severity never permits skipping a criterion.
 
-| ID | Concrete scenario | Expected result | Observation | Severity |
-| --- | --- | --- | --- | --- |
-| AC-001 | List a fresh, empty store. | Success; empty task list. | Actual CLI exit and JSON. | Major |
-| AC-002 | Create a title containing Unicode and surrounding spaces; list in a new process. | Exact title preserved; ID 1; status open; identical stored task. | Creation acknowledgement and independent list process. | Major |
-| AC-003 | Create Buy milk and Read book; complete ID 1. | Only task 1 becomes completed; task 2 remains open. | Completion result and complete task list. | Major |
-| AC-004 | With task 1 completed and task 2 open, request all three status filters. | Open returns only 2; completed only 1; all returns 1 and 2, ordered. | Three fresh list processes; exact partitions. | Major |
-| AC-005 | Create two tasks, complete ID 1, reopen/list, then create Water plants. | Both earlier tasks and their statuses persist; the next ID is 3. | Six separate CLI processes sharing one store. | Critical |
-| AC-006 | Create Buy milk twice; reopen/list. | Two separate tasks with IDs 1 and 2. | Acknowledgements and list contents. | Major |
-| AC-007 | Complete task 1, then repeat completion twice. | Each retry succeeds with task 1 completed; task 2 and task count remain unchanged. | Repeated acknowledgements and final list. | Major |
-| AC-008 | Create with empty and whitespace-only titles. | Both reject with INVALID_TITLE; no task exists afterward. | Exit 2, error code and final empty list. | Major |
-| AC-009 | Complete IDs 0, -1, abc and unknown ID 999 with one existing task. | INVALID_ID for the first three; NOT_FOUND for 999; existing task unchanged. | Error results and final list. | Major |
-| AC-010 | Request status done, then list valid data. | INVALID_STATUS; existing task unchanged. | Error result and final list. | Major |
-| AC-011 | Open malformed existing storage. | STORE_INVALID; original bytes preserved. | CLI result and observer-computed before/after file digest. | Critical |
-| AC-012 | Create where the store's parent path is a regular file. | STORE_IO; no success acknowledgement. | Actual failed filesystem persistence via CLI, including under UID 0. | Critical |
-| AC-013 | Run ten creates strictly sequentially, each process exiting before the next starts, using fresh measurement titles; then list in a new process. | Ten distinct valid acknowledgements; zero acknowledged records missing. | Actual registered `measure` path; independent count from acknowledgements versus reopened list. No parallel writers. | Critical |
-| AC-014 | In a fresh store, reject an empty title, then create Buy milk and list in a new process. | INVALID_TITLE with exit 2; the valid create receives ID 1; the store contains exactly that one open task. Rejection does not advance the next-ID counter. | Three strictly sequential CLI processes; exact error, acknowledgement and final list. | Critical |
+| ID | Scenario and expected result | Observation | Severity |
+| --- | --- | --- | --- |
+| AC-001 | An empty store lists zero tasks successfully. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-002 | Creating a nonblank title preserves its text, assigns ID 1 and status open; a fresh process reads the same task. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-003 | Completing task 1 changes only its status and preserves task 2. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-004 | Open, completed and all filters return exactly the correct partition, ordered by ID. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-005 | Across process restarts, completed task 1 and open task 2 persist; the next creation receives ID 3. | Sequential CLI processes; exact exits and JSON | Critical |
+| AC-006 | Repeated creation of the exact same title intentionally creates two tasks with distinct persistent IDs. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-007 | Completing an already completed task again returns success with the same task; state and the other task remain unchanged. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-008 | Empty and whitespace-only titles return INVALID_TITLE with exit 2 and create no task. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-009 | Zero, negative and noninteger IDs return INVALID_ID; unknown positive ID 999 returns NOT_FOUND; existing state is unchanged. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-010 | Unsupported status done returns INVALID_STATUS with exit 2; existing state is unchanged. | Sequential CLI processes; exact exits and JSON | Major |
+| AC-011 | Malformed existing storage returns STORE_INVALID with exit 1, preserves the original bytes and does not silently reset data. | Sequential CLI processes; exact exits and JSON; before/after store-byte digest | Critical |
+| AC-012 | A creation that cannot persist because its store parent is a regular file returns STORE_IO with exit 1 and never acknowledges success. | Sequential CLI processes; exact exits and JSON | Critical |
+| AC-013 | After ten strictly sequential creates, each process exits before the next starts. A new list process must find every acknowledged record: zero records missing. The observer counts distinct valid acknowledgements; at least ten are required. Concurrent creation is out of scope; do not test parallel writers. | Actual registered measure; count acknowledged records against a new list process | Critical |
+| AC-014 | In a fresh store, reject a blank title, then create a valid task. The valid task receives ID 1 and the store contains exactly that one task. A rejected create must not advance the next-ID counter. | Sequential CLI processes; exact exits and JSON | Critical |
 
-AC-013 units are **records missing**. Workload: ten strictly sequential creates,
-each process exiting before the next starts, one fresh temporary store, fresh
-per-run titles, then a new list process. Concurrent creation is out of scope;
-parallel writers are not tested. Threshold: `value == 0` with
-`sample.minimum == 10`; sample size is distinct valid acknowledgements, so creating
-nothing cannot pass. This deterministic count is not a statistical model-quality
-evaluation or a production-latency benchmark.
+## Exact scenario body
 
-## Meaningful failure and tamper evidence
+Each section below is generated from the same criterion as its grid row.
+Commands execute synchronously. A process exits before the next starts.
 
-After approval, the original baseline must fail by assertion. A candidate with
-broken persistence must fail the restart/lost-record checks; a candidate with
-broken filtering must fail the partition check. Unrelated crashes do not satisfy
-these negative tests. Any known-bad candidate that passes stops the run.
+### AC-001 — Major
 
-At approval time, record the evaluator and every approval-bound artifact digest.
-Check all of them immediately before and immediately after each authoritative
-check, including failed checks, exceptions and timeouts. Any mismatch fails the
-run. Pin the exact artifacts and relevant execution profile; never replace an
-expected digest to obtain a pass. The bundle's manifest records the review inputs;
-the approved contract, receipt and compiled-plan digests are derived and recorded
-only after an actual owner approval.
+An empty store lists zero tasks successfully.
 
-Root can still change the checker or evidence, or restore a transient change
-between observations. These checks supply bounded tamper evidence, not prevention.
-Existing receipts are forgeable; their proper signing-authority fix is deferred by
-the owner. Neither root access nor that known forgery is a blocker for this run.
+```json
+{
+  "criterion": "An empty store lists zero tasks successfully.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-001",
+  "requirement": "FR-003",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": []
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 1
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
 
-## Execution and limits accepted by the owner
+### AC-002 — Major
 
-**Named limitation — Creation is not idempotent.** Duplicate-on-retry is approved behavior,
-not a defect. This report makes no retry-safety claim for create. Completion
-idempotency is covered by AC-007. Concurrent creation is out of scope, consistent
-with the single-writer persistence decision.
+Creating a nonblank title preserves its text, assigns ID 1 and status open; a fresh process reads the same task.
 
-The network-only sandbox amendment still failed: `setting up uid map: Operation
-not permitted`. The exact flags were `--unshare-all --share-net`; every other
-production argument was retained. A separate explicit user/PID/IPC/UTS/cgroup
-namespace probe failed identically. Read-only mounts, tmpfs and resource-limit
-arguments were unchanged. Exact argv and
-results are linked from `execution-profile.json` and PEOS's audit evidence.
+```json
+{
+  "criterion": "Creating a nonblank title preserves its text, assigns ID 1 and status open; a fresh process reads the same task.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-002",
+  "requirement": "FR-001",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "  Café notes  "
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "open",
+                "title": "  Café notes  "
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 2
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "create",
+          "  Café notes  "
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
 
-**Sandbox decision: closed by the owner; no further Bubblewrap attempts.** The
-real-sandbox leg is environment-blocked. The authorized fallback uses the existing
-container. It lacks additional candidate user, PID, mount, IPC, UTS, cgroup and
-network namespaces; read-only candidate/runtime mounts; and private tmpfs/proc. The resource
-probe observed the configured limits; it did not stress-test enforcement. All
-behavioral and digest checks remain required. No second sandbox is proposed.
+### AC-003 — Major
 
-The model provider requires an active agent session. New business actions already
-work through the Template API without engine-source edits; only the declarative
-file/CLI path remains. Historical live-provider evidence exists in PEOS and was
-not independently verified by this run.
+Completing task 1 changes only its status and preserves task 2.
 
-## Metrics and approval boundary
+```json
+{
+  "criterion": "Completing task 1 changes only its status and preserves task 2.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-003",
+  "requirement": "FR-002",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              },
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Read book"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 2,
+              "status": "open",
+              "title": "Read book"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 4
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "setup": [
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "create",
+          "Read book"
+        ]
+      ],
+      "steps": [
+        [
+          "complete",
+          "1"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
 
-Proposed outcome metric: share of approved task-management journeys completed with
-correct durable state and no manual repair. Leading measures: first-pass contract
-compatibility, first-attempt criterion results and build attempts. Guardrails:
-requirements preserved, known-bad false passes, manual effort, recorded runtime
-and available usage. No numerical cost, token or latency claim is invented.
+### AC-004 — Major
 
-For this experiment, report all 14 criterion outcomes individually; a ratio cannot
-override a failed gate. One feature does not estimate broad platform reliability.
+Open, completed and all filters return exactly the correct partition, ordered by ID.
 
-The existing publisher produced a DRAFT with blank approval fields. Validation
-proved schema and criterion traceability, and compilation with the proposed
-bindings. It did not validate the observer against a product or demonstrate
-delivery. CLI loading, digest enforcement and live behavioral validation remain
-implementation work after owner approval; meaning-changing revisions require
-renewed approval. If that work changes a source file bound by this manifest, its
-new bytes also require approval before product generation; this proposal cannot
-approve future source bytes. No receipt or product code has been generated.
+```json
+{
+  "criterion": "Open, completed and all filters return exactly the correct partition, ordered by ID.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-004",
+  "requirement": "FR-003",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Read book"
+              }
+            ]
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              },
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Read book"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 2,
+              "status": "open",
+              "title": "Read book"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 6
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "setup": [
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "create",
+          "Read book"
+        ],
+        [
+          "complete",
+          "1"
+        ]
+      ],
+      "steps": [
+        [
+          "list",
+          "--status",
+          "open"
+        ],
+        [
+          "list",
+          "--status",
+          "completed"
+        ],
+        [
+          "list",
+          "--status",
+          "all"
+        ]
+      ]
+    }
+  }
+}
+```
 
-The owner requested one final confirmation of this amended grid before freezing
-the contract, acceptance grid, evaluator and digest manifest, then proceeding to
-Phases 3 and 4. The three approved rules are not being reopened. Confirmation:
-**“Confirmed — freeze the amended grid and proceed.”**
+### AC-005 — Critical
+
+Across process restarts, completed task 1 and open task 2 persist; the next creation receives ID 3.
+
+```json
+{
+  "criterion": "Across process restarts, completed task 1 and open task 2 persist; the next creation receives ID 3.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-005",
+  "requirement": "FR-004",
+  "severity": "critical",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 2,
+              "status": "open",
+              "title": "Read book"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              },
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Read book"
+              }
+            ]
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 3,
+              "status": "open",
+              "title": "Water plants"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 6
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "create",
+          "Read book"
+        ],
+        [
+          "complete",
+          "1"
+        ],
+        [
+          "list"
+        ],
+        [
+          "create",
+          "Water plants"
+        ],
+        [
+          "list",
+          "--status",
+          "completed"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-006 — Major
+
+Repeated creation of the exact same title intentionally creates two tasks with distinct persistent IDs.
+
+```json
+{
+  "criterion": "Repeated creation of the exact same title intentionally creates two tasks with distinct persistent IDs.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-006",
+  "requirement": "FR-006",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 2,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "open",
+                "title": "Buy milk"
+              },
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 3
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-007 — Major
+
+Completing an already completed task again returns success with the same task; state and the other task remain unchanged.
+
+```json
+{
+  "criterion": "Completing an already completed task again returns success with the same task; state and the other task remain unchanged.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-007",
+  "requirement": "FR-006",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "completed",
+                "title": "Buy milk"
+              },
+              {
+                "id": 2,
+                "status": "open",
+                "title": "Read book"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 2,
+              "status": "open",
+              "title": "Read book"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "completed",
+              "title": "Buy milk"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 6
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "setup": [
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "create",
+          "Read book"
+        ],
+        [
+          "complete",
+          "1"
+        ]
+      ],
+      "steps": [
+        [
+          "complete",
+          "1"
+        ],
+        [
+          "complete",
+          "1"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-008 — Major
+
+Empty and whitespace-only titles return INVALID_TITLE with exit 2 and create no task.
+
+```json
+{
+  "criterion": "Empty and whitespace-only titles return INVALID_TITLE with exit 2 and create no task.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-008",
+  "requirement": "FR-005",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_TITLE"
+          }
+        },
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_TITLE"
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": []
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 3
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "create",
+          ""
+        ],
+        [
+          "create",
+          "   "
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-009 — Major
+
+Zero, negative and noninteger IDs return INVALID_ID; unknown positive ID 999 returns NOT_FOUND; existing state is unchanged.
+
+```json
+{
+  "criterion": "Zero, negative and noninteger IDs return INVALID_ID; unknown positive ID 999 returns NOT_FOUND; existing state is unchanged.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-009",
+  "requirement": "FR-005",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_ID"
+          }
+        },
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_ID"
+          }
+        },
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_ID"
+          }
+        },
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "NOT_FOUND"
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "open",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 6
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "setup": [
+        [
+          "create",
+          "Buy milk"
+        ]
+      ],
+      "steps": [
+        [
+          "complete",
+          "0"
+        ],
+        [
+          "complete",
+          "-1"
+        ],
+        [
+          "complete",
+          "abc"
+        ],
+        [
+          "complete",
+          "999"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-010 — Major
+
+Unsupported status done returns INVALID_STATUS with exit 2; existing state is unchanged.
+
+```json
+{
+  "criterion": "Unsupported status done returns INVALID_STATUS with exit 2; existing state is unchanged.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-010",
+  "requirement": "FR-005",
+  "severity": "major",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_STATUS"
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "open",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": [
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 3
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "setup": [
+        [
+          "create",
+          "Buy milk"
+        ]
+      ],
+      "steps": [
+        [
+          "list",
+          "--status",
+          "done"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-011 — Critical
+
+Malformed existing storage returns STORE_INVALID with exit 1, preserves the original bytes and does not silently reset data.
+
+```json
+{
+  "criterion": "Malformed existing storage returns STORE_INVALID with exit 1, preserves the original bytes and does not silently reset data.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-011",
+  "requirement": "FR-004",
+  "severity": "critical",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 1,
+          "output": {
+            "error": "STORE_INVALID"
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 1
+    },
+    {
+      "operator": "eq",
+      "path": "result.store_unchanged",
+      "value": true
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "corrupt",
+      "steps": [
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-012 — Critical
+
+A creation that cannot persist because its store parent is a regular file returns STORE_IO with exit 1 and never acknowledges success.
+
+```json
+{
+  "criterion": "A creation that cannot persist because its store parent is a regular file returns STORE_IO with exit 1 and never acknowledges success.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-012",
+  "requirement": "FR-004",
+  "severity": "critical",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 1,
+          "output": {
+            "error": "STORE_IO"
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 1
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "unwritable",
+      "steps": [
+        [
+          "create",
+          "Buy milk"
+        ]
+      ]
+    }
+  }
+}
+```
+
+### AC-013 — Critical
+
+After ten strictly sequential creates, each process exits before the next starts. A new list process must find every acknowledged record: zero records missing. The observer counts distinct valid acknowledgements; at least ten are required. Concurrent creation is out of scope; do not test parallel writers.
+
+Workload: ten strictly sequential creates, each process exiting before the next starts;
+fresh titles in one fresh store, then a new list process. Units: records missing.
+Concurrent creation is out of scope; do not test parallel writers.
+
+```json
+{
+  "criterion": "After ten strictly sequential creates, each process exits before the next starts. A new list process must find every acknowledged record: zero records missing. The observer counts distinct valid acknowledgements; at least ten are required. Concurrent creation is out of scope; do not test parallel writers.",
+  "id": "AC-013",
+  "measure": "task_tracker.missing_acknowledged_records",
+  "operator": "eq",
+  "requirement": "FR-004",
+  "sample": {
+    "minimum": 10
+  },
+  "severity": "critical",
+  "value": 0
+}
+```
+
+### AC-014 — Critical
+
+In a fresh store, reject a blank title, then create a valid task. The valid task receives ID 1 and the store contains exactly that one task. A rejected create must not advance the next-ID counter.
+
+```json
+{
+  "criterion": "In a fresh store, reject a blank title, then create a valid task. The valid task receives ID 1 and the store contains exactly that one task. A rejected create must not advance the next-ID counter.",
+  "given": [
+    {
+      "operator": "eq",
+      "path": "acceptance.ready",
+      "value": true
+    }
+  ],
+  "id": "AC-014",
+  "requirement": "FR-001",
+  "severity": "critical",
+  "then": [
+    {
+      "operator": "eq",
+      "path": "result.observations",
+      "value": [
+        {
+          "exit_code": 2,
+          "output": {
+            "error": "INVALID_TITLE"
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "task": {
+              "id": 1,
+              "status": "open",
+              "title": "Buy milk"
+            }
+          }
+        },
+        {
+          "exit_code": 0,
+          "output": {
+            "tasks": [
+              {
+                "id": 1,
+                "status": "open",
+                "title": "Buy milk"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operator": "eq",
+      "path": "result.setup_observations",
+      "value": []
+    },
+    {
+      "operator": "eq",
+      "path": "result.process_count",
+      "value": 3
+    }
+  ],
+  "when": {
+    "action": "task_tracker.observe",
+    "arguments": {
+      "fixture": "empty",
+      "steps": [
+        [
+          "create",
+          ""
+        ],
+        [
+          "create",
+          "Buy milk"
+        ],
+        [
+          "list"
+        ]
+      ]
+    }
+  }
+}
+```
+
+## Binary release gates
+
+- description: Every approved AC-001 through AC-014 passes unchanged; severity does not permit skipping a criterion.; id: GATE-001
+- description: The meaningful baseline fails by assertion; isolated persistence and filtering mutations fail unchanged checks for the intended behavior, not a missing prerequisite or arbitrary crash.; id: GATE-002
+- description: Every approval-bound digest matches immediately before and immediately after each authoritative check. A mismatch fails the run, regardless of its behavioral verdict.; id: GATE-003
+- description: Actual in-session model request/response evidence, exact commands, generated artifact and criterion-linked observations are retained; no undisclosed manual repair.; id: GATE-004
+- description: Report root privileges, forgeable receipts, active-session reproduction and the environment-blocked real-sandbox leg. An allowed weaker-isolation run cannot be represented as full isolation or general readiness.; id: GATE-005
+
+## Scored eval rubric
+
+- criterion: Report functional evidence coverage as approved criteria with independently observed passing behavior divided by all fourteen criteria; this descriptive score cannot override any binary gate.; id: RUB-001; scale: 0 through 14 passed criteria
+
+## Non functional requirements
+
+- category: durability; id: NFR-001; requirement: A successful task acknowledgement remains observable after that process exits and another process opens the same store.
+- category: measurement; id: NFR-002; requirement: AC-013 runs ten strictly sequential creates, each process exiting before the next starts, in a fresh temporary store with fresh titles; then a new list process observes the stored records. Units are records missing after restart, threshold exactly zero, sample.minimum ten distinct valid acknowledgements. Concurrent creation is out of scope; do not test parallel writers. This is deterministic, not statistical AI quality or a latency claim.
+- category: execution; id: NFR-003; requirement: Standard-library CLI with no paid dependency. Execution limits, file-handoff provider and admitted weaker-isolation limitations are pinned in execution-profile.json.
+
+## Approved product decisions
+
+- decision: Owner approved a local task tracker with create, complete, status filtering and persistence across restart; CLI is sufficient.; id: APD-001
+- decision: Owner approved cloud-only in-session file handoff, the supplied BAR Gate and no paid model API.; id: APD-002
+- decision: Owner replaced prevention with before/after artifact-digest checks, retained root access and receipt forgery as limitations, and deferred signing repair.; id: APD-003
+- decision: Owner authorized testing only the network-unsharing removal, and an explicitly reported weaker-isolation candidate run if the environment still blocks the real sandbox.; id: APD-004
+- decision: Owner approved exactly the proposed increasing positive integer identifiers, distinct tasks on duplicate creation and idempotent repeated completion.; id: APD-005
+- decision: Owner requires strictly sequential AC-013 with each create process exiting before the next starts; concurrent creation is out of scope and parallel writers must not be tested.; id: APD-006
+- decision: Owner requires critical AC-014: reject a blank title, then create a valid task with ID 1 and exactly one stored task. A rejected create must not advance the next-ID counter.; id: APD-007
+- decision: Owner closed the sandbox decision: no more Bubblewrap attempts; use the documented fallback and state every absent isolation. Approval-forgery repair remains deferred.; id: APD-008
+
+## Required approvals
+
+- for: Owner requested one-line confirmation of the amended grid before freezing this exact DRAFT contract, acceptance grid, evaluator and digest manifest, then continuing to Phases 3 and 4. The previously proposed identifier, duplicate and repeated-completion rules are already approved.; role: product-owner
+- for: Renew approval for changes affecting artifact, evaluator or execution-profile meaning.; role: product-owner
+
+## Measurement
+
+Proposed outcome: share of approved task-management journeys completed with correct durable state and no manual repair. This one-feature experiment does not estimate representative platform delivery rate.
+
+- First-pass contract compatibility; first-attempt criterion pass count; model build attempts.
+- No approved requirement or expected outcome changed to obtain a pass.
+- All missing records count in AC-013 and failed acknowledgement workload cannot pass its minimum sample.
+- Track false passes against known-bad candidates, manual interventions, actual runtime and available usage without inventing token or cost figures.
+- Root access and forgeable receipts remain permanent limitations; recorded digests are tamper evidence, not prevention.
+
+The AC-013 count is deterministic. It establishes neither statistical AI quality
+nor production latency. Report all 14 criterion outcomes; no ratio overrides a failure.
+
+## Named limitations and execution
+
+**Creation is not idempotent. Duplicate-on-retry is approved behavior, not a defect.**
+No retry-safety claim for create; completion idempotency is covered by AC-007.
+Concurrent creation is out of scope. No parallel writers are tested.
+
+- Root can modify evaluator/checker/evidence or change and restore bytes between digest observations; this run does not establish adversarial tamper prevention.
+- Existing approval receipts can be forged from public hashes; external signing authority is deferred by owner direction.
+- The real sandbox still cannot establish a UID map in this environment; any candidate run here uses the expressly admitted weaker isolation and must state dropped protections.
+- Named limitation — Creation is not idempotent. Duplicate-on-retry is approved behavior, not a defect; this experiment must not claim retry-safety for create. Completion idempotency is covered by AC-007.
+
+**Sandbox: closed by owner direction. Do not attempt Bubblewrap again.**
+The existing --unshare-all --share-net retry and explicit namespace probe failed
+with `bwrap: setting up uid map: Operation not permitted`. Every other original
+sandbox argument was retained. Exact commands and evidence: https://github.com/Abhillashjadhav/production-engineering-os/blob/audit/task-tracker-seam/docs/evidence/task-tracker-audit-20260918/owner-amendment.md
+The real-sandbox leg is blocked by environment. The authorized existing-container
+fallback lacks these additional protections:
+
+- candidate user namespace
+- candidate PID namespace
+- candidate mount namespace and read-only runtime/candidate mounts
+- candidate IPC namespace
+- candidate UTS namespace
+- candidate cgroup namespace
+- candidate network namespace
+- candidate private tmpfs and /proc
+
+Retained controls:
+
+- existing process timeouts and budgets
+- prlimit resource caps where executable
+- candidate path and output validation
+- all approved acceptance assertions
+- before/after tamper checks
+
+Resource caps:
+
+```json
+{
+  "action_cpu_seconds": 11,
+  "action_timeout_seconds": 10,
+  "address_space_bytes": 1073741824,
+  "file_size_bytes": 67108864,
+  "open_files": 256,
+  "per_cli_process_timeout_seconds": 2,
+  "processes": 128
+}
+```
+
+Configured prlimit values observed in a harmless process; enforcement was not stress-tested, and root privilege remains a limitation.
+
+## Tamper evidence and approval
+
+- At owner approval, verify the reviewed bundle digest; derive the approved contract and receipt using the existing publisher; record all concrete artifact digests and exact paths.
+- Immediately before each authoritative criterion/check process, recompute every approval-bound digest and compare against the approval-time snapshot; any mismatch fails the run before evaluation.
+- Immediately after each check, including nonzero exit, exception or timeout, repeat the comparisons and retain before/after observations with the criterion ID; mismatch overrides a passing result.
+- Any artifact or profile change affecting meaning requires renewed approval; do not update the trusted expected digest to make a run pass.
+
+Permanent limitations and audit corrections:
+
+- Builder and orchestrator run as root. Prevention of evaluator/approval modification is not established.
+- Before/after hashes can expose observed changes; a root process can rewrite the checker or evidence, or make and restore a transient change between observations. This is not adversarial tamper prevention.
+- Existing approval receipts can be forged by recomputing public hashes. No signing-authority fix is included; owner approval is captured in the conversation.
+- Historical live-provider evidence exists in PEOS and was not independently verified by this run.
+- New business actions already work through the Template API without engine-source edits; the remaining access work is a declarative file and CLI loader path.
+- One feature, deterministic measurement and weaker-isolation run cannot establish broad reliability or production readiness.
+- Creation is not idempotent. Duplicate-on-retry is approved behavior, not a defect. No retry-safety claim for create; AC-007 covers completion idempotency.
+- Concurrent creation is out of scope. AC-013 is strictly sequential: each create process exits before the next starts. Do not test parallel writers.
+
+The provider requires an active agent session; no headless model reproduction is claimed.
+New business actions do not require an engine-source change, only a CLI path.
+Prior live-provider evidence already exists in PEOS, unverified by this run.
+Root privileges remain a limitation; hashes are tamper evidence, not prevention.
+Approval-forgery repair is deferred. One feature establishes feasibility only.
+
+## Freeze boundary
+
+The owner confirmed the amended grid and authorized full-document regeneration
+before the freeze. Contract, grid, evaluator and prepared manifest must agree
+before approval-time digests are recorded. No criterion or evaluator meaning changes.
+If later CLI/enforcement work changes a bound source file, update the review manifest and obtain renewed approval before product generation. Do not treat this proposal as approval of source bytes that do not yet exist.
