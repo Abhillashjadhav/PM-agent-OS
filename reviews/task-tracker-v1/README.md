@@ -1,4 +1,4 @@
-# Task-tracker Phase 2 review packet
+# Approved task-tracker handoff
 
 Status: **DEMONSTRATED FOR THE APPROVED FEATURE under the owner-authorized fallback.**
 
@@ -16,11 +16,14 @@ Bubblewrap attempts; the documented fallback lists every absent isolation.
 | `publisher-input.json` | PMOS-owned intent passed to the existing publisher. |
 | `contract.draft.json` | Exact `build_contract_draft` output, with blank approval fields. |
 | `scenarios.json` | Concrete commands, expected observations and severity; criterion values match the contract. |
-| `evaluator.py` | Proposed observer source; executes CLI commands and returns facts, with expected results in the contract. Not yet behaviorally validated. |
+| `evaluator.py` | Frozen CLI observer; behaviorally validated against the live product and deliberately broken copies in PEOS #203. |
 | `bindings.json` | Existing `Template` fields in a declarative file; uses the shipped meaningful-red skeleton and exact observer bytes. |
 | `execution-profile.json` | Before/after digest policy, resources, admitted fallback and root/receipt limitations. |
 | `review-manifest.json` | Raw-file digests for seven proposal artifacts, the PMOS skill and the PEOS source/profile inputs. |
-| `proposal-validation.json` | Observed structural validation and remaining implementation work. |
+| `proposal-validation.json` | Historical proposal-stage structural validation; not the final delivery result. |
+| `contract.approved.json` / `approval-receipt.json` | Frozen approved contract and the existing receipt, with the public-hash forgery limitation retained. |
+| `compiled-plan.json` | Exact approved plan, recomputed and compared before verification. |
+| `freeze-manifest.json` / `freeze-bundle.sha256` | Approval-time digests covering all 218 frozen artifact entries and the canonical manifest anchor. |
 
 Draft digest:
 `sha256:0684ae3efbc62aef686e36b9acc871e92451c458ed0a53bb951cebc44748fe89`.
@@ -31,7 +34,7 @@ The bundle digest uses existing RFC 8785 `canonical_digest` over the manifest;
 individual file entries use SHA-256 over raw bytes. The digest records the confirmed review bundle; the owner conversation supplies
 approval, not a cryptographic signature.
 
-## Validation performed
+## Historical proposal validation
 
 The existing publisher returned `DRAFT_READY_FOR_APPROVAL`; the canonical loader
 reported DRAFT and not runnable. Six requirements map to 14 criteria, including
@@ -56,50 +59,38 @@ live evidence below. Compilation alone remains insufficient delivery evidence.
 If that work changes a bound source file, obtain approval of the new bytes before
 product generation; this packet cannot approve future source code.
 
-Reproduce with sibling `pmos` and `peos` checkouts, PEOS at
-`1abfbd47061a947e8ce077523a60516a0b6cdcb0`, installed using the existing standard
-venv flow (`python3 -m venv .venv`, then `.venv/bin/python -m pip install -e .`).
-From the PMOS checkout:
+## Reproduce the frozen approved handoff
+
+Use the [complete pinned clone/install/journey walkthrough](https://github.com/Abhillashjadhav/production-engineering-os/blob/d800d42abafe1b40e27e1a28763c1471643c6b61/docs/evidence/task-tracker-live-20260918/REPRODUCE.md).
+It checks out PEOS `02959731e06d977e9ed61cfd15c962e5ebb85ee5` and PMOS
+`9d55bf650d6586d90a0028241b468559349487c3`; the frozen artifact bytes in this
+README correction are unchanged. A second model build is not required by Phase 5.
+
+Once those sibling checkouts and the standard PEOS venv exist, run from PMOS:
 
 ```bash
-../peos/.venv/bin/python - <<'PY'
-import hashlib, json
-from pathlib import Path
-from pmpe.barebones import Template, compile_barebones_plan
-from pmpe.contracts.authoring import build_contract_draft
-from pmpe.contracts.canonical import canonical_digest
-from pmpe.contracts.model import load_contract
-root = Path('reviews/task-tracker-v1')
-read = lambda name: json.loads((root / name).read_text())
-draft = build_contract_draft(read('publisher-input.json'))
-assert draft.draft == read('contract.draft.json')
-assert not load_contract(root / 'contract.draft.json').runnable
-bindings = read('bindings.json')
-assert bindings['files']['tests/acceptance/task_tracker.py'] == (root / 'evaluator.py').read_text()
-plan = compile_barebones_plan(contract=draft.draft, repository_root=Path.cwd(), template=Template(**bindings))
-assert len(plan.criteria) == 14
-cases = {case['id']: case for case in read('scenarios.json')}
-assert 'strictly sequential' in cases['AC-013']['criterion']
-assert 'each process exits before the next starts' in cases['AC-013']['criterion']
-case = cases['AC-014']
-assert case['severity'] == 'critical'
-assert case['when']['arguments']['steps'] == [['create', ''], ['create', 'Buy milk'], ['list']]
-task = {'id': 1, 'title': 'Buy milk', 'status': 'open'}
-expected = [
-    {'exit_code': 2, 'output': {'error': 'INVALID_TITLE'}},
-    {'exit_code': 0, 'output': {'task': task}},
-    {'exit_code': 0, 'output': {'tasks': [task]}},
-]
-assert next(item['value'] for item in case['then'] if item['path'] == 'result.observations') == expected
-manifest = read('review-manifest.json')
-assert canonical_digest(manifest) == (root / 'review-bundle.sha256').read_text().strip()
-repos = {'PM-agent-OS': Path.cwd(), 'production-engineering-os': Path.cwd().parent / 'peos'}
-for item in manifest['artifacts']:
-    path = repos[item['repository']] / item['path']
-    assert 'sha256:' + hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'], str(path)
-print('PASS: DRAFT, traceable criteria and exact review artifacts; no product generated')
-PY
+../peos/.venv/bin/python ../peos/examples/barebones/contract-file.py verify \
+  --packet reviews/task-tracker-v1 \
+  --root PM-agent-OS=. --root production-engineering-os=../peos \
+  --freeze-digest sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e2322c7e463ef9a6e37f2 \
+  --candidate ../peos/docs/evidence/task-tracker-live-20260918/live/candidate \
+  --output ../approved-handoff-verification --authorized-host-fallback
 ```
+
+This existing verifier loads the approved contract and receipt, recomputes and
+compares the compiled plan, and checks all 218 freeze entries and the manifest
+anchor before and after every authoritative execution. It then runs all 14
+frozen criteria against the retained generated product. Expected: exit zero,
+all criteria PASS, no findings and no digest mismatches. A stale or changed
+approval-bound artifact must fail. Use a fresh output directory for each run.
+The full walkthrough also runs the existing eight-command user journey.
+
+The former inline reproduction only checked the draft and review manifest; it
+could print PASS after an approved-contract replica changed. Independent review
+found that documentation defect. The [before/after evidence](reproduction-closeout/validation.json)
+records its reproduction and this correction. This does not change the frozen
+contract, evaluator, receipt, profile or any product semantics; receipt forgery
+and the owner's closed real-sandbox exception remain stated limitations.
 
 The engine and authority findings, amended sandbox argv and fallback probe are in
 [PEOS's owner-amendment record](https://github.com/Abhillashjadhav/production-engineering-os/blob/audit/task-tracker-seam/docs/evidence/task-tracker-audit-20260918/owner-amendment.md).
@@ -116,7 +107,7 @@ Canonical freeze digest: `sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e232
 Approval source: the owner’s “Confirmed — freeze the amended grid and proceed.”
 The digest snapshot includes contract, receipt, plan, grid, evaluator, bindings,
 profile, renderer, review manifest and all previously bound source bytes.
-The new Phase 3 entry script will be recorded separately as engineering evidence;
+The Phase 3 entry script is recorded separately as engineering evidence;
 existing bound source and approved outcomes must remain unchanged.
 
 ## Completed handoff

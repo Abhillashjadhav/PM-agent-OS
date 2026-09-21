@@ -85,3 +85,25 @@ Handoff completed through PEOS #203: live 14/14, both required behavior mutants
 rejected, tamper probes rejected and clean retained-artifact replay passed. This
 follow-up changes only the unbound README/status record; the 218 frozen bytes
 remain unchanged. No new capability or owner decision is introduced.
+
+## Unit — correct frozen-handoff reproduction instructions, 2026-09-21
+
+Start local `6ca2b8a6d49e8480c428381730d3dd22f4d8b736`, remote
+`9d55bf650d6586d90a0028241b468559349487c3`. PR #58 independent Codex review
+5263227861, finding 4059411783: the README reproduction checks only draft/review
+artifacts and can print PASS without checking approval-bound freeze artifacts.
+Correction attempt one of two; issue #56.
+
+1. **Yes, restructured.** Reuse PEOS's existing authoritative file verifier and complete Phase 5 walkthrough; do not introduce a second verifier.
+2. **Yes.** The reproduced review finding and Phase 5's documented frozen-handoff reproduction require this correction.
+3. **No.** README and correction evidence only; frozen approval, evaluator, source, product and execution profile are unchanged.
+4. **Yes.** First reproduce the old README command accepting a changed approved-contract replica. Then require the new command to pass the original freeze and reject that replica.
+5. **Yes.** One documentation/evidence correction commit is independently revertible.
+6. **No.** No new semantics, threshold, dependency, approval mechanism or sandbox. Existing owner decisions remain authoritative.
+
+Correction attempt 1 passed. The old README command printed PASS for a disposable
+approved-contract replica whose desired_outcome had changed. The replacement
+uses the existing authoritative PEOS verifier: original freeze 14/14 PASS with
+30 matching digest observations; changed replica exits 2 before any candidate
+process. All original 218 frozen artifacts and product semantics are unchanged.
+Evidence: reviews/task-tracker-v1/reproduction-closeout/validation.json.
