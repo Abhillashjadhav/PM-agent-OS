@@ -1,1 +1,52 @@
-{}
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/scripts/beacon_hook.sh\" >/dev/null 2>&1 || true",
+            "async": true,
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/scripts/beacon_hook.sh\" >/dev/null 2>&1 || true",
+            "async": true,
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/scripts/beacon_hook.sh\" >/dev/null 2>&1 || true",
+            "async": true,
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/scripts/beacon_hook.sh\" >/dev/null 2>&1 || true",
+            "async": true,
+            "timeout": 2
+          }
+        ]
+      }
+    ]
+  }
+}
