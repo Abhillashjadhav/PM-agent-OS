@@ -22,6 +22,9 @@ jobs:
       - name: Run documented repository audit
         run: python3 tests/audit_repository.py
 
+      - name: Run installer safety regressions
+        run: python3 tests/test_install.py
+
       - name: Install into a clean Claude home
         run: |
           python3 scripts/install.py --target "$RUNNER_TEMP/claude-home"
