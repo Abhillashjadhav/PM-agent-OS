@@ -37,6 +37,11 @@ def _scalar(value: str):
         if not isinstance(parsed, str):
             raise YAMLError("quoted scalar must be a string")
         return parsed
+    if value.startswith("#"):
+        return None
+    value = re.split(r"\s+#", value, maxsplit=1)[0].rstrip()
+    if re.search(r":(?:\s|$)", value):
+        raise YAMLError("plain scalar contains a mapping separator; quote the value")
     if value in {"true", "True"}:
         return True
     if value in {"false", "False"}:
