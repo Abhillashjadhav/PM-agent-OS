@@ -16,21 +16,61 @@ Fixtures are **specifications**, not executed behavioural tests. Their presence 
 
 ## 3. Executable cross-repository compatibility
 
-`tests/decision-to-contract/validate_contract.py` runs committed PMOS answers through a pinned revision of the real Production Engineering OS authoring publisher, approval verifier, canonical contract loader, acceptance compiler, and engineering admission API. CI requires deterministic reproduction of the approved health contract and receipt, a receipt-bound engineering run to start without artifact rewriting, and a prose-only planted failure to be rejected with `CRITERION_FORM_INVALID`.
+`tests/decision-to-contract/validate_contract.py --legacy-intake` preserves the
+publisher/receipt/assessment compatibility check against its historical PEOS pin.
+The default command, or `--evidence-dir <empty-directory>`, runs the real current
+PEOS runner using synthetic test approval and fixed local health programs. It
+requires the positive case to reach `RELEASE_READY`, the broken candidate to
+reach `HALTED`, and the unbound release gate to stop before provider/executor use.
+The separate CI jobs declare their exact PEOS revisions in
+`.github/workflows/repository-audit.yml`; a repaired PMOS inspector requires the
+corresponding repaired PEOS shared validator. These are source/fixture checks,
+not evidence that either repository's repair has merged.
 
 This proves one deterministic end-to-end handoff boundary. It does not prove live-model authoring quality, arbitrary-product coverage, or a real-provider engineering run.
 
 An approval record with `status: "VERIFIED"` means its structural/content checks
-passed. A consumer must also check `authority`; status alone must never be read
+passed. Retained inspection re-verifies the receipt against its contract and
+recorded `authority` through the shared PEOS validator. Status alone must never be read
 as product-owner approval. `test-only-fixture-issuer` identifies synthetic test
 issuance, not an authenticated owner. Receipts and ledger events are unsigned.
 
-For retained current-run evidence, `verify_current_evidence` accepts an optional
+For retained current-run evidence, `verify_current_evidence` derives state,
+cause, and provider-call count from the terminal ledger event. The caller's
+result object supplies only the run ID. It checks terminal event type and calls
+the shared PEOS semantic validator before applying the fixture's additional
+test-issuer and outcome checks. It accepts an optional
 `expected_head_digest` supplied from an independently trusted source. Without it,
 verification proves packet self-consistency only. The current synthetic fixture
 always supplies a digest observed from the real runtime append result before
 reopening the packet. A digest copied from the same packet or its summary does
 not establish that trust; the fixture assumes a trusted verifier process.
+
+Use the read-only inspection mode for an existing fixture packet:
+
+```bash
+python tests/decision-to-contract/validate_contract.py \
+  --inspect-evidence-dir <packet-directory> --case positive
+python tests/decision-to-contract/validate_contract.py \
+  --inspect-evidence-dir <packet-directory> --case positive \
+  --expected-head-digest "$PMOS_TRUSTED_HEAD"
+```
+
+Set `PMOS_TRUSTED_HEAD` from an independently controlled record of the original
+runtime head. `--case broken-candidate` inspects the negative control. Inspection
+does not invoke the provider, execute candidates, rewrite files, or trust
+`summary.json`. It exits 0 for the verified fixture outcome, including the
+expected negative control, and 3 for invalid evidence.
+
+Fresh inspection output reports `head_anchor.status: NOT_PROVIDED` without an
+expected head, or `VERIFIED` with the matching supplied digest. `VERIFIED` means
+the digest matched; the reader must establish that its source is independent.
+The saved fixture summary instead records
+`head_check_at_capture: MATCHED_RUNTIME_HEAD`. That field describes the fixture's earlier check and
+cannot assert an independent reader's trust. A consistently rewritten unsigned
+packet can still pass without the original external head. Neither receipt
+consistency nor head matching authenticates an owner or protects against a
+malicious verifier process or root.
 
 ## 4. Recorded behavioural model-run evidence
 

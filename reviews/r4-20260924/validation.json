@@ -1,0 +1,79 @@
+{
+  "classification": "LOCAL TEST-ONLY repair evidence; publication and review tracked by coordinator",
+  "pmos_base_local_commit": "4a59c1d85daca004f49911e0c91bac033080b3e4",
+  "tests_local_commit": "4b13ee3711e3423b76009dc4b20634aa3f718556",
+  "implementation_local_commit": "c8d02d4bad1190abb3660be538969aac50cfc5cc",
+  "implementation_local_tree": "3afc259298fb34d7eb368fdd98e3051287b2c6da",
+  "red_peos_local_commit": "23ca4cbb4cc474fe6fe65d479029c8deb8a152cb",
+  "green_peos_local_commit": "7a9abc139acb0a4441902d0c57c52d19e99f242c",
+  "green_peos_local_tree": "8890ad89fdf278f9437c129f95b606b0e51e90be",
+  "green_source_preparation": "git archive 7a9abc139acb0a4441902d0c57c52d19e99f242c | tar -x -C /tmp/pmos-r4-peos-7a9abc",
+  "checks": [
+    {
+      "name": "RED before implementation",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/workspace/scratch/f9ac546f3a50/r3-20260924/peos-admission/src /workspace/scratch/f9ac546f3a50/overnight-20260923/venv/bin/python -m unittest discover -s tests/decision-to-contract -p test_retained_inspection.py -v",
+      "exit_code": 1,
+      "test_methods": 10,
+      "assertion_failures": 15,
+      "errors": 0,
+      "log": "retained-inspection-red.txt",
+      "log_sha256": "c5b99586ef6e2a3a498de8c472d1b0e39f32b5d8e26060f9e2d4bc2391415f1b"
+    },
+    {
+      "name": "Dependency RED with repaired PMOS and prior PEOS",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/workspace/scratch/f9ac546f3a50/r3-20260924/peos-admission/src /workspace/scratch/f9ac546f3a50/overnight-20260923/venv/bin/python -m unittest discover -s tests/decision-to-contract -p 'test_*.py' -v",
+      "exit_code": 1,
+      "test_methods": 13,
+      "assertion_failures": 2,
+      "errors": 0,
+      "log": "retained-inspection-dependency-red.txt",
+      "log_sha256": "fd4ff6cf8aa9a308f8bd34b309b367871a4ad7e2e2187b44847a7b323ea4fa13"
+    },
+    {
+      "name": "GREEN with committed PEOS reader repair",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pmos-r4-peos-7a9abc/src /workspace/scratch/f9ac546f3a50/overnight-20260923/venv/bin/python -m unittest discover -s tests/decision-to-contract -p 'test_*.py' -v",
+      "exit_code": 0,
+      "test_methods": 13,
+      "log": "retained-inspection-green.txt",
+      "log_sha256": "df84134472f9015bf523a97aa18c2006470368b0f3dd9d86504e72749cfd86d0"
+    },
+    {
+      "name": "Repository audit",
+      "command": "PYTHONDONTWRITEBYTECODE=1 /workspace/scratch/f9ac546f3a50/overnight-20260923/venv/bin/python tests/audit_repository.py",
+      "exit_code": 0,
+      "log": "repository-audit.txt",
+      "log_sha256": "e8194623218e168d41e943f25e177f39cf68a0337a8cfdaa47ef08d3666e90db"
+    },
+    {
+      "name": "Preserved fixture and evidence source comparison",
+      "command": "git diff --exit-code 4a59c1d85daca004f49911e0c91bac033080b3e4 -- reviews/f10-20260924 tests/decision-to-contract/valid-answers.json tests/decision-to-contract/valid-contract.json tests/decision-to-contract/valid-approval-receipt.json",
+      "exit_code": 0
+    },
+    {
+      "name": "Public provenance mapping check",
+      "command": "Compare pmos and pmos_docs JSON values exactly with source publication receipt",
+      "exit_code": 0
+    }
+  ],
+  "log_format": "Captured unittest output; trailing whitespace removed for repository whitespace gate. Original RED output remains in test-first commit.",
+  "preserved_paths": [
+    "reviews/f10-20260924",
+    "tests/decision-to-contract/valid-answers.json",
+    "tests/decision-to-contract/valid-contract.json",
+    "tests/decision-to-contract/valid-approval-receipt.json"
+  ],
+  "changed_skill_lint": "NOT_APPLICABLE: no SKILL.md changed",
+  "publication": {
+    "status": "PENDING_COORDINATOR",
+    "current_handoff_ci_pin_at_local_commit": "5ccc46ce220092451032397cd7a951a0e8d163e0",
+    "required_action": "Publish repaired PEOS source, update current-handoff CI to its exact public SHA, independently review, then publish PMOS. Do not claim merged."
+  },
+  "limits": [
+    "No model call or live sandbox retry.",
+    "Fixed TEST-ONLY health programs execute locally without OS isolation.",
+    "Unsigned consistent rewrites remain acceptable without an independently trusted original head.",
+    "No authenticated owner approval or defense against a malicious verifier process or root.",
+    "Legacy-intake runtime was not rerun against its historical dependency during this bounded unit; its code and dependency pin remain unchanged.",
+    "No frozen v1 or retained F10 evidence edits, GitHub writes, merge or deployment."
+  ]
+}

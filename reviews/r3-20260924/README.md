@@ -6,9 +6,13 @@ captured from real ledger append return values, before reopening retained files.
 This transparent observer changes neither append inputs nor return values.
 
 `retained-head-red.txt` records the missing argument/anchor failures before the
-implementation; test commit `906efbd` precedes implementation commit `f8baf96`.
-These are local development IDs; the publisher must record their GitHub mapping
-before advertising remote commit identities. `retained-head-green.txt` records
+implementation; published test commit
+[`909833af58199c7412b2868bc38250fa44cf39cf`](https://github.com/Abhillashjadhav/PM-agent-OS/commit/909833af58199c7412b2868bc38250fa44cf39cf)
+precedes published implementation commit
+[`13a08d260d28043fe5901c11ed5764ebe135027c`](https://github.com/Abhillashjadhav/PM-agent-OS/commit/13a08d260d28043fe5901c11ed5764ebe135027c).
+The mapping and exact trees are recorded in
+[`../r4-20260924/publication-provenance.json`](../r4-20260924/publication-provenance.json).
+`retained-head-green.txt` records
 all three focused tests passing against the already reviewed PEOS gate source.
 
 The seeded forgery changes the stored health program to return `broken`, updates

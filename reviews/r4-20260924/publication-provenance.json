@@ -1,0 +1,28 @@
+{
+  "pmos": [
+    {
+      "local": "906efbdd1c57440ee4ac0f3e89687ec58b00b150",
+      "remote": "909833af58199c7412b2868bc38250fa44cf39cf",
+      "tree": "2295ec6d327f573195bb718fdf7a2e59f3f99f34",
+      "files": 3
+    },
+    {
+      "local": "f8baf96c3b119fcb583dd812a5cb1eb1fca4a63c",
+      "remote": "13a08d260d28043fe5901c11ed5764ebe135027c",
+      "tree": "d03515676e0c51848ba74000f01fc0612590c0c6",
+      "files": 2
+    }
+  ],
+  "pmos_docs": {
+    "local": "4a59c1d85daca004f49911e0c91bac033080b3e4",
+    "remote": "394f0386827c1c0e6357717c906323855c2c37e0",
+    "tree": "8f80fa3d66894aedb269b4f80ab6fe28771ad826",
+    "files": 9
+  },
+  "source": {
+    "repository": "Abhillashjadhav/production-engineering-os",
+    "path": "docs/evidence/r3-repair-20260924/published-sources.json",
+    "sha256": "52707b7c5ea70eb55e2c316d44c71ef1f21a277a6f77dca74b51724517f4f100",
+    "scope": "Publication identity mapping from the R3 receipt; not a merge or approval claim."
+  }
+}

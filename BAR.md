@@ -100,3 +100,18 @@ fixture and every original task-store artifact.
    decision or approval is added. The requested inspection input uses existing
    PEOS validation. Unsigned rewrites still need an independently trusted anchor;
    this does not protect against a malicious verifier process or root.
+
+# BAR: R4 inspection scope and published provenance documentation
+
+1. **Already exists? Yes, correct it.** Extend VALIDATION and the R3 evidence
+   narrative, using the existing publication receipt for public identities.
+2. **Approved criterion or reproduced blocker? Yes.** C4-F3/F5 identify an
+   ambiguous capture-time head assertion and unpublished IDs in reader guidance.
+3. **Existing behavior changes? No.** This documentation unit records the runtime
+   repair, unsigned limits, dependency requirements and public source mappings.
+4. **Automated check? Yes.** Compare the PMOS mappings with the source publication
+   receipt, run repository audit, and verify preserved fixtures/evidence unchanged.
+5. **Revertible separately? Yes.** Documentation and provenance metadata are in
+   their own commit; root controls later publication and final dependency pin.
+6. **Unrequested setting/dependency/surface? No.** No owner authentication,
+   signing, fresh model result, merge or release is claimed.
