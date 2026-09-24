@@ -44,3 +44,23 @@ fixture and every original task-store artifact.
 6. **Does this add unrequested settings, dependencies, or extension surfaces?
    No.** Only test-fixture provider/execution seams are used; no paid provider,
    production sandbox, product action, or approved threshold is added.
+
+# BAR: R3 retained-evidence head binding
+
+1. **Already exists? Yes, extend it.** Reuse `verify_current_evidence` and the
+   actual PEOS ledger append/verify APIs; create no signing or second ledger.
+2. **Approved criterion or reproduced blocker? Yes.** F-R3-05 reproduced a
+   re-chained candidate forgery accepted without an independently held head.
+3. **Existing behavior changes? Yes.** The current synthetic fixture must supply
+   its runtime-observed head. Unanchored direct callers keep the documented
+   self-consistency check; this isolated R3 branch owns the compatibility change.
+4. **Failing-before/passing-after check? Yes, test first.** A copied synthetic
+   packet is re-chained after candidate substitution; unanchored verification
+   accepts it, while the trusted original head and runtime-capture path reject it.
+5. **Revertible as one unit? Yes.** The test-first and verifier commits contain
+   only this concern; authority/provenance wording is a separate documentation
+   commit. Frozen v1 artifacts remain unchanged.
+6. **Unrequested setting/dependency/surface? No.** The requested optional expected
+   digest uses no signing, runtime API extension or new dependency. The fixture's
+   transparent append observer assumes trusted in-process execution and is not
+   protection against a malicious verifier process or root.
