@@ -34,7 +34,15 @@ contract/plan/candidate binding, criterion result, and release-gate evidence
 reference before reporting success. `source-digests.json` records the tested
 PMOS validator and PEOS source bytes.
 
-Reproduce with the agreed PEOS gate implementation installed:
+The current-run CI job installs PEOS commit
+`b1d1fa7c86d016d518005368c96a07f44e881fbc`. Its tree
+`be48f33c466b6f0f2f50658d4a1c17764038dc92` is identical to independently
+reviewed local head `aacfde34088abc425fb6d467cba388e5d54852de`. All eight
+retained source hashes were checked against the final reviewed implementation.
+`compatibility-pin.json` records this provenance. CI retains the synthetic
+contract/receipt files and complete ledgers, including their hidden storage.
+
+Reproduce with that PEOS gate implementation installed:
 
 ```sh
 python -m unittest discover -s tests/decision-to-contract -p test_handoff.py -v
@@ -56,5 +64,8 @@ gates remain blocked under the new compiler; this fixture does not replace its
 historical owner-qualified demonstration or claim a new one.
 
 Both changed skill files pass repository lint; the repository audit and
-`git diff --check` pass. The new current-run CI pin is coordinated with the
-reviewed PEOS gate commit; historical intake remains a separately pinned job.
+`git diff --check` pass. Current-run compatibility and historical intake run in
+separate CI jobs so each uses its own exact PEOS pin. The historical job keeps
+`5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9`; its validator command explicitly
+selects `--legacy-intake`. Local evidence here is not a claim that remote CI
+has already run or passed.
