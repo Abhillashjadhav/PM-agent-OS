@@ -53,7 +53,7 @@ Prepare one UTF-8 publisher-input JSON object. It must include the complete PM-o
       "then": [{"path": "result.status", "operator": "eq", "value": "ok"}]
     }
   ],
-  "binary_release_gates": [{"id": "GATE-001", "description": "<binary gate>"}],
+  "binary_release_gates": [{"id": "GATE-001", "description": "<binary gate>", "acceptance_criterion_refs": ["AC-001"]}],
   "scored_eval_rubric": [{"id": "RUB-001", "criterion": "<quality>", "scale": "1-5"}],
   "golden_cases": ["<representative case>"],
   "north_star_metric": "<outcome metric>",
@@ -83,6 +83,12 @@ For the current frozen `barebones-1` template, the only registered action is `he
 
 Use only registered operators: `eq`, `ne`, `lt`, `lte`, `gt`, `gte`, `contains`, `not_contains`, `matches`, `is_true`, `is_false`, `is_null`, and `not_null`.
 
+## Executable release gates
+
+The current PEOS compiler admits a declared binary gate only when its explicit, non-empty `acceptance_criterion_refs` bind existing executable criteria. All referenced criteria must pass. Preserve the owner's gate meaning: do not infer references from prose or bind a process, approval, evidence-retention, or isolation gate to unrelated acceptance checks. A description-only or unsupported gate returns `CONTRACT_BLOCKED` with the compiler diagnostics.
+
+Never add bindings to an approved contract while reusing its receipt. Preserve historical artifacts; any changed draft needs approval of its new exact digest. A test-issued fixture receipt is never product-owner approval.
+
 ## Digest-bound contract approval
 
 Product-decision approval authorizes conversion; it does not authorize later edits to the generated contract. First emit the contract as `DRAFT` with blank `approved_by` and `approved_at`, compute its canonical digest, and ask the accountable human to approve that exact digest. Only then use the Production Engineering OS `approve_contract_draft` publisher to set `APPROVED`, approver, and RFC 3339 timestamp and to create the receipt. Never hand-author receipt digests.
@@ -99,8 +105,8 @@ Before delivery:
 4. prove every explicit acceptance-intent criterion was either mapped without semantic change to exactly one executable form or reported as blocked;
 5. prove action, measure, operator, path, and test bindings are explicit;
 6. load the published contract through the Production Engineering OS canonical contract loader;
-7. run the Production Engineering OS compiler compatibility check when available;
-8. prove a receipt-verified Engineering OS handoff can start without rewriting the artifact;
+7. run the current Production Engineering OS `compile_barebones_plan` compatibility check, including declared release-gate bindings;
+8. prepare the exact contract, receipt, expected approver, and submitted receipt bytes for PEOS's `run_to_release_ready` consumer without rewriting them; legacy `assessment` admission alone is not proof of this current handoff;
 9. return the contract and receipt only when all checks pass unmodified.
 
 On failure, return the compiler diagnostic codes and stop. Never translate rejected prose by guessing.

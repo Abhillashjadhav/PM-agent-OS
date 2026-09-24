@@ -165,7 +165,7 @@ Validated mechanically:
 - README links and inventory totals are consistent;
 - the public installation layout works from a clean checkout;
 - installation refuses silent overwrites unless `--force` is explicitly supplied;
-- committed PMOS answers are deterministically published into an exact approved contract and receipt, accepted unmodified by the pinned Production Engineering OS loader/compiler, and admitted into an engineering run, while planted prose is rejected.
+- historical PMOS answers still reproduce their exact contract and receipt in the explicitly pinned legacy intake smoke; a separate TEST-ONLY fixture drives the current Production Engineering OS runner to `RELEASE_READY`, halts a broken candidate, and rejects an unbound gate before execution, with verified evidence.
 
 Not yet certified:
 
@@ -174,7 +174,7 @@ Not yet certified:
 - independent enforcement of every instruction-level gate;
 - production outcomes from the complete 40-skill catalogue.
 
-Fixture documents specify expected behaviour; they are not recorded behavioural model tests. The executable decision-contract check proves the deterministic cross-repository authoring and admission seam, not that a live model will always author a correct contract. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
+Fixture documents specify expected behaviour; they are not recorded behavioural model tests. The executable decision-contract check proves deterministic cross-repository compatibility using fixed test programs and test-issued receipts. It does not establish live-model authoring, OS isolation, product-owner approval, or release authorization. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
 
 ## Verify without installing
 

@@ -26,7 +26,7 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 
 When the user asks to turn a raw or unapproved product idea into an engineering contract, route to `prd-first` before `decision-to-contract`. Complete its one-question-at-a-time product-definition flow, persist the PRD, and require explicit accountable approval. Only the gated approved PRD may enter `decision-to-contract`; that skill collects any remaining bounded ProductDecisionContract truth and uses the deterministic publisher. Do not send an unapproved idea directly to engineering.
 
-When the user supplies an explicitly approved product decision and asks to hand it to Production Engineering OS, route directly to `decision-to-contract`. Require approval identity and executable acceptance bindings. A publisher, loader, compiler, or engineering-admission rejection returns `CONTRACT_BLOCKED`; never convert rejected prose by guessing. PMOS does not code, deploy, release, or claim `RELEASE_READY`.
+When the user supplies an explicitly approved product decision and asks to hand it to Production Engineering OS, route directly to `decision-to-contract`. Require approval identity, executable acceptance bindings, and explicit supported bindings for every declared binary release gate. A publisher, loader, compiler, or engineering-admission rejection returns `CONTRACT_BLOCKED`; never convert rejected prose by guessing. Target PEOS's current `run_to_release_ready` consumer; legacy `assessment` admission is not current-run evidence. PMOS does not code, deploy, release, or claim `RELEASE_READY`.
 
 ## Step 1 — Classify
 
