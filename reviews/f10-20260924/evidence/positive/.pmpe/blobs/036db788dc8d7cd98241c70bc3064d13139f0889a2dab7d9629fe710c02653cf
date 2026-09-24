@@ -1,0 +1,1 @@
+{"files":{"product.py":"\"\"\"TEST-ONLY fixed health fixture, not model-generated code.\"\"\"\n\ndef health():\n    return {'status': 'ok'}\n"},"provider_metadata":{"model":"no-model-called","prompt_version":"f10-compatibility-v1","provider":"test-only-scripted-fixture"},"request_digest":"sha256:0443001c393279139f7ef5f28c70e1864064749697a0325d44630a38667ff52c"}

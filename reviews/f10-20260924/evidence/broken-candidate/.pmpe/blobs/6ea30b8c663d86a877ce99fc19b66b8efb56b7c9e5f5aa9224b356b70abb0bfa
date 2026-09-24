@@ -1,0 +1,1 @@
+[{"code":"ASSERTION_FAILED","files":["product.py"],"message":"compiled acceptance assertion failed","subject_id":"AC-001"},{"code":"RELEASE_GATE_FAILED","files":[],"message":"every bound acceptance criterion must have explicit PASS evidence","subject_id":"GATE-001"}]

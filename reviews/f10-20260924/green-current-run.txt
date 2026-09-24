@@ -1,0 +1,6 @@
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.143s
+
+OK

@@ -25,7 +25,28 @@ jobs:
           done < <(find . -name SKILL.md -not -path './.git/*' -print)
       - name: Install pinned Production Engineering OS compiler
         run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9"
-      - name: Execute PMOS to PEOS contract compatibility
-        run: python tests/decision-to-contract/validate_contract.py
+      - name: Preserve historical PMOS to PEOS intake compatibility
+        run: python tests/decision-to-contract/validate_contract.py --legacy-intake
       - name: Compile Python checks
-        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py tests/decision-to-contract/validate_contract.py
+        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py tests/decision-to-contract/validate_contract.py tests/decision-to-contract/test_handoff.py
+
+  current-handoff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install reviewed current Production Engineering OS runner
+        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@5ccc46ce220092451032397cd7a951a0e8d163e0"
+      - name: Verify current PMOS handoff and seeded failures
+        run: python -m unittest discover -s tests/decision-to-contract -p test_handoff.py -v
+      - name: Retain TEST-ONLY current-run evidence
+        run: python tests/decision-to-contract/validate_contract.py --evidence-dir "$RUNNER_TEMP/pmos-current-handoff-evidence"
+      - name: Upload TEST-ONLY ledgers and fixtures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmos-current-handoff-test-only-evidence
+          path: ${{ runner.temp }}/pmos-current-handoff-evidence/
+          include-hidden-files: true
