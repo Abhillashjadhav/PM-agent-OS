@@ -115,3 +115,11 @@ fixture and every original task-store artifact.
    their own commit; root controls later publication and final dependency pin.
 6. **Unrequested setting/dependency/surface? No.** No owner authentication,
    signing, fresh model result, merge or release is claimed.
+# BAR: resume R4 handoff dependency pin
+
+1. **Already exists? Yes, extend it.** Use the existing current-handoff CI job and verifier; no parallel adapter.
+2. **Required? Yes.** F-C3-5 and the retained dependency-RED evidence show that the old PEOS revision rejects the corrected PMOS behavior.
+3. **Existing behavior changes? Yes.** Only the current-handoff dependency changes on this isolated branch. The historical-intake pin remains unchanged.
+4. **Failing-before/passing-after evidence? Yes.** The R4 dependency-RED log already records the old-reader failure. Run the unchanged ordinary handoff fixtures with the exact public repaired reader; no blocked tampering probe is rerun.
+5. **Revertible? Yes.** One CI pin and its evidence form a separate commit.
+6. **Unapproved surface? No.** No scanner, allowlist, provider, permission or runtime dependency is added. Publish a review-only source branch; do not trigger blocked rechecks through a PR update.

@@ -53,3 +53,9 @@ historical pin. Independent review, final cross-repository pinning and GitHub
 publication are coordinator actions; this work records local engineering proof.
 No model call, live sandbox retry, product approval, deployment or merge is
 included.
+
+## Resumed handoff verification
+
+The current-handoff job is now pinned to public PEOS review source `297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6` (tree `c2d6ba8467eae13e774f5c9f161dda18099c3961`). The unchanged ordinary fixture was rerun against those exact source bytes: valid candidate RELEASE_READY, broken candidate HALTED, unbound gate CONTRACT_BLOCKED before execution. See `../r4-resume/ordinary-handoff.json` and `summary.json`. These are TEST-ONLY deterministic programs, with no model service or owner approval.
+
+This combined source is published for review without advancing the existing PR heads or invoking CI as a substitute for the previously blocked adversarial rechecks. The final integration review remains open.
