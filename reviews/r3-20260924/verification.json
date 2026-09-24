@@ -1,0 +1,37 @@
+[
+  {
+    "check": "handoff",
+    "exit_code": 0,
+    "output": "test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened (test_handoff.CurrentHandoffTests.test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened) ... ok\ntest_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... ok\ntest_trusted_original_head_rejects_self_consistent_candidate_forgery (test_handoff.CurrentHandoffTests.test_trusted_original_head_rejects_self_consistent_candidate_forgery) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.252s\n\nOK\n"
+  },
+  {
+    "check": "audit",
+    "exit_code": 0,
+    "output": "PASS repository audit: 40 lifecycle skills, 3 supporting skills, 7 reviewer personas\n"
+  },
+  {
+    "check": "whitespace",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "check": "documentation and publication mappings",
+    "exit_code": 0
+  },
+  {
+    "check": "historical fixture and retained evidence unchanged",
+    "exit_code": 0,
+    "paths": [
+      "tests/decision-to-contract/valid-answers.json",
+      "tests/decision-to-contract/valid-contract.json",
+      "tests/decision-to-contract/valid-approval-receipt.json",
+      "tests/decision-to-contract/invalid-prose-contract.json",
+      "reviews/f10-20260924/evidence",
+      "reviews/task-tracker-v1"
+    ]
+  },
+  {
+    "check": "skill lint applicability",
+    "result": "N/A: no SKILL.md modified"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "pmos_sources": {
+    "tests/decision-to-contract/validate_contract.py": "eb82f00bcb3d9a4775f80dbeb179fa9e1baea2b761329e2373445165dfe6ffb3",
+    "tests/decision-to-contract/test_handoff.py": "0046715b156a91a7183aea194660ff5113483271ed30e3bee1a2f28d069eb01d"
+  },
+  "peos_source_tree": "6d481cd6245f7742111cc6d88ecbb17b607dae89",
+  "execution": "Existing fixed local health fixtures; no live model or OS sandbox retries"
+}
