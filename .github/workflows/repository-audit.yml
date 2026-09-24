@@ -37,8 +37,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install reviewed current Production Engineering OS runner
-        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@5ccc46ce220092451032397cd7a951a0e8d163e0"
+      - name: Install exact Production Engineering OS review snapshot
+        run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6"
       - name: Verify current PMOS handoff and seeded failures
         run: python -m unittest discover -s tests/decision-to-contract -p 'test_*.py' -v
       - name: Retain TEST-ONLY current-run evidence
