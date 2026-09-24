@@ -33,6 +33,15 @@ class CurrentHandoffTests(unittest.TestCase):
         def observe_run(**kwargs):
             record = {"kwargs": kwargs}
             records.append(record)
+            receipt_name = (
+                "test-only-unbound-receipt.json"
+                if kwargs["contract"]["contract_id"].endswith("-UNBOUND")
+                else "test-only-approval-receipt.json"
+            )
+            record["submitted_file_bytes_match"] = (
+                kwargs["approval_receipt_bytes"]
+                == (kwargs["repository_root"].parent / receipt_name).read_bytes()
+            )
             provider = kwargs["provider"]
             execution = kwargs["candidate_sandbox"]
             with patch.object(provider, "invoke", wraps=provider.invoke) as invoke, patch.object(
@@ -59,6 +68,7 @@ class CurrentHandoffTests(unittest.TestCase):
 
         self.assertEqual(len(records), 3, "legacy assessment is not a current-run proof")
         good, broken, unbound = records
+        self.assertTrue(all(record["submitted_file_bytes_match"] for record in records))
         self.assertEqual(good["state"], "RELEASE_READY")
         self.assertEqual(broken["state"], "HALTED")
         self.assertEqual(unbound["diagnostics"], {"RELEASE_GATE_UNBOUND"})
