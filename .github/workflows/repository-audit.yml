@@ -28,7 +28,7 @@ jobs:
       - name: Preserve historical PMOS to PEOS intake compatibility
         run: python tests/decision-to-contract/validate_contract.py --legacy-intake
       - name: Compile Python checks
-        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py tests/decision-to-contract/validate_contract.py tests/decision-to-contract/test_handoff.py
+        run: python -m py_compile tests/audit_repository.py tests/lint_skill.py tests/pr_quality_gate.py tests/yaml.py tests/decision-to-contract/validate_contract.py tests/decision-to-contract/test_handoff.py tests/decision-to-contract/test_retained_inspection.py
 
   current-handoff:
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
       - name: Install reviewed current Production Engineering OS runner
         run: python -m pip install "git+https://github.com/Abhillashjadhav/production-engineering-os.git@5ccc46ce220092451032397cd7a951a0e8d163e0"
       - name: Verify current PMOS handoff and seeded failures
-        run: python -m unittest discover -s tests/decision-to-contract -p test_handoff.py -v
+        run: python -m unittest discover -s tests/decision-to-contract -p 'test_*.py' -v
       - name: Retain TEST-ONLY current-run evidence
         run: python tests/decision-to-contract/validate_contract.py --evidence-dir "$RUNNER_TEMP/pmos-current-handoff-evidence"
       - name: Upload TEST-ONLY ledgers and fixtures

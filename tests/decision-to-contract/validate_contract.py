@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from types import SimpleNamespace
 
 from pmpe.barebones import default_template
 from pmpe.contracts.acceptance import AcceptanceCompileError, compile_acceptance_plan
@@ -188,9 +189,11 @@ def verify_current_evidence(
 
     Without the caller's independent head this proves only self-consistency of
     an unsigned packet. A head copied from that same packet is not a trust anchor.
+    The result argument supplies only the run ID; retained events supply state.
     """
     from pmpe.contracts.canonical import canonical_digest
     from pmpe.evidence.ledger import EvidenceLedger
+    from pmpe.evidence.release_gates import validate_release_gate_evidence
 
     ledger = EvidenceLedger.open_existing(root, result.run_id)
     events = list(ledger.verify())
@@ -199,6 +202,12 @@ def verify_current_evidence(
     head_digest = events[-1]["event_digest"]
     if expected_head_digest is not None and head_digest != expected_head_digest:
         raise AssertionError("retained ledger does not match the trusted head digest")
+    terminal = events[-1]
+    expected_terminal = {"PASS": ("release_ready", "RELEASE_READY"),
+                         "FAIL": ("halted", "HALTED")}.get(gate_status)
+    if expected_terminal is None or (terminal["event_type"], terminal["state"]) != expected_terminal:
+        raise AssertionError("terminal ledger event does not match the current fixture outcome")
+    validate_release_gate_evidence(ledger, events, expected_head_digest=expected_head_digest)
     approval = events[0]["payload"]["approval"]
     if approval["status"] != "VERIFIED" or approval["authority"] != "test-only-fixture-issuer":
         raise AssertionError("current handoff did not retain verified TEST-ONLY approval")
@@ -240,10 +249,16 @@ def verify_current_evidence(
         ledger.read_blob(gate_digest)
     elif releases:
         raise AssertionError("broken candidate emitted release_ready")
-    return {"state": result.state.value, "cause": result.cause, "gate": gate_status,
-            "fixture_provider_calls": result.model_calls, "events": len(events),
+    terminal_payload = terminal["payload"]
+    telemetry = terminal_payload.get("telemetry", {})
+    calls = telemetry.get("calls") if isinstance(telemetry, dict) else None
+    if isinstance(calls, bool) or not isinstance(calls, int) or calls < 0:
+        raise AssertionError("terminal ledger omitted the fixture provider call count")
+    return {"state": terminal["state"], "cause": terminal_payload.get("cause", ""), "gate": gate_status,
+            "fixture_provider_calls": calls, "events": len(events),
             "head_digest": head_digest,
-            "head_check": "MATCHED_EXTERNAL_HEAD" if expected_head_digest else "SELF_CONSISTENCY_ONLY"}
+            "head_anchor": ({"status": "VERIFIED", "expected_head_digest": expected_head_digest}
+                            if expected_head_digest is not None else {"status": "NOT_PROVIDED"})}
 
 
 @contextmanager
@@ -310,10 +325,14 @@ def validate_current_handoff(root: Path) -> int:
             raise AssertionError("current fixture did not observe a runtime ledger head")
         expected_head = observed["digest"]
         print(f"CURRENT HANDOFF HEAD: {run_id} {expected_head} (retain independently)")
-        summary["cases"][label] = verify_current_evidence(
+        captured = verify_current_evidence(
             repository, result, fixture.contract, gate_status=gate_status,
             expected_head_digest=expected_head,
         )
+        # A saved capture-time assertion is not an independent reader's anchor.
+        captured.pop("head_anchor")
+        captured["head_check_at_capture"] = "MATCHED_RUNTIME_HEAD"
+        summary["cases"][label] = captured
     unbound = publish_test_fixture(bound=False)
     provider, execution = FixtureProvider("ok"), FixtureExecution()
     write_json_atomic(root / "test-only-unbound-contract.json", unbound.contract)
@@ -348,7 +367,35 @@ def main(argv=None) -> int:
                         help="run preserved publisher/receipt/assessment compatibility only")
     parser.add_argument("--evidence-dir", type=Path,
                         help="retain TEST-ONLY current-run ledgers in an empty directory")
+    parser.add_argument("--inspect-evidence-dir", type=Path,
+                        help="read an existing TEST-ONLY fixture packet without running it")
+    parser.add_argument("--case", choices=("positive", "broken-candidate"),
+                        help="retained fixture case to inspect (default: positive)")
+    parser.add_argument("--expected-head-digest",
+                        help="original head retained outside the packet; applies only to inspection")
     args = parser.parse_args(argv)
+    if args.inspect_evidence_dir is not None:
+        if args.legacy_intake or args.evidence_dir is not None:
+            parser.error("retained inspection cannot be combined with fixture execution")
+        from pmpe.evidence.ledger import EvidenceIntegrityError
+
+        case = args.case or "positive"
+        try:
+            observed = verify_current_evidence(
+                args.inspect_evidence_dir / case,
+                SimpleNamespace(run_id=f"test-only-f10-{case}"),
+                load_fixture(args.inspect_evidence_dir / "test-only-contract.json"),
+                gate_status="PASS" if case == "positive" else "FAIL",
+                expected_head_digest=args.expected_head_digest,
+            )
+        except (AssertionError, EvidenceIntegrityError, OSError, ValueError, KeyError,
+                TypeError, StopIteration) as error:
+            print(json.dumps({"status": "EVIDENCE_INVALID", "message": str(error)}, sort_keys=True))
+            return 3
+        print(json.dumps(observed, sort_keys=True))
+        return 0
+    if args.expected_head_digest is not None or args.case is not None:
+        parser.error("--expected-head-digest and --case require --inspect-evidence-dir")
     if args.legacy_intake:
         if args.evidence_dir is not None:
             parser.error("--evidence-dir applies to the current-run fixture only")

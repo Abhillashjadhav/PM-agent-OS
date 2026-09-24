@@ -1,0 +1,18 @@
+test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened (test_handoff.CurrentHandoffTests.test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened) ... ok
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... ok
+test_trusted_original_head_rejects_self_consistent_candidate_forgery (test_handoff.CurrentHandoffTests.test_trusted_original_head_rejects_self_consistent_candidate_forgery) ... ok
+test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) ... ok
+test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head (test_retained_inspection.RetainedInspectionTests.test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head) ... ok
+test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) ... ok
+test_expected_head_requires_read_only_inspection (test_retained_inspection.RetainedInspectionTests.test_expected_head_requires_read_only_inspection) ... ok
+test_generation_labels_head_check_as_capture_evidence_only (test_retained_inspection.RetainedInspectionTests.test_generation_labels_head_check_as_capture_evidence_only) ... ok
+test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) ... ok
+test_release_followed_by_halt_is_not_a_current_release (test_retained_inspection.RetainedInspectionTests.test_release_followed_by_halt_is_not_a_current_release) ... ok
+test_shared_validator_failure_is_not_bypassed (test_retained_inspection.RetainedInspectionTests.test_shared_validator_failure_is_not_bypassed) ... ok
+test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) ... ok
+test_unknown_terminal_event_cannot_claim_release_ready (test_retained_inspection.RetainedInspectionTests.test_unknown_terminal_event_cannot_claim_release_ready) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.637s
+
+OK
