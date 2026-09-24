@@ -19,7 +19,7 @@ test receipts are visibly test-only and never presented as owner approval.
 
 Root also inspected the historical fixture preservation, explicit
 `--legacy-intake` path, both CI pins and the evidence upload. The current job
-uses reviewed PEOS `b1d1fa7c86d016d518005368c96a07f44e881fbc`; the historical job
+uses reviewed PEOS `5ccc46ce220092451032397cd7a951a0e8d163e0`; the historical job
 retains `5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9`. The repository audit passes.
 
 The fixture executor runs only fixed health programs locally. It supplies no
