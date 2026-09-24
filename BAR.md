@@ -64,3 +64,23 @@ fixture and every original task-store artifact.
    digest uses no signing, runtime API extension or new dependency. The fixture's
    transparent append observer assumes trusted in-process execution and is not
    protection against a malicious verifier process or root.
+
+# BAR: R4 retained inspection and independent head input
+
+1. **Already exists? Yes, extend it.** Reuse the current fixture verifier and
+   PEOS shared retained-evidence validator; do not create another evidence engine.
+2. **Approved criterion or reproduced blocker? Yes.** F-C3-1 and C4-F1/F3 show
+   caller-supplied state, unverified receipt authority, and a missing retained
+   inspection CLI. Their regressions precede implementation.
+3. **Existing behavior changes? Yes.** The verifier derives its result from the
+   terminal ledger and rejects semantic contradictions. A read-only CLI accepts
+   an independently supplied head; fixture generation retains its current API.
+4. **Failing-before/passing-after check? Yes, test first.** Temp-copy mutations
+   cover terminal events, subject/plan identity, authority/receipt disagreement,
+   and forged heads. Positive and broken fixture controls must still pass.
+5. **Revertible as one unit? Yes.** Tests and runtime repair are isolated commits;
+   provenance and scope documentation form a separate documentation commit.
+6. **Unrequested setting/dependency/surface? No.** No signing, model, product
+   decision or approval is added. The requested inspection input uses existing
+   PEOS validation. Unsigned rewrites still need an independently trusted anchor;
+   this does not protect against a malicious verifier process or root.

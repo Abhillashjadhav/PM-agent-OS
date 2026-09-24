@@ -1,0 +1,166 @@
+test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) ... 
+  test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) (mutation='subject') ... FAIL
+  test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) (mutation='plan') ... FAIL
+test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head (test_retained_inspection.RetainedInspectionTests.test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head) ... FAIL
+test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) ... 
+  test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='positive', anchor=False) ... FAIL
+  test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='positive', anchor=True) ... FAIL
+  test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='broken-candidate', anchor=False) ... FAIL
+  test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='broken-candidate', anchor=True) ... FAIL
+test_expected_head_requires_read_only_inspection (test_retained_inspection.RetainedInspectionTests.test_expected_head_requires_read_only_inspection) ... ok
+test_generation_labels_head_check_as_capture_evidence_only (test_retained_inspection.RetainedInspectionTests.test_generation_labels_head_check_as_capture_evidence_only) ... FAIL
+test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) ... 
+  test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) (case='positive') ... FAIL
+  test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) (case='broken-candidate') ... FAIL
+test_release_followed_by_halt_is_not_a_current_release (test_retained_inspection.RetainedInspectionTests.test_release_followed_by_halt_is_not_a_current_release) ... FAIL
+test_shared_validator_failure_is_not_bypassed (test_retained_inspection.RetainedInspectionTests.test_shared_validator_failure_is_not_bypassed) ... FAIL
+test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) ... 
+  test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) (case='positive') ... FAIL
+  test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) (case='broken-candidate') ... FAIL
+test_unknown_terminal_event_cannot_claim_release_ready (test_retained_inspection.RetainedInspectionTests.test_unknown_terminal_event_cannot_claim_release_ready) ... FAIL
+
+======================================================================
+FAIL: test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) (mutation='subject')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 118, in test_changed_subject_and_missing_plan_are_rejected_without_anchor
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_changed_subject_and_missing_plan_are_rejected_without_anchor (test_retained_inspection.RetainedInspectionTests.test_changed_subject_and_missing_plan_are_rejected_without_anchor) (mutation='plan')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 118, in test_changed_subject_and_missing_plan_are_rejected_without_anchor
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head (test_retained_inspection.RetainedInspectionTests.test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 184, in test_cli_ignores_packet_anchor_claims_and_rejects_forgery_with_original_head
+    self.assertEqual(code, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='positive', anchor=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 170, in test_cli_reads_existing_packets_and_computes_reader_anchor
+    self.assertEqual(code, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='positive', anchor=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 170, in test_cli_reads_existing_packets_and_computes_reader_anchor
+    self.assertEqual(code, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='broken-candidate', anchor=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 170, in test_cli_reads_existing_packets_and_computes_reader_anchor
+    self.assertEqual(code, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) (case='broken-candidate', anchor=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 170, in test_cli_reads_existing_packets_and_computes_reader_anchor
+    self.assertEqual(code, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_generation_labels_head_check_as_capture_evidence_only (test_retained_inspection.RetainedInspectionTests.test_generation_labels_head_check_as_capture_evidence_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 197, in test_generation_labels_head_check_as_capture_evidence_only
+    self.assertEqual(cases[label].get("head_check_at_capture"), "MATCHED_RUNTIME_HEAD")
+AssertionError: None != 'MATCHED_RUNTIME_HEAD'
+
+======================================================================
+FAIL: test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) (case='positive')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 145, in test_receipt_content_must_agree_with_recorded_authority_for_both_cases
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_receipt_content_must_agree_with_recorded_authority_for_both_cases (test_retained_inspection.RetainedInspectionTests.test_receipt_content_must_agree_with_recorded_authority_for_both_cases) (case='broken-candidate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 145, in test_receipt_content_must_agree_with_recorded_authority_for_both_cases
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_release_followed_by_halt_is_not_a_current_release (test_retained_inspection.RetainedInspectionTests.test_release_followed_by_halt_is_not_a_current_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 90, in test_release_followed_by_halt_is_not_a_current_release
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_shared_validator_failure_is_not_bypassed (test_retained_inspection.RetainedInspectionTests.test_shared_validator_failure_is_not_bypassed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 151, in test_shared_validator_failure_is_not_bypassed
+    with self.assertRaisesRegex((AssertionError, EvidenceIntegrityError), "seeded shared rejection"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+======================================================================
+FAIL: test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) (case='positive')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 80, in test_state_cause_and_call_count_come_from_terminal_ledger
+    self.assertEqual((observed["state"], observed["cause"],
+AssertionError: Tuples differ: ('STOPPED', 'CALLER_CLAIM', 999) != ('RELEASE_READY', '', 2)
+
+First differing element 0:
+'STOPPED'
+'RELEASE_READY'
+
+- ('STOPPED', 'CALLER_CLAIM', 999)
++ ('RELEASE_READY', '', 2)
+
+======================================================================
+FAIL: test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) (case='broken-candidate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 80, in test_state_cause_and_call_count_come_from_terminal_ledger
+    self.assertEqual((observed["state"], observed["cause"],
+AssertionError: Tuples differ: ('STOPPED', 'CALLER_CLAIM', 999) != ('HALTED', 'ATTEMPT_BUDGET_EXHAUSTED', 1)
+
+First differing element 0:
+'STOPPED'
+'HALTED'
+
+- ('STOPPED', 'CALLER_CLAIM', 999)
++ ('HALTED', 'ATTEMPT_BUDGET_EXHAUSTED', 1)
+
+======================================================================
+FAIL: test_unknown_terminal_event_cannot_claim_release_ready (test_retained_inspection.RetainedInspectionTests.test_unknown_terminal_event_cannot_claim_release_ready)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r4-20260924/pmos/tests/decision-to-contract/test_retained_inspection.py", line 99, in test_unknown_terminal_event_cannot_claim_release_ready
+    with self.assertRaises((AssertionError, EvidenceIntegrityError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'AssertionError'>, <class 'pmpe.evidence.ledger.EvidenceIntegrityError'>) not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.272s
+
+FAILED (failures=15)
