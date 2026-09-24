@@ -1,0 +1,37 @@
+test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened (test_handoff.CurrentHandoffTests.test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened) ... FAIL
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... FAIL
+test_trusted_original_head_rejects_self_consistent_candidate_forgery (test_handoff.CurrentHandoffTests.test_trusted_original_head_rejects_self_consistent_candidate_forgery) ... ERROR
+
+======================================================================
+ERROR: test_trusted_original_head_rejects_self_consistent_candidate_forgery (test_handoff.CurrentHandoffTests.test_trusted_original_head_rejects_self_consistent_candidate_forgery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r3-20260924/pmos/tests/decision-to-contract/test_handoff.py", line 93, in test_trusted_original_head_rejects_self_consistent_candidate_forgery
+    validator.verify_current_evidence(
+TypeError: verify_current_evidence() got an unexpected keyword argument 'expected_head_digest'
+
+======================================================================
+FAIL: test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened (test_handoff.CurrentHandoffTests.test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened)
+----------------------------------------------------------------------
+AssertionError: None != 'sha256:3b2290880df52c4341cf87e981f76b1085eb1223d77136cd8bda6756b1c80487'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r3-20260924/pmos/tests/decision-to-contract/test_handoff.py", line 109, in test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened
+    with self.assertRaisesRegex(AssertionError, "trusted head digest"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "trusted head digest" does not match "None != 'sha256:3b2290880df52c4341cf87e981f76b1085eb1223d77136cd8bda6756b1c80487'"
+
+======================================================================
+FAIL: test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/r3-20260924/pmos/tests/decision-to-contract/test_handoff.py", line 155, in test_default_entrypoint_exercises_current_runner_and_negative_controls
+    self.assertEqual(call.kwargs.get("expected_head_digest"), record["events"][-1]["event_digest"])
+AssertionError: None != 'sha256:7c4869c6689d3dbfd1f324eb4f230c86112ea9c90e26c624759d95c89894b37f'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.239s
+
+FAILED (failures=2, errors=1)

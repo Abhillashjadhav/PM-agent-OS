@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import json
 import subprocess
 import sys
@@ -180,12 +181,24 @@ def publish_test_fixture(*, bound: bool):
     )
 
 
-def verify_current_evidence(root: Path, result, contract, *, gate_status: str):
+def verify_current_evidence(
+    root: Path, result, contract, *, gate_status: str, expected_head_digest: str | None = None
+):
+    """Check content bindings, optionally against a head trusted outside this packet.
+
+    Without the caller's independent head this proves only self-consistency of
+    an unsigned packet. A head copied from that same packet is not a trust anchor.
+    """
     from pmpe.contracts.canonical import canonical_digest
     from pmpe.evidence.ledger import EvidenceLedger
 
     ledger = EvidenceLedger.open_existing(root, result.run_id)
     events = list(ledger.verify())
+    if not events:
+        raise AssertionError("current handoff ledger is empty")
+    head_digest = events[-1]["event_digest"]
+    if expected_head_digest is not None and head_digest != expected_head_digest:
+        raise AssertionError("retained ledger does not match the trusted head digest")
     approval = events[0]["payload"]["approval"]
     if approval["status"] != "VERIFIED" or approval["authority"] != "test-only-fixture-issuer":
         raise AssertionError("current handoff did not retain verified TEST-ONLY approval")
@@ -228,7 +241,33 @@ def verify_current_evidence(root: Path, result, contract, *, gate_status: str):
     elif releases:
         raise AssertionError("broken candidate emitted release_ready")
     return {"state": result.state.value, "cause": result.cause, "gate": gate_status,
-            "fixture_provider_calls": result.model_calls, "events": len(events)}
+            "fixture_provider_calls": result.model_calls, "events": len(events),
+            "head_digest": head_digest,
+            "head_check": "MATCHED_EXTERNAL_HEAD" if expected_head_digest else "SELF_CONSISTENCY_ONLY"}
+
+
+@contextmanager
+def observe_fixture_runtime_head(run_id: str):
+    """Retain real append results in trusted fixture memory, outside packet reads.
+
+    This transparent TEST-ONLY observer changes no append arguments or results.
+    It assumes a trusted process; it does not defend against root or code running
+    in the verifier process, and does not extend the PEOS runtime API.
+    """
+    from unittest.mock import patch
+    from pmpe.evidence.ledger import EvidenceLedger
+
+    observed = {}
+    append = EvidenceLedger.append
+
+    def remember_head(ledger, **kwargs):
+        event = append(ledger, **kwargs)
+        if ledger.run_id == run_id:
+            observed["digest"] = event["event_digest"]
+        return event
+
+    with patch.object(EvidenceLedger, "append", remember_head):
+        yield observed
 
 
 def validate_current_handoff(root: Path) -> int:
@@ -244,8 +283,10 @@ def validate_current_handoff(root: Path) -> int:
         "classification": "TEST-ONLY deterministic current-run compatibility",
         "approval": "test-issued receipt; not product-owner approval",
         "limitations": ["No external model call or new live generation.",
-                        "Fixed fixture programs execute locally without OS isolation.",
-                        "No deployment, release authorization, or production-readiness claim."],
+                         "Fixed fixture programs execute locally without OS isolation.",
+                        "Unsigned evidence: retain printed runtime heads independently of this packet.",
+                        "The runtime observer assumes a trusted process, not a malicious writer or root.",
+                         "No deployment, release authorization, or production-readiness claim."],
         "cases": {},
     }
     for label, status, state, gate_status in (
@@ -253,18 +294,25 @@ def validate_current_handoff(root: Path) -> int:
         ("broken-candidate", "broken", RunState.HALTED, "FAIL"),
     ):
         repository = root / label
-        result = run_to_release_ready(
-            contract=fixture.contract, repository_root=repository,
-            workspace=repository / "candidate", run_id=f"test-only-f10-{label}",
-            provider=FixtureProvider(status), candidate_sandbox=FixtureExecution(),
-            budget=BudgetCaps(max_attempts=1, max_model_calls=2),
-            approval_receipt=fixture.receipt, approval_authority="test-only-fixture-issuer",
-            approval_receipt_bytes=(root / "test-only-approval-receipt.json").read_bytes(),
-        )
+        run_id = f"test-only-f10-{label}"
+        with observe_fixture_runtime_head(run_id) as observed:
+            result = run_to_release_ready(
+                contract=fixture.contract, repository_root=repository,
+                workspace=repository / "candidate", run_id=run_id,
+                provider=FixtureProvider(status), candidate_sandbox=FixtureExecution(),
+                budget=BudgetCaps(max_attempts=1, max_model_calls=2),
+                approval_receipt=fixture.receipt, approval_authority="test-only-fixture-issuer",
+                approval_receipt_bytes=(root / "test-only-approval-receipt.json").read_bytes(),
+            )
         if result.state is not state:
             raise AssertionError(f"{label}: expected {state}, got {result.state}: {result.cause}")
+        if "digest" not in observed:
+            raise AssertionError("current fixture did not observe a runtime ledger head")
+        expected_head = observed["digest"]
+        print(f"CURRENT HANDOFF HEAD: {run_id} {expected_head} (retain independently)")
         summary["cases"][label] = verify_current_evidence(
-            repository, result, fixture.contract, gate_status=gate_status
+            repository, result, fixture.contract, gate_status=gate_status,
+            expected_head_digest=expected_head,
         )
     unbound = publish_test_fixture(bound=False)
     provider, execution = FixtureProvider("ok"), FixtureExecution()
