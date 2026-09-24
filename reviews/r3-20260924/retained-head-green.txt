@@ -1,0 +1,8 @@
+test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened (test_handoff.CurrentHandoffTests.test_current_fixture_uses_runtime_head_before_retained_packet_is_reopened) ... ok
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... ok
+test_trusted_original_head_rejects_self_consistent_candidate_forgery (test_handoff.CurrentHandoffTests.test_trusted_original_head_rejects_self_consistent_candidate_forgery) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.217s
+
+OK
