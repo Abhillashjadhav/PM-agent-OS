@@ -1,0 +1,14 @@
+{
+  "pmos": {
+    "tests/decision-to-contract/validate_contract.py": "79a13336aa2f2c562ac8780bd9975d26914fd85c6c52182f4a6d3d16c694ec20",
+    "tests/decision-to-contract/test_handoff.py": "a17c69f7cf394b765e2199e0fc56010b719d6c732fca9d4c2731c4814c8ee12a"
+  },
+  "peos": {
+    "src/pmpe/barebones.py": "871ec0e1083b0ef4719fc9b2e4b5e5d0219aafcd46dc186780c9bfc16f34b5b3",
+    "src/pmpe/contracts/acceptance.py": "106e30c7cba38dc98dd3492e90a8fa3a6a6ef901bcddc298e1de415583ea182f",
+    "src/pmpe/contracts/release_gates.py": "29cd57596090a595777ed339a98bdecaa3062e0463a0bc08bd6a6156659ed288",
+    "src/pmpe/release_gates.py": "7d38bfd26b1823281b2974369818eb6e5da35c0ce53d7b05af2e138e86b3a877",
+    "src/pmpe/contracts/authoring.py": "0c43963cbe41edb7e36dc5d9c4bdea7948099a13290507a4d8548c16d1248b80",
+    "src/pmpe/evidence/ledger.py": "ecf2370073e9452a5689c964455af45eb90602242558aa88b6489eb0718c8b1d"
+  }
+}

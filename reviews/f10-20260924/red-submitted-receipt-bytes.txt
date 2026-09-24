@@ -1,0 +1,14 @@
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... FAIL
+
+======================================================================
+FAIL: test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/f9ac546f3a50/integration-20260924/pmos-handoff/tests/decision-to-contract/test_handoff.py", line 71, in test_default_entrypoint_exercises_current_runner_and_negative_controls
+    self.assertTrue(all(record["submitted_file_bytes_match"] for record in records))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.152s
+
+FAILED (failures=1)
