@@ -20,6 +20,18 @@ Fixtures are **specifications**, not executed behavioural tests. Their presence 
 
 This proves one deterministic end-to-end handoff boundary. It does not prove live-model authoring quality, arbitrary-product coverage, or a real-provider engineering run.
 
+An approval record with `status: "VERIFIED"` means its structural/content checks
+passed. A consumer must also check `authority`; status alone must never be read
+as product-owner approval. `test-only-fixture-issuer` identifies synthetic test
+issuance, not an authenticated owner. Receipts and ledger events are unsigned.
+
+For retained current-run evidence, `verify_current_evidence` accepts an optional
+`expected_head_digest` supplied from an independently trusted source. Without it,
+verification proves packet self-consistency only. The current synthetic fixture
+always supplies a digest observed from the real runtime append result before
+reopening the packet. A digest copied from the same packet or its summary does
+not establish that trust; the fixture assumes a trusted verifier process.
+
 ## 4. Recorded behavioural model-run evidence
 
 Recorded behavioural evidence would consist of committed, reproducible model-run artifacts that identify the runtime/model, input, configuration, output, evaluation method, and result. No such evidence is currently committed in this repository.

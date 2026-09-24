@@ -1,9 +1,15 @@
 # Independent review: F10 current handoff
 
-Root reviewed the implementation and evidence produced by the separate PMOS
-agent at `95f7c53f282432dca303f844ce090cfb3c4c5fb3`, followed by the CI pin at
-`3d69e4b0d99f5c69054563d0652fcf1ad32ae824`. This runtime PR preserves that code
-byte-for-byte; four narrative/instruction files are a separate follow-on PR.
+Root reviewed pre-publication local implementation and evidence. Its runtime
+source is preserved in published commit
+`5d9cd06c5eca562361a4d080d09ea00bc5eee1a3` (tree
+`123309d52d0c6e1ff0ccd673954371e550662a58`); the reviewed CI wiring is preserved
+in published commit `be0158d8c7c1ddb544fa882099fcd7374cdbadbe` (tree
+`5624f2d542b86d66bbea5dc47b324028d4a34823`). These are the retrievable published
+identities, not the earlier local-only commit names. The publication receipt
+mapping is retained in [`../r3-20260924/publication-provenance.json`](../r3-20260924/publication-provenance.json).
+Four narrative/instruction files were published in a separate follow-on PR.
+This original review predates the R3 verifier repair and is not its approval.
 
 LINT: N/A in the runtime PR — it changes no SKILL.md. Both follow-on skill files
 were independently linted successfully before the split. SPEC COMPLIANCE,

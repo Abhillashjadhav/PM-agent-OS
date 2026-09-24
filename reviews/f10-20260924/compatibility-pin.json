@@ -4,12 +4,14 @@
   "peos_current_remote_commit": "5ccc46ce220092451032397cd7a951a0e8d163e0",
   "peos_reviewed_local_commit": "f18395a3edb53d7c450fc87660e55b1dc1ce073b",
   "peos_identical_tree": "6d481cd6245f7742111cc6d88ecbb17b607dae89",
-  "peos_implementation_commit": "91383de192b6483d721e4573d92634e8a8b645c6",
+  "peos_implementation_commit": "85358d5130700315a513640524f64837ae4bd1e9",
   "peos_historical_ci_commit": "5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9",
   "source_hash_manifest": "source-digests.json",
   "verified_source_hash_count": 8,
   "remote_ci_run_claimed": false,
   "owner_approval_or_live_model_claimed": false,
   "superseded_peos_evidence_pin": "b1d1fa7c86d016d518005368c96a07f44e881fbc",
-  "pin_update_reason": "Independent audit fixture reused existing security source after SEC_EVAL CI rejection; runtime and all eight bound source hashes unchanged; four probes independently rerun and passed."
+  "pin_update_reason": "Independent audit fixture reused existing security source after SEC_EVAL CI rejection; runtime and all eight bound source hashes unchanged; four probes independently rerun and passed.",
+  "peos_implementation_local_commit": "91383de192b6483d721e4573d92634e8a8b645c6",
+  "publication_mapping": "../r3-20260924/publication-provenance.json"
 }

@@ -64,3 +64,19 @@ fixture and every original task-store artifact.
    digest uses no signing, runtime API extension or new dependency. The fixture's
    transparent append observer assumes trusted in-process execution and is not
    protection against a malicious verifier process or root.
+
+# BAR: R3 evidence and authority documentation
+
+1. **Already exists? Yes, correct existing records.** Update VALIDATION and the
+   F10 review narratives; reuse the published receipt's local-to-GitHub mappings.
+2. **Approved criterion or reproduced blocker? Yes.** F-R3-06, F-R3-07 and F-R3-09
+   identify authority ambiguity, inaccessible local commit names and receipt
+   serialization overstatement. F-R3-05 requires an explicit unsigned boundary.
+3. **Existing behavior changes? No.** This separate documentation commit records
+   the boundary of the preceding verifier repair without changing runtime code.
+4. **Automated check? Yes.** Check copied publication mappings against the source
+   receipt, compare the preserved reviewed source paths, and run repository audit.
+5. **Revertible separately? Yes.** Documentation and provenance metadata are kept
+   in their own commit so the root can map them onto the documentation stack.
+6. **Unrequested setting/dependency/surface? No.** No signing, policy, new runtime
+   API, owner approval or live execution is introduced by these corrections.
