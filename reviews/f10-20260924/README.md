@@ -35,9 +35,9 @@ reference before reporting success. `source-digests.json` records the tested
 PMOS validator and PEOS source bytes.
 
 The current-run CI job installs PEOS commit
-`b1d1fa7c86d016d518005368c96a07f44e881fbc`. Its tree
-`be48f33c466b6f0f2f50658d4a1c17764038dc92` is identical to independently
-reviewed local head `aacfde34088abc425fb6d467cba388e5d54852de`. All eight
+`5ccc46ce220092451032397cd7a951a0e8d163e0`. Its tree
+`6d481cd6245f7742111cc6d88ecbb17b607dae89` is identical to independently
+reviewed local head `f18395a3edb53d7c450fc87660e55b1dc1ce073b`. All eight
 retained source hashes were checked against the final reviewed implementation.
 `compatibility-pin.json` records this provenance. CI retains the synthetic
 contract/receipt files and complete ledgers, including their hidden storage.
