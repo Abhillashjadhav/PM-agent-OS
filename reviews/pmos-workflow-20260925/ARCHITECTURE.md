@@ -7,15 +7,16 @@ transfer product authority. No second publisher or engineering runner is added.
 
 ```mermaid
 flowchart TD
-    A[Product idea and existing context] --> B[PMOS identifies missing decisions]
-    B --> C[Ask one relevant question]
+    A[Product idea and existing context] --> B{Product truth and coverage complete?}
+    B -->|No| C[Ask one relevant question]
     C --> D[Update PRD and decision records]
-    D --> E{Product truth complete?}
-    E -->|No| B
-    E -->|Yes| F[Owner approves product definition]
+    D --> B
+    B -->|Yes| F[Confirm current product approval]
     F --> G[Map fields and validate supported bindings]
-    G --> H{Complete and supported?}
-    H -->|No| B
+    G -->|Missing product decision| B
+    G --> H{Binding supported?}
+    H -->|No| M[Engineering dependency BLOCKED]
+    M -->|Dependency resolved| G
     H -->|Yes| I[Existing publisher creates draft and digest]
     I --> J[Owner approves exact digest]
     J --> K[Verify receipt and unchanged contract]
