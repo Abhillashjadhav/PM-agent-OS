@@ -1,0 +1,22 @@
+name: Current contract authoring
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  current-authoring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing reviewed publisher snapshot
+        run: python -m pip install 'git+https://github.com/Abhillashjadhav/production-engineering-os.git@297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6'
+      - name: Check ordinary authoring compatibility
+        run: python -B tests/decision-to-contract/test_current_authoring.py -v
