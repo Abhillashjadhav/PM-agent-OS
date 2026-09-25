@@ -6,3 +6,12 @@
 4. **Failing automated check before repair? Yes.** `test_adapter_preserves_nonexecutable_status` invokes the public launcher with a local adapter fixture and a non-executable file; expected 126, current result 1. Commit this check before the repair.
 5. **Independently revertible? Yes.** The launcher mapping, regression fixture, and evidence are one concern; installer, skills, verification gates, and external repositories are untouched.
 6. **Unrequested setting/dependency/extension? No.** Reuse Python standard library and the existing optional adapter interface; introduce no configuration or dependency.
+
+# BAR: inherited Beacon installer whitespace
+
+1. **Already exists? Yes.** Correct only the existing installer's extra blank line at EOF.
+2. **Reproduced blocker? Yes.** `git diff --check origin/main...HEAD` at `a21279a` exits 2: `scripts/install_beacon_adapter.py:34: new blank line at EOF.`
+3. **Changes existing behavior? No.** The edit changes trailing whitespace only.
+4. **Failing check first? Yes.** The existing diff check reproduces this exact RED; the deterministic PR quality gate runs the same check.
+5. **Independently revertible? Yes.** The one-line formatting correction has no runtime dependency.
+6. **Unrequested setting/dependency/extension? No.** No settings, dependencies, or interfaces are added.
