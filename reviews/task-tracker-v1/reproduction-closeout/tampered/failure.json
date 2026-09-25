@@ -1,0 +1,4 @@
+{
+  "detail": "APPROVAL_BOUND_ARTIFACT_CHANGED: [{'path': '/workspace/scratch/f9ac546f3a50/phase5-readme-review-20260921/pmos/reviews/task-tracker-v1/contract.approved.json', 'expected': 'sha256:41f93f23ca57cef11201fe685b18d66be882c122e5a3c7192e37e9018de0f0e2', 'actual': 'sha256:bc494f58c927b2628cecc7af14309be3ef234a4d8a812f79423f5abe77c8d6cf'}]",
+  "error": "TamperDetectedError"
+}

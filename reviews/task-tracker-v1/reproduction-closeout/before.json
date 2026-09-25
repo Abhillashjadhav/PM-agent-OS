@@ -1,0 +1,11 @@
+{
+  "source_commit": "9d55bf650d6586d90a0028241b468559349487c3",
+  "source_path": "reviews/task-tracker-v1/README.md",
+  "changed_approved_contract_replica": "/workspace/scratch/f9ac546f3a50/phase5-readme-review-20260921/pmos/reviews/task-tracker-v1/contract.approved.json",
+  "changed_field": "desired_outcome",
+  "original_frozen_artifacts_modified": false,
+  "exit_code": 0,
+  "stdout": "PASS: DRAFT, traceable criteria and exact review artifacts; no product generated\n",
+  "stderr": "",
+  "bug_reproduced": true
+}
