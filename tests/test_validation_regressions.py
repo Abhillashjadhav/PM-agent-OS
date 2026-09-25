@@ -43,6 +43,24 @@ class ValidationRegressions(unittest.TestCase):
         result = self.command("tests/lint_skill.py", path)
         self.assertNotEqual(result.returncode, 0, result.stdout)
 
+    def test_collection_description_cannot_bypass_string_requirement(self):
+        path = self.replace_metadata(
+            "decision-to-contract", "[Use when needed., Do NOT use otherwise.]"
+        )
+        for args in [("tests/lint_skill.py", path), ("tests/audit_repository.py",)]:
+            with self.subTest(args=args):
+                result = self.command(*args)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+
+    def test_quoted_collection_text_is_a_valid_description(self):
+        path = self.replace_metadata(
+            "decision-to-contract", '"[Use when needed., Do NOT use otherwise.]"'
+        )
+        for args in [("tests/lint_skill.py", path), ("tests/audit_repository.py",)]:
+            with self.subTest(args=args):
+                result = self.command(*args)
+                self.assertEqual(result.returncode, 0, result.stdout)
+
     def test_valid_inline_comment_preserves_description(self):
         path = self.replace_metadata("decision-to-contract", "Use when needed. Do NOT use otherwise. # note: valid comment")
         for args in [("tests/lint_skill.py", path), ("tests/audit_repository.py",)]:
