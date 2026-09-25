@@ -1,0 +1,14 @@
+[
+  {
+    "case": "missing-directory",
+    "exit_code": 3,
+    "status": "EVIDENCE_INVALID",
+    "writes_observed": false
+  },
+  {
+    "case": "malformed-contract-json",
+    "exit_code": 3,
+    "status": "EVIDENCE_INVALID",
+    "writes_observed": false
+  }
+]

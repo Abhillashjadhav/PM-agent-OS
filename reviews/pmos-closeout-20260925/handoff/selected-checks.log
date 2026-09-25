@@ -1,0 +1,9 @@
+test_default_entrypoint_exercises_current_runner_and_negative_controls (test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls) ... ok
+test_state_cause_and_call_count_come_from_terminal_ledger (test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger) ... ok
+test_cli_reads_existing_packets_and_computes_reader_anchor (test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor) ... ok
+test_expected_head_requires_read_only_inspection (test_retained_inspection.RetainedInspectionTests.test_expected_head_requires_read_only_inspection) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.284s
+
+OK

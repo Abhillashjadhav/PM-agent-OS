@@ -1,0 +1,32 @@
+{
+  "pmos_commit": "c95469338b64f22edcd9d260246e3c9186b0d302",
+  "pmos_tree": "59703d2980477e1321441bf3c440888cfa90fdc7",
+  "python": "3.12.14",
+  "dependency_install": {
+    "url": "https://github.com/Abhillashjadhav/production-engineering-os.git",
+    "vcs_info": {
+      "commit_id": "297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6",
+      "requested_revision": "297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6",
+      "vcs": "git"
+    }
+  },
+  "packages": {
+    "pmpe": "0.2.0",
+    "PyYAML": "6.0.3",
+    "jsonschema": "4.25.1",
+    "rfc8785": "0.1.4"
+  },
+  "source_digests": {
+    "tests/decision-to-contract/validate_contract.py": "sha256:ae906e23ae655a56bac1644dff034772023508cec27649a0b0630d44567b8e0e",
+    "tests/decision-to-contract/test_handoff.py": "sha256:0046715b156a91a7183aea194660ff5113483271ed30e3bee1a2f28d069eb01d",
+    "tests/decision-to-contract/test_retained_inspection.py": "sha256:d13e087f0f1ddc29ef0b08850785cfdb59e7b2bc8b81c17fe2f084b5053ea371",
+    ".github/workflows/repository-audit.yml": "sha256:8e0baf8ca0da9fdae522a1b625c27816cfe12c2b82c9da063d0e8e76df3c003f"
+  },
+  "archive": {
+    "path": "ordinary-fixtures.tar.gz",
+    "files": 29,
+    "bytes": 6604,
+    "sha256": "1c714bdf7313aab999754350ef3c7dcd5baa1592a13431382f007739efbfd3fc"
+  },
+  "initial_environment_failure": "The earlier venv no longer existed; the default interpreter lacked rfc8785. No fixtures ran before installing the existing requirements and pinned dependency into a task-local venv."
+}
