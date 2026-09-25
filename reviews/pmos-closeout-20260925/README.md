@@ -40,7 +40,7 @@ and documentation only.
 | Missing directory / malformed JSON | EVIDENCE_INVALID, no writes |
 | Exact pinned Beacon adapter | Twelve offline journeys pass; worker launch replaced locally; zero collector sends and zero model calls |
 | Independent assembly review | APPROVE: worker blobs/modes, original handoff artifacts, all skills, prior workflow steps and dependency pins preserved |
-| GitHub CI | [Point-in-time check links](ci-snapshot.json); skipped draft-era checks are not counted as passing |
+| GitHub CI | All four ready PRs have passing audit, public-quickstart and deterministic quality checks on their published heads; [exact runs](ci-snapshot.json). Skipped draft-era checks are not counted as passing |
 
 The combined quality gate initially rejected an extra EOF blank line inherited
 from the Beacon adapter installer. A formatting-only correction closed it; both

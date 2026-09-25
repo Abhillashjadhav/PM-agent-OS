@@ -1,6 +1,7 @@
 {
-  "captured_at": "2026-09-25T18:16:38.950Z",
-  "note": "Point-in-time GitHub checks; skipped draft-era runs are not counted as passing. Inspect linked runs for later status.",
+  "captured_at": "2026-09-25T18:18:40.029Z",
+  "result": "All four ready PRs have passing audit, public-quickstart and deterministic quality checks on their published heads.",
+  "note": "Skipped draft-era runs are not counted as passing. This snapshot does not claim handoff review-branch CI executed.",
   "prs": [
     {
       "pr": 59,
@@ -70,8 +71,8 @@
         {
           "id": 108193965700,
           "name": "Deterministic PR quality gate",
-          "status": "queued",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172126861/job/108193965700"
         },
         {
@@ -118,8 +119,8 @@
         {
           "id": 108193973288,
           "name": "public-quickstart",
-          "status": "queued",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172129162/job/108193973288"
         }
       ]
