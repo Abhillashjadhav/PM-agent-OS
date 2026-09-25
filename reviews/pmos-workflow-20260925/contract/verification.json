@@ -1,0 +1,40 @@
+{
+  "base_commit": "bee295cacd882f8a7fb4a5c306f2774b0cd3919a",
+  "test_first_commit": "f65a8fe030111b2b8ebc6e40665723ef035f0925",
+  "public_dependency_commit": "297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6",
+  "checks": {
+    "current-authoring": {
+      "command": [
+        "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/bin/python",
+        "-B",
+        "tests/decision-to-contract/test_current_authoring.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "skill-lint": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/lint_skill.py",
+        ".claude/skills/decision-to-contract/SKILL.md"
+      ],
+      "exit_code": 0
+    }
+  },
+  "frozen_artifacts": {
+    "tests/decision-to-contract/valid-answers.json": {
+      "unchanged": true,
+      "sha256": "437d7bb9ef3ea1e06ea0a17faaad0acb8e89bc325e5f6f1af057309638647a08"
+    },
+    "tests/decision-to-contract/valid-contract.json": {
+      "unchanged": true,
+      "sha256": "0339adbc2c54acf58646ecbdd2e76d53e659e4c0999a19706ed81506ca4797d7"
+    },
+    "tests/decision-to-contract/valid-approval-receipt.json": {
+      "unchanged": true,
+      "sha256": "5b3de637eee6b64c35bb3a6978c2346cbf3f0faf58f05802524a204870b3062f"
+    }
+  },
+  "scope": "Ordinary authoring, synthetic test approval, receipt verification and compile only. No model or engineering run."
+}
