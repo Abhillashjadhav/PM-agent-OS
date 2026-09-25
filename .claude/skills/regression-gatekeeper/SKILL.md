@@ -47,7 +47,7 @@ GATE CHECK: G1 pass (no unrun verdict) · G2 pass (rules pre-committed) · G3 pa
 
 1. No ship verdict without complete, comparable results in hand. "Low risk" reasoning postpones the run; it never replaces it.
 2. Verdict rules are written before results and never edited mid-flight. Out-of-bound results retain HOLD/INVESTIGATE under the ordered rules; future rule-review proposals do not approve this run.
-3. A reintroduced captured failure is an automatic HOLD — the golden set's fail-class cases are non-negotiable tripwires, whatever the aggregate looks like.
+3. On a complete run, any reintroduced captured failure forces HOLD regardless of the aggregate. Incomplete evidence remains PENDING with the observed failure disclosed; neither state permits shipping.
 4. The gate certifies only what the set covers; uncovered requirements are named, not waved through under a green aggregate.
 
 ## Limitations
