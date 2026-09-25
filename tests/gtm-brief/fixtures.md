@@ -33,7 +33,7 @@ EXPECTED OUTPUT PROPERTIES:
    An audience claim with neither = gate failure.
 2. One-pager structure: audience & evidence · problem & alternative today · positioning
    (against the named competitor only where the input supports it — Fireflies, 2/9
-   losses, cited) · channels (self-serve + the stated 4-person sales motion only) ·
+   losses, cited) · channels (NOT PROVIDED — ask which motions/owners exist) ·
    pricing (+$10/seat, decided) · success measures with baselines marked "none — 
    pre-launch" where true.
 3. Numbers reconcile to input: 41 tickets, 3 stalled deals, 2/9 losses — quoted
@@ -49,3 +49,15 @@ A draft claiming "agencies consistently tell us they'd pay a premium for AI summ
 price) — MUST be caught by the sourced-audience gate: either re-tied to what the
 input actually supports (demand signal ≠ willingness to pay) or labeled
 [ASSUMPTION] with the validation step.
+
+CHANNEL WITNESS: the fixture supplies three stalled deals and sales notes, but
+does not supply a self-serve upgrade flow or sales-team size. A brief asserting
+“self-serve + 4-person sales team [stated motions]” fails evidence-bounded scope.
+The number of deals is not a count of people. Return a channel gap/question;
+do not invent staffing or present a proposed channel as an existing motion.
+
+SUPPLIED-CHANNEL VARIANT: if the owner later explicitly supplies “self-serve
+upgrade path and a four-person sales team,” those motions may be stated with
+that source. No additional channels or staff are inferred.
+
+These are specification witnesses, not recorded model outputs.
