@@ -1,0 +1,73 @@
+{
+  "prior_installer": {
+    "commit": "27d0418",
+    "command": "python3 -B tests/test_install.py -v (current regression suite, parent installer only, disposable repository)",
+    "exit": 1,
+    "results": [
+      "test_clean_install_refuses_overwrite_and_force_replaces (__main__.InstallerSafetyTests.test_clean_install_refuses_overwrite_and_force_replaces) ... ok",
+      "test_dangling_reviewer_link_requires_force (__main__.InstallerSafetyTests.test_dangling_reviewer_link_requires_force) ... FAIL",
+      "test_force_can_replace_leaf_link_to_source (__main__.InstallerSafetyTests.test_force_can_replace_leaf_link_to_source) ... FAIL",
+      "test_force_replaces_dangling_reviewer_link_without_writing_referent (__main__.InstallerSafetyTests.test_force_replaces_dangling_reviewer_link_without_writing_referent) ... FAIL",
+      "test_force_replaces_directory_link_without_changing_referent (__main__.InstallerSafetyTests.test_force_replaces_directory_link_without_changing_referent) ... FAIL",
+      "test_source_target_is_rejected_before_modification (__main__.InstallerSafetyTests.test_source_target_is_rejected_before_modification) ... FAIL",
+      "test_symlinked_group_into_source_is_rejected_before_modification (__main__.InstallerSafetyTests.test_symlinked_group_into_source_is_rejected_before_modification) ... FAIL",
+      "Ran 7 tests in 0.861s",
+      "FAILED (failures=6)"
+    ]
+  },
+  "repaired_installer": {
+    "commit": "9d09327a4fca24d111f98e895874eed0f609aa5a",
+    "command": "python3 -B tests/test_install.py -v",
+    "exit": 0,
+    "results": [
+      "test_clean_install_refuses_overwrite_and_force_replaces (__main__.InstallerSafetyTests.test_clean_install_refuses_overwrite_and_force_replaces) ... ok",
+      "test_dangling_reviewer_link_requires_force (__main__.InstallerSafetyTests.test_dangling_reviewer_link_requires_force) ... ok",
+      "test_force_can_replace_leaf_link_to_source (__main__.InstallerSafetyTests.test_force_can_replace_leaf_link_to_source) ... ok",
+      "test_force_replaces_dangling_reviewer_link_without_writing_referent (__main__.InstallerSafetyTests.test_force_replaces_dangling_reviewer_link_without_writing_referent) ... ok",
+      "test_force_replaces_directory_link_without_changing_referent (__main__.InstallerSafetyTests.test_force_replaces_directory_link_without_changing_referent) ... ok",
+      "test_source_target_is_rejected_before_modification (__main__.InstallerSafetyTests.test_source_target_is_rejected_before_modification) ... ok",
+      "test_symlinked_group_into_source_is_rejected_before_modification (__main__.InstallerSafetyTests.test_symlinked_group_into_source_is_rejected_before_modification) ... ok",
+      "Ran 7 tests in 0.686s",
+      "OK"
+    ]
+  },
+  "additional_boundaries": [
+    {
+      "case": "source_alias",
+      "command": "python3 -B scripts/install.py --target <disposable case target> --force",
+      "exit": 2,
+      "source_unchanged": true,
+      "diagnostic_blocked": true,
+      "unexpected_target_created": false
+    },
+    {
+      "case": "target_nested_in_source_group",
+      "command": "python3 -B scripts/install.py --target <disposable case target> --force",
+      "exit": 2,
+      "source_unchanged": true,
+      "diagnostic_blocked": true,
+      "unexpected_target_created": false
+    },
+    {
+      "case": "invalid_repository",
+      "command": "python3 -B scripts/install.py --target <disposable case target> --force",
+      "exit": 2,
+      "source_unchanged": true,
+      "diagnostic_blocked": true,
+      "unexpected_target_created": false
+    },
+    {
+      "case": "missing_source_group",
+      "command": "python3 -B scripts/install.py --target <disposable case target> --force",
+      "exit": 2,
+      "source_unchanged": true,
+      "diagnostic_blocked": true,
+      "unexpected_target_created": false
+    }
+  ],
+  "repository_audit": {
+    "command": "python3 -B tests/audit_repository.py",
+    "exit": 0,
+    "stdout": "PASS repository audit: 40 lifecycle skills, 3 supporting skills, 7 reviewer personas"
+  }
+}

@@ -57,7 +57,20 @@ def validate_repository() -> None:
 
 def install(target: Path, force: bool) -> tuple[int, int]:
     planned = entries()
-    conflicts = [target / relative for _, _, relative in planned if (target / relative).exists()]
+    source_roots = [source_root.resolve() for source_root in SOURCE_GROUPS.values()]
+    for _, _, relative in planned:
+        # Resolve parent links, but not a leaf link that --force will unlink.
+        destination = (target / relative).parent.resolve() / relative.name
+        for source_root in source_roots:
+            if destination.is_relative_to(source_root) or source_root.is_relative_to(destination):
+                raise ValueError(
+                    f"installation destination overlaps source directory: {destination} ({source_root})"
+                )
+    conflicts = [
+        target / relative
+        for _, _, relative in planned
+        if (target / relative).exists() or (target / relative).is_symlink()
+    ]
     if conflicts and not force:
         rendered = "\n".join(f"  - {path}" for path in conflicts)
         raise FileExistsError(
@@ -73,7 +86,9 @@ def install(target: Path, force: bool) -> tuple[int, int]:
     for group, source, relative in planned:
         destination = target / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
-        if destination.exists():
+        if destination.is_symlink():
+            destination.unlink()
+        elif destination.exists():
             if destination.is_dir():
                 shutil.rmtree(destination)
             else:
@@ -95,7 +110,7 @@ def main() -> int:
     target = args.target.expanduser().resolve()
     try:
         skill_count, agent_count = install(target, args.force)
-    except (FileExistsError, FileNotFoundError, subprocess.CalledProcessError) as exc:
+    except (FileExistsError, FileNotFoundError, ValueError, subprocess.CalledProcessError) as exc:
         print(f"INSTALLATION BLOCKED: {exc}", file=sys.stderr)
         return 2
 
