@@ -1,0 +1,142 @@
+{
+  "status": "FAIL",
+  "scope": "Static byte/blob/mode comparison only; no historical script executed.",
+  "verified_files": 0,
+  "errors": [
+    {
+      "path": "AGENTS.md",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/ACCEPTANCE.md",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/README.md",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/approval-receipt.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/bindings.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/compiled-plan.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/contract.approved.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/contract.draft.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/evaluator.py",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/execution-profile.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/freeze-bundle.sha256",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/freeze-manifest.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/proposal-validation.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/publisher-input.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/render-proposal.py",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/README.md",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/after-command.sh",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/before-command.py",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/before.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original/compatibility.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original/digest-checks.jsonl",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original/execution-source.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original/processes.jsonl",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/original/result.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/tampered.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/digest-checks.jsonl",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/execution-source.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/failure.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/reproduction-closeout/validation.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/review-bundle.sha256",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/review-manifest.json",
+      "error": "regular file missing"
+    },
+    {
+      "path": "reviews/task-tracker-v1/scenarios.json",
+      "error": "regular file missing"
+    }
+  ],
+  "command": "python3 -B reviews/pmos-workflow-20260925/references/check_reference_snapshot.py",
+  "exit_code": 1,
+  "tested_source": "bee295cacd882f8a7fb4a5c306f2774b0cd3919a"
+}

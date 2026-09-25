@@ -1,0 +1,252 @@
+{
+  "classification": "Immutable historical references; not current owner approval or runtime certification.",
+  "sources": [
+    {
+      "source_commit": "5d79b20cc16703cb8fd6fa98040659db8881c579",
+      "path": "AGENTS.md",
+      "kind": "file",
+      "source_git_object": "52bef2b2a096384e2aef6e4d7324a819c66abde3",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "mode": "100644",
+          "git_blob": "52bef2b2a096384e2aef6e4d7324a819c66abde3",
+          "sha256": "229f9e8ad5ff636824a2e2e6641aeded2419078d674168ab7b6367ec65554da5",
+          "bytes": 1234
+        }
+      ]
+    },
+    {
+      "source_commit": "33a35962d13fb13163d61beb938f9e593a742197",
+      "path": "reviews/task-tracker-v1",
+      "kind": "directory",
+      "source_git_object": "101567cc26c83dc51a3d19fbe96bcd94da90763b",
+      "files": [
+        {
+          "path": "reviews/task-tracker-v1/ACCEPTANCE.md",
+          "mode": "100644",
+          "git_blob": "84cc4b5fe7532110c3bfb8bce8047b672371aa09",
+          "sha256": "7788286762d679c26769e4abc05406597829cdb89da57a0425d4353d79c5e7a8",
+          "bytes": 41723
+        },
+        {
+          "path": "reviews/task-tracker-v1/README.md",
+          "mode": "100644",
+          "git_blob": "9d3cf959a07fa9dd3d108392ba31b6f5e7dd9876",
+          "sha256": "a9fc43ca99cdc023628b0098c2d0c6df1e2e3d3a52fc92b7aeea260c3c23a775",
+          "bytes": 8478
+        },
+        {
+          "path": "reviews/task-tracker-v1/approval-receipt.json",
+          "mode": "100644",
+          "git_blob": "42456c30693022da22d5e5d2d5a351cc3b1dd81d",
+          "sha256": "856ef2b3257a54c3834c44f95d61b245be4906807db50d2f88dc63e219b1d09c",
+          "bytes": 471
+        },
+        {
+          "path": "reviews/task-tracker-v1/bindings.json",
+          "mode": "100644",
+          "git_blob": "d5ba3e0fe10d5c1fdf9640ce4d9aa8a54691e47c",
+          "sha256": "3414ac07671405b6d69a41af91b1e96b8324d1c4455b0e262f5e04123540dac0",
+          "bytes": 5581
+        },
+        {
+          "path": "reviews/task-tracker-v1/compiled-plan.json",
+          "mode": "100644",
+          "git_blob": "5ce764acfe9497b34566a8f76781f74837930127",
+          "sha256": "e729e28f5383340068073ae78fc6c2523016f642160b7c2a1d17388b655c12d1",
+          "bytes": 12385
+        },
+        {
+          "path": "reviews/task-tracker-v1/contract.approved.json",
+          "mode": "100644",
+          "git_blob": "858a60ca567111cee676b8acb7d0928fca3702bd",
+          "sha256": "41f93f23ca57cef11201fe685b18d66be882c122e5a3c7192e37e9018de0f0e2",
+          "bytes": 22927
+        },
+        {
+          "path": "reviews/task-tracker-v1/contract.draft.json",
+          "mode": "100644",
+          "git_blob": "26c3b360613c04f7964da91a82d67bc5ecb28813",
+          "sha256": "141fce81ce3b7ff25408df72bd0d4d3a6520b3ec70aab75a5d1821cf605ead74",
+          "bytes": 22876
+        },
+        {
+          "path": "reviews/task-tracker-v1/evaluator.py",
+          "mode": "100644",
+          "git_blob": "110a60e2dd62746cbcd24a6052a21983c77a118e",
+          "sha256": "7a5a3064d8ec07ae1d941aaa2145330076c8acf62bbbc7cc65e158b9f9cf4d66",
+          "bytes": 4792
+        },
+        {
+          "path": "reviews/task-tracker-v1/execution-profile.json",
+          "mode": "100644",
+          "git_blob": "8b25915c88ea335e6aead34ceafd629716dfadee",
+          "sha256": "4a46f594d269e130b8933cd032fa7fb400c0a510553f77140efa2a1fab683120",
+          "bytes": 5186
+        },
+        {
+          "path": "reviews/task-tracker-v1/freeze-bundle.sha256",
+          "mode": "100644",
+          "git_blob": "a490bb4fd900ca8d04d0da4ae99c883c75f50d2a",
+          "sha256": "2ea86dd14d594f0afb3954d7b8b4f95af745e2ff6204668458c72ebb6fc5b1d2",
+          "bytes": 72
+        },
+        {
+          "path": "reviews/task-tracker-v1/freeze-manifest.json",
+          "mode": "100644",
+          "git_blob": "e691ec1600f503cede8f4716739d7175491a7d9f",
+          "sha256": "bb7bc83e5270cc29cadfc8b30608d73f85c271f77bba4c024fa3c659f3363f59",
+          "bytes": 37599
+        },
+        {
+          "path": "reviews/task-tracker-v1/proposal-validation.json",
+          "mode": "100644",
+          "git_blob": "5c7adc9337064f424325e12672faf0dfc7f3dfbe",
+          "sha256": "e5ab7b69b767599784dc91bdd08901483516c0b7ada990904448dff61bf3ab3a",
+          "bytes": 2974
+        },
+        {
+          "path": "reviews/task-tracker-v1/publisher-input.json",
+          "mode": "100644",
+          "git_blob": "6e7846ff4492a5045ce28e3f35484b49abf6e887",
+          "sha256": "37303040df5b8dc6a9d3ae8182654872e629b59e1212dca736586693ecd50c40",
+          "bytes": 22700
+        },
+        {
+          "path": "reviews/task-tracker-v1/render-proposal.py",
+          "mode": "100644",
+          "git_blob": "d0e587fe86dbcc77ad9bb697e525b3f4258d72f1",
+          "sha256": "5c209bf04ba958a0ab57e11fd58cbb06532e3c6f086a826d458a420c2f4a6f63",
+          "bytes": 6258
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/README.md",
+          "mode": "100644",
+          "git_blob": "28bd553e04656e2873563b86a5251e29152a3302",
+          "sha256": "e5d830d40cb4d3ec4e92de63997f6314a0b131c794f3195a3d8bdd1b7abe893b",
+          "bytes": 1166
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/after-command.sh",
+          "mode": "100644",
+          "git_blob": "f077c8a0f483a86edd34b9eb8f4301ba0eb4f19d",
+          "sha256": "4de9536de27cd3e6218bb68d69fb50141c6e9f165a5b349891c5a43beadd0db8",
+          "bytes": 442
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/before-command.py",
+          "mode": "100644",
+          "git_blob": "bf5b30955badda9fe4f912b9533641a32b68575d",
+          "sha256": "e5440f154af788046dc109d19b2f4ff28239845dd9945e4e22ded5f76f257cbe",
+          "bytes": 2006
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/before.json",
+          "mode": "100644",
+          "git_blob": "d5f20339247fc720e2d87637d5d4997fef3d9152",
+          "sha256": "f8648de930572318b4223f47362c33289bf8e4e74ec40661694fb3a2cdfc4d92",
+          "bytes": 519
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original.json",
+          "mode": "100644",
+          "git_blob": "d900e931d620fb2f11982560698db7733587f8b8",
+          "sha256": "5a6b78abee6501a773d32f1433bee32043698fbb3bec1bdaa41952aaf841cbc4",
+          "bytes": 397
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original/compatibility.json",
+          "mode": "100644",
+          "git_blob": "ba5ccbc52b02b74641a49635129a27c794098869",
+          "sha256": "a2cd727ee1fb87695e9dac9fc17341454386d0508035d6deea1fbe3009895560",
+          "bytes": 723
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original/digest-checks.jsonl",
+          "mode": "100644",
+          "git_blob": "669ffdf360ab8d40010be7a637e3594d73daec17",
+          "sha256": "b2eeb32ee9fdc0fcde3d60b191ebd0f59b29328546a5609e5d915a5e6de8b068",
+          "bytes": 8477
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original/execution-source.json",
+          "mode": "100644",
+          "git_blob": "b78ab277cf24bfd329a9f20331726384f497aaa7",
+          "sha256": "d4faa8ecf184623ec3b3bef8f5636718a69cc598063ba808eaa73f9d0a23a8ec",
+          "bytes": 765
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original/processes.jsonl",
+          "mode": "100644",
+          "git_blob": "104bfcff2d4616c30c4cc57ca3017393cc864b7e",
+          "sha256": "4ddb634977ceb0dbcef6649834844808c8c9cba9f3679896527b92669440303e",
+          "bytes": 20238
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/original/result.json",
+          "mode": "100644",
+          "git_blob": "4be8cc5d2b2395c8e24de5ef407a4c2379807c1a",
+          "sha256": "6e610933f427f91fcdf0bbc8ccb62778f70aeef2dfe15ccc9404e0fb89c65905",
+          "bytes": 349
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/tampered.json",
+          "mode": "100644",
+          "git_blob": "95c0e76f9a9b2990ef2bda2d6c53a0c50d130958",
+          "sha256": "544e0a4a14f194ee2e89e0bfa05341db1c5cadefdd51b59cdf6f61faba090e3e",
+          "bytes": 408
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/digest-checks.jsonl",
+          "mode": "100644",
+          "git_blob": "90c813ee06d3b2a05fccbbdc999ca3f2db4c3001",
+          "sha256": "5f0e5bd0ee1728b77cf68a78cf2bbdeab014f9d13b4b9e0413eb919d393b00b6",
+          "bytes": 581
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/execution-source.json",
+          "mode": "100644",
+          "git_blob": "b78ab277cf24bfd329a9f20331726384f497aaa7",
+          "sha256": "d4faa8ecf184623ec3b3bef8f5636718a69cc598063ba808eaa73f9d0a23a8ec",
+          "bytes": 765
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/tampered/failure.json",
+          "mode": "100644",
+          "git_blob": "d6eb854d4cae95956554760094073e516d8542dc",
+          "sha256": "b34dcdea7b66c3e22c2e4494a2d1a40ebf8f431c4f0334248c566f243e7c120a",
+          "bytes": 385
+        },
+        {
+          "path": "reviews/task-tracker-v1/reproduction-closeout/validation.json",
+          "mode": "100644",
+          "git_blob": "da8bdc85b31afc016e48a61c70c48f9be9ffdf1e",
+          "sha256": "faa85ecffac4e7db339a72124bf078f8ae19bf99bf9c2c9b681360f96e819fd0",
+          "bytes": 495
+        },
+        {
+          "path": "reviews/task-tracker-v1/review-bundle.sha256",
+          "mode": "100644",
+          "git_blob": "e901e7edb6615e93f87cbfd6cba087c9a25d83ee",
+          "sha256": "231c4c27890243571860fd31d510f7596ea3fdcd00bf2d2b9bde7b4368cc2825",
+          "bytes": 72
+        },
+        {
+          "path": "reviews/task-tracker-v1/review-manifest.json",
+          "mode": "100644",
+          "git_blob": "8042d1d9adfe9030a876810c4c9e65f4efd5fddf",
+          "sha256": "f3ad347cad242eea5c6c1c58aaa4dd761d72ce457d80299f9120de5044a85b27",
+          "bytes": 36905
+        },
+        {
+          "path": "reviews/task-tracker-v1/scenarios.json",
+          "mode": "100644",
+          "git_blob": "8dd207cba0ef05609ccf61272c8127bd185371e7",
+          "sha256": "0c5bd5d6f5b0130333c823be2f136df31487b26b22a6b74837bdfc8061806620",
+          "bytes": 11652
+        }
+      ]
+    }
+  ]
+}
