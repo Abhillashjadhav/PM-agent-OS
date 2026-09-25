@@ -11,7 +11,7 @@ T4. "/pm we want to build usage-based pricing — what needs to be true?" (via o
 T5. "Riskiest assumption first — break down this concept"
 
 SHOULD NOT FIRE:
-N1. "Write the PRD for the onboarding coach"        (Build stage — not shipped, /pm refuses)
+N1. "Write the PRD for the onboarding coach"        (prd-first owns PRD intake/drafting; not assumption mapping)
 N2. "Size the market for onboarding tools"          (opportunity-sizer)
 N3. "What is a riskiest-assumption test?"           (knowledge question)
 N4. "List the assumptions in this legal contract"   (document analysis, not product-idea risk mapping)

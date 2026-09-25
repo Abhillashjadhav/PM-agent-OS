@@ -49,3 +49,9 @@ any language" — two blocklist hits (integrations beyond own video; multi-langu
 dressed as one friendly sentence — MUST be caught by the overclaim gate via the
 claim-to-spec map (no spec line supports it) and rewritten to the spec's actual
 scope ("meetings on [our] video calls, English today").
+
+CATALOGUE REFERENCE CHECK: if the draft identifies a claims/privacy exposure,
+the repository's `legal-reviewer` persona is available for a cited review and
+flags for counsel. Do not say the persona is not yet available, or treat its
+review as legal approval. The persona reviews; it does not replace counsel.
+This checks the shipped source reference, not execution of a persona/model.
