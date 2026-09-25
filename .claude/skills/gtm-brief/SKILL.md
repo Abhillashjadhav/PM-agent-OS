@@ -12,13 +12,13 @@ One page on who buys and why — with every audience claim wearing its receipt o
 
 - **G1 — Sourced or labeled, every audience claim:** who wants this, what they'll pay, why now — each tied to a stated source from the input (sales notes, ticket export, win/loss doc) or carrying `[ASSUMPTION: … — validation step]`. A bare audience claim fails.
 - **G2 — Numbers reconcile:** figures quoted from the input exactly (41 tickets is 41, or honestly "dozens" — never "hundreds"). Pre-launch metrics have no baselines; the brief says "none — pre-launch" instead of inventing one.
-- **G3 — Evidence-bounded scope:** positioning targets only competitors the input evidences; channels are only the motions that exist; the brief names its own weakest evidence in one line.
+- **G3 — Evidence-bounded scope:** positioning targets only competitors the input evidences; existing channels/staffing require stated source evidence. Missing motions or owners are gaps/questions, never inferred from sales notes or deal counts. The brief names its own weakest evidence in one line.
 
 ## Steps
 
 1. **Inventory the evidence:** every demand signal, loss reason, and customer fact in the input, with its source tag. This inventory is the universe claims may cite — the same rule as competitor-teardown's OBSERVED discipline, pointed at your own market.
 2. **Read the signals honestly.** 41 feature requests are demand for the capability, not proof of willingness to pay $10 — the brief keeps those separate, converting evidence gaps into labeled assumptions with validation steps ("attach-rate ≥15% [ASSUMPTION — measure in first 30 days]").
-3. **Write the page:** audience & evidence · problem & today's alternative · positioning (competitor named only with cited basis) · channels (stated motions only) · pricing (as decided) · success measures (metric + target-or-assumption + baseline-or-"none — pre-launch").
+3. **Write the page:** audience & evidence · problem & today's alternative · positioning (competitor named only with cited basis) · channels (stated motions only; if absent, `NOT PROVIDED` plus a question about available motions/owners) · pricing (as decided) · success measures (metric + target-or-assumption + baseline-or-"none — pre-launch"). Proposed channels stay labeled proposals; a number of deals never supplies a number of salespeople.
 4. **Confess the weakest link.** One line: the claim the launch most depends on with the least evidence behind it. Every honest GTM brief has one; a brief that doesn't is hiding it.
 5. **Gate pass.** Every audience claim sourced/labeled (G1), every figure reconciled against input (G2), scope bounded and weakest link present (G3). Fix and re-run; maximum 2 repair loops, then report the failure.
 
@@ -33,7 +33,8 @@ PROBLEM & ALTERNATIVE: manual recaps post-call; losing 'AI-first' evaluations to
 Fireflies [source: win/loss — 2 of 9 losses]
 POSITIONING: summaries inside the scheduling flow they already use, vs. adding a
 separate AI notetaker [basis: the win/loss pattern above]
-CHANNELS: self-serve upgrade path + 4-person sales team on the 3 stalled deals [stated motions]
+CHANNELS: NOT PROVIDED — which launch motions and owners are available?
+Sales notes establish stalled deals, not self-serve availability or team size.
 PRICING: +$10/seat (decided)
 SUCCESS: attach rate ≥15% in 90 days [ASSUMPTION: no usage data pre-launch — measure
 from day 1; baseline: none — pre-launch] · reopen 3 stalled deals [source: sales notes]
