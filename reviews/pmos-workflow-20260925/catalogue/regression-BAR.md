@@ -6,3 +6,7 @@
 4. **Rejecting check first? Yes.** Commit the single-outlier, binary-failure, precedence, incomplete-evidence and explicit-tolerance fixtures before the instructions. These are source/specification witnesses, not an executed model run.
 5. **Independently revertible? Yes.** Only this skill, its fixtures and this note change.
 6. **New unrequested surface? No.** No runner, threshold default, model call or dependency is added.
+
+Consistency follow-up: the legacy “automatic HOLD” hard rule also needs the
+complete-run qualification. Extend the incomplete-evidence witness first so an
+observed failure is reported and shipping blocked without inventing completion.

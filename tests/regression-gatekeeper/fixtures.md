@@ -69,6 +69,8 @@ the approved 1-point bound above unless explicitly stated otherwise.
   by 2 points. Expected HOLD, with both observations reported.
 - INCOMPLETE: only 13 of 14 cases have comparable baseline/new results. Expected
   PENDING with the missing evidence identified; no ship verdict from the subset.
+  This remains PENDING if an observed case already reproduces bad behavior: name
+  that failure and block shipping, but do not claim a complete-run verdict yet.
 - WITHIN-BOUNDS: all gates pass and every rubric delta is at most 1 point.
   Expected SHIP for covered regressions only; the new length requirement remains
   uncovered, so this is not certification of that requirement.
