@@ -10,42 +10,44 @@ Real outputs, real human judgments, structured to last. A golden case without it
 
 ## Verification gates (defined first; output is blocked until all pass)
 
-- **G1 — No unlabeled cases:** every golden carries the human verdict AND the human's reason. Cases missing either are quarantined with the specific ask ("needs verdict", "'fine I guess' — pass or fail, and why?") — never included, never auto-labeled, never upgraded from ambiguity.
-- **G2 — Labels are the human's, verbatim:** reasons are stored as written; paraphrasing a reason into something stronger or cleaner corrupts provenance. Ambiguous verdicts go back as questions, not interpretations.
-- **G3 — Set integrity:** duplicates collapsed to one case with provenance noted; the set report shows candidates → goldens + quarantined, verdict balance (a set of only passes tests nothing), and failure-pattern coverage.
+- **G1 — Complete human-label provenance:** every golden carries its input, observed output, human verdict, reason, reviewer alias and label date. Missing or ambiguous fields mean quarantine with specific asks, never inferred labels. An incident description or expected-behavior assertion alone is not a human-label record.
+- **G2 — Labels are the human's, verbatim:** retain every supplied review record. If a reason contains identifying data, request human-approved sanitized wording and store that wording verbatim; do not share the original or present the skill's rewrite as the human's words. Conflicting verdicts/reasons stay quarantined for accountable adjudication; append the resolution without erasing the original sanitized reviews.
+- **G3 — Case identity and counts:** deduplicate only the same input (exact content or immutable versioned reference), observed output and criterion ID/version. Equal output text alone is insufficient. Report candidate records, unique cases, goldens and quarantine separately, with retained review/export provenance, verdict balance and failure-pattern coverage.
 
 ## Steps
 
-1. **Inventory the raw material:** every output-review pair, however informal. Nothing is discarded — cases split into golden-ready (verdict + reason) and quarantine (missing pieces, each with its unblock question).
-2. **Structure each golden:** id · input (or reference) · output · verdict · reason (verbatim) · label author · date · the eval criterion it exercises (mapped where an eval exists; `unmapped` honestly otherwise — unmapped goldens are seeds for eval-engine, noted as such).
-3. **Deduplicate** on output identity; keep one case, note the duplication (frequency is metadata, not case count).
-4. **Report the set:** N candidates → K goldens / M quarantined (with asks); pass/fail balance; which known failure patterns are covered and which have zero cases — a coverage gap is a collection task, not a generation task.
+1. **Inventory the raw material:** every supplied output and review record, however informal. Separate complete, undisputed records from quarantine (missing pieces or disputes, each with its unblock question). Do not discard review history or infer a label from the request calling something a failure.
+2. **Structure each golden:** case id · exact input or immutable versioned reference · observed output · criterion ID/version · human verdict · reason (verbatim, human-approved sanitized wording where needed) · reviewer alias · label date · source provenance. If no eval criterion exists, mark `unmapped` as a seed for eval-engine; do not infer identity or collapse unmapped records.
+3. **Deduplicate on full case identity.** Group only identical input/output/criterion cases; retain all review records and export references. Different inputs or criteria remain separate even with identical outputs. Missing/unversioned references or unknown criterion identity cannot establish a duplicate. A conflicting label quarantines the grouped case with both labels intact; ask the criterion owner to adjudicate, never use latest-label-wins or majority vote.
+4. **Report the set:** N candidate records → U unique cases = K goldens + M quarantined (with asks); additional exports/reviews retained as provenance, not extra unique cases. Show pass/fail balance and failure-pattern coverage gaps — a coverage gap is a collection task, not a generation task.
 5. **State the maintenance loop:** new production failures arrive via failure-to-eval-capture; the set re-runs on every prompt/model change via regression-gatekeeper; label disputes route to the criterion owner. The golden set is infrastructure, and this section is its operating manual.
-6. **Gate pass.** Zero unlabeled goldens (G1), all reasons verbatim (G2), dedup + balance + coverage reported (G3). Fix and re-run; maximum 2 repair loops, then report the failure.
+6. **Gate pass.** All goldens have complete provenance (G1), human wording and disputes preserved (G2), full-identity dedup + reconciled counts + balance + coverage reported (G3). Quarantine is an honest output, not a failed attempt to fill the set. Fix and re-run; maximum 2 repair loops, then report the failure.
 
 ## Output format
 
 ```
-GOLDEN SET: meeting summarizer (6 candidates → 2 goldens · 3 quarantined · 1 duplicate)
+GOLDEN SET: meeting summarizer (6 candidate records → 5 unique cases = 2 goldens + 3 quarantined)
 GOLDENS
-GC-1 (from O2) — verdict: FAIL — reason [Priya, verbatim]: "the action items are
-wrong, it assigned Marco's task to Lena" — exercises: action-item attribution gate
-GC-2 (from O5) — verdict: PASS — reason [Priya, verbatim]: "perfect example of what
-we want: short, all decisions captured" — exercises: decision coverage + concision
+GC-1 (from O2) — input: [immutable source/version] · output: [recorded output]
+criterion: attribution/v1 · verdict: FAIL · reviewer: reviewer-1 · date: [supplied date]
+reason [human-approved sanitized wording, verbatim]: "assigned the action item to the wrong attendee"
+GC-2 (from O5) — input: [immutable source/version] · output: [recorded output]
+criterion: summary-quality/v1 · verdict: PASS · reviewer: reviewer-1 · date: [supplied date]
+reason [verbatim]: "perfect example of what we want: short, all decisions captured"
 QUARANTINE (not goldens until unblocked)
-Q-1 (O1) — verdict "good" present, reason missing → ask Priya: good because what?
+Q-1 (O1) — supplied PASS, note "good", reason missing → ask reviewer-1: good because what?
 Q-2 (O3) — no review → needs verdict + reason
-Q-3 (O4) — "fine I guess" — ambiguous → ask Marco: pass or fail, and why?
-DEDUP: O6 = O1 (duplicate export) — collapsed, frequency noted.
+Q-3 (O4) — "fine I guess" — ambiguous → ask reviewer-2: pass or fail, and why?
+DEDUP: O6 = O1 (same input/output/criterion); additional export retained as provenance.
 BALANCE: 1 pass / 1 fail — minimum viable; coverage gaps: no case exercises the
 no-invented-content gate yet → collection task, not generation.
-GATE CHECK: G1 pass (2/2 labeled, 0 auto-labels) · G2 pass (verbatim) · G3 pass
+GATE CHECK: G1 pass (2/2 complete, 0 auto-labels) · G2 pass (human wording retained) · G3 pass
 ```
 
 ## Hard rules
 
 1. Never label a case yourself. The skill's entire value is provenance — an inferred "pass" is a poisoned well, and a bigger set is not worth it.
-2. Never paraphrase a reason. "The action items are wrong" stays as Priya wrote it; interpretation happens at eval-design time, attributed.
+2. Never strengthen or silently rewrite a reason. Privacy edits require human-approved sanitized wording; until supplied, quarantine and omit the identifying reason from shared artifacts.
 3. Quarantine is a first-class output: every quarantined case carries the exact question that unblocks it, addressed to the person who can answer.
 4. Report the balance. A one-sided set gets said out loud, with the collection task that fixes it — never padded with synthetic counterweights.
 
