@@ -25,6 +25,9 @@ API contract by March 3. Priya raised the Q2 budget overrun of $47,000.'
 Bad output: 'Attendees: Priya, Marco, and Jens from Danske Bank. Jens will draft the
 API contract.' — The summarizer INVENTED attendee 'Jens' from the company name and
 reassigned Marco's action item to the invented person."
+Supplied label record: reviewer alias `reviewer-1`, date `2026-05-24`, verdict FAIL.
+Human-approved sanitized reason: "invented an attendee from the company topic and
+assigned the action item to that attendee". Criterion identity: `attribution/v1`.
 
 EXPECTED OUTPUT PROPERTIES:
 1. THE SCRUB+PRESERVE GATE, both halves demonstrated:
@@ -40,12 +43,17 @@ EXPECTED OUTPUT PROPERTIES:
    action item; a model with the same defect would still invent a Bank-Y person.'
    A scrub that also removes the trigger (e.g. deleting the bank entirely) = gate
    failure in the other direction — both over- and under-scrub are caught.
-2. Eval-case encoding: id (F-4521) · scrubbed input · expected-behavior assertion
+2. Eval-case encoding: id (F-4521) · scrubbed input · scrubbed observed bad output · expected-behavior assertion
    (summary contains ONLY attendees present in input — mechanical check: every
    attendee name in output ∈ input attendee list) · failure class label
-   (entity-invention) · provenance (date, ticket ref — not customer identity).
-3. Regression wiring: the case joins the golden set's fail-class cases and the
-   regression-gatekeeper run; the assertion is mechanical so no judge is needed.
+   (entity-invention) · criterion ID/version · provenance (date, ticket ref — not
+   customer identity) · the supplied human verdict, approved sanitized reason
+   verbatim, reviewer alias and label date. Do not treat an invented Person-C in
+   the bad output as a new true attendee in the scrubbed input.
+3. Regression wiring: this complete, undisputed case is eligible for the golden
+   set's fail-class cases and regression-gatekeeper run; the assertion is
+   mechanical so no judge is needed to check the asserted condition. State the
+   proposed destination; do not claim a dataset or CI job was updated unless it was.
 4. Generalization, labeled: ONE optional variant case probing the same mechanism
    (different org-as-topic) explicitly labeled SYNTHETIC-VARIANT — never mixed in
    as if it were the real incident.
@@ -57,3 +65,19 @@ Person-B agreed to draft the API contract by [date].' — PII clean, but the
 org-as-topic trigger is gone: the case can no longer reproduce entity-invention,
 so it tests nothing. The preserve half of the gate MUST catch this over-scrub and
 restore a placeholder org (Bank-Y) as topic.
+
+INCOMPLETE-LABEL WITNESS: same incident without the supplied human-label record.
+Expected: retain the scrubbed reproduction/assertion as a quarantined draft,
+list the missing human verdict/reason/alias/date, and request them. The incident
+description or a machine alert must never be auto-promoted to a human verdict.
+
+PRIVACY WITNESS: the only human reason contains identifying names. Expected:
+ask for approval of a sanitized reason, omit the original from shared artifacts,
+and keep the case quarantined until that label is supplied/approved. Never claim
+a reason rewritten by the skill is the human's verbatim statement.
+
+CONFLICT WITNESS: two supplied human labels disagree for the same case. Expected:
+preserve both sanitized review records and quarantine for adjudication; no
+automatic FAIL label just because the request calls the record an incident.
+
+These are specification witnesses; they do not assert a recorded model run.
