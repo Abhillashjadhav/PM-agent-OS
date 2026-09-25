@@ -48,7 +48,7 @@ GATE CHECK: G1 pass (n/n mapped, 0 N-hits) · G2 pass · G3 pass
 
 ## Limitations
 
-- The drafts are spec-true, not legally reviewed — regulated-industry claims (the legal reviewer persona, once available, or counsel) get the final word.
+- The drafts are spec-true, not legally approved. The available `legal-reviewer` persona flags specific claims/privacy exposures for counsel; its review does not replace counsel's judgment.
 - Tone is competent-neutral with room for brand energy; deep brand voice is the user's edit — the claim-to-spec map makes that edit safely checkable afterward.
 - The skill bounds claims to the spec; it cannot verify the spec itself is true — a spec that overclaims produces a faithfully overclaiming announcement.
 - Channel-specific mechanics (subject lines A/B, SEO, social threading) are marketing craft beyond this skill's gate.
