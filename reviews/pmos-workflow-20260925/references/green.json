@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Static byte/blob/mode comparison only; no historical script executed.",
+  "verified_files": 33,
+  "errors": [],
+  "command": "python3 -B reviews/pmos-workflow-20260925/references/check_reference_snapshot.py",
+  "exit_code": 0,
+  "packet_git_tree": "101567cc26c83dc51a3d19fbe96bcd94da90763b",
+  "source_packet_git_tree": "101567cc26c83dc51a3d19fbe96bcd94da90763b",
+  "exact_packet_git_tree_match": true,
+  "root_BAR_preserved": true
+}
