@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "source_commit": "f1852d5c32c9d7dd3b1503e5f17d69c2e59a8498",
+  "command": "python3 -B -m unittest discover -s tests -p test_beacon_runner.py -v",
+  "exit_code": 1,
+  "tests_run": 5,
+  "tests_passed": 4,
+  "failed_test": "test_adapter_preserves_nonexecutable_status",
+  "expected_exit_code": 126,
+  "actual_exit_code": 1,
+  "independent_pinned_adapter_reproduction": {
+    "commit": "b32bdfee2c5b579b06b45ffc5bf14bee5fa3f614",
+    "recording_disabled": true,
+    "command": "non-executable local fixture",
+    "without_adapter_exit_code": 126,
+    "with_adapter_exit_code": 1,
+    "with_adapter_error": "PermissionError"
+  },
+  "collector_events_sent": 0,
+  "model_calls": 0
+}
