@@ -1,0 +1,14 @@
+test_boolean_description_cannot_bypass_lint (__main__.ValidationRegressions.test_boolean_description_cannot_bypass_lint) ... ok
+test_collection_description_cannot_bypass_string_requirement (__main__.ValidationRegressions.test_collection_description_cannot_bypass_string_requirement) ... ok
+test_duplicate_inventory_cannot_replace_a_missing_skill (__main__.ValidationRegressions.test_duplicate_inventory_cannot_replace_a_missing_skill) ... ok
+test_inventory_cannot_substitute_another_file_for_skill (__main__.ValidationRegressions.test_inventory_cannot_substitute_another_file_for_skill) ... ok
+test_lifecycle_metadata_name_must_match_inventory (__main__.ValidationRegressions.test_lifecycle_metadata_name_must_match_inventory) ... ok
+test_quoted_collection_text_is_a_valid_description (__main__.ValidationRegressions.test_quoted_collection_text_is_a_valid_description) ... ok
+test_unlisted_skill_is_not_silently_installed (__main__.ValidationRegressions.test_unlisted_skill_is_not_silently_installed) ... ok
+test_unquoted_mapping_in_description_is_rejected (__main__.ValidationRegressions.test_unquoted_mapping_in_description_is_rejected) ... ok
+test_valid_inline_comment_preserves_description (__main__.ValidationRegressions.test_valid_inline_comment_preserves_description) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.817s
+
+OK

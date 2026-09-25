@@ -1,0 +1,128 @@
+{
+  "captured_at": "2026-09-25T18:16:38.950Z",
+  "note": "Point-in-time GitHub checks; skipped draft-era runs are not counted as passing. Inspect linked runs for later status.",
+  "prs": [
+    {
+      "pr": 59,
+      "head": "2e6da2731305c9d9abb94a079b8710e734598df3",
+      "checks": [
+        {
+          "id": 108192353253,
+          "name": "Deterministic PR quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171639184/job/108192353253"
+        },
+        {
+          "id": 108192208082,
+          "name": "Deterministic PR quality gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171597181/job/108192208082"
+        },
+        {
+          "id": 108192206647,
+          "name": "public-quickstart",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171597348/job/108192206647"
+        },
+        {
+          "id": 108192206635,
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171597268/job/108192206635"
+        }
+      ]
+    },
+    {
+      "pr": 60,
+      "head": "29d883f8b591e2f34ccb2196aacdbca95df36d80",
+      "checks": [
+        {
+          "id": 108193077912,
+          "name": "Deterministic PR quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171858288/job/108193077912"
+        },
+        {
+          "id": 108193077588,
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171858362/job/108193077588"
+        },
+        {
+          "id": 108193077305,
+          "name": "public-quickstart",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36171858334/job/108193077305"
+        }
+      ]
+    },
+    {
+      "pr": 61,
+      "head": "ef25c508478a7059f5756d5d38c16b1caf84e10d",
+      "checks": [
+        {
+          "id": 108193965700,
+          "name": "Deterministic PR quality gate",
+          "status": "queued",
+          "conclusion": null,
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172126861/job/108193965700"
+        },
+        {
+          "id": 107296690857,
+          "name": "public-quickstart",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/35895020592/job/107296690857"
+        },
+        {
+          "id": 107296689554,
+          "name": "Deterministic PR quality gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/35895020659/job/107296689554"
+        },
+        {
+          "id": 107296685178,
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/35895020661/job/107296685178"
+        }
+      ]
+    },
+    {
+      "pr": 62,
+      "head": "c723bb536fc92c49779082413578afe49496a944",
+      "checks": [
+        {
+          "id": 108193973703,
+          "name": "Deterministic PR quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172129170/job/108193973703"
+        },
+        {
+          "id": 108193973324,
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172129285/job/108193973324"
+        },
+        {
+          "id": 108193973288,
+          "name": "public-quickstart",
+          "status": "queued",
+          "conclusion": null,
+          "url": "https://github.com/Abhillashjadhav/PM-agent-OS/actions/runs/36172129162/job/108193973288"
+        }
+      ]
+    }
+  ]
+}

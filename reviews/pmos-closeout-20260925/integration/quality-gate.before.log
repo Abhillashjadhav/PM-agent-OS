@@ -1,0 +1,3 @@
+PASS repository audit: 40 lifecycle skills, 3 supporting skills, 7 reviewer personas
+scripts/install_beacon_adapter.py:34: new blank line at EOF.
+FAIL PR quality gate: command failed: git diff --check origin/main...HEAD

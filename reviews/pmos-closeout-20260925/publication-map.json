@@ -1,0 +1,109 @@
+{
+  "repository": "Abhillashjadhav/PM-agent-OS",
+  "scope": "PMOS only",
+  "method": "GitHub Git data API; each created remote tree SHA was asserted equal to its local source tree before creating the commit. Commit IDs differ because publication metadata differs.",
+  "verified_source": {
+    "local": "6c1bf7b978594fca8984c4b5bfa84de78df19160",
+    "published": "9b3689e4c23c42d89195b2e31c3f47fe4901bc2d",
+    "tree": "48c2954e0830387812b657c66f3e284132884a68"
+  },
+  "mappings": [
+    {
+      "local": "0504e07a3f6797085fef2183d6bdcdf9106cc957",
+      "published": "0504e07a3f6797085fef2183d6bdcdf9106cc957"
+    },
+    {
+      "local": "f1852d5c32c9d7dd3b1503e5f17d69c2e59a8498",
+      "published": "f1852d5c32c9d7dd3b1503e5f17d69c2e59a8498"
+    },
+    {
+      "local": "9d09327a4fca24d111f98e895874eed0f609aa5a",
+      "published": "9d09327a4fca24d111f98e895874eed0f609aa5a"
+    },
+    {
+      "local": "c95469338b64f22edcd9d260246e3c9186b0d302",
+      "published": "c95469338b64f22edcd9d260246e3c9186b0d302"
+    },
+    {
+      "local": "36050d2f13cc30937d349662ec9fbab345a2d8ea",
+      "published": "57d0d5d0d113194f61b3b915a5fd439ab3e976cf"
+    },
+    {
+      "local": "ffa1e3af86ed71ee7a2a80f1d7a284eea68d2406",
+      "published": "4d898e0d134b7bb1898cfa7d2978befbf6ccfbe7"
+    },
+    {
+      "local": "2729d0f0fbbaed04a5d1c4af1a49fa795860fa4b",
+      "published": "2c95f75a619a479d931c21fd9dea40fba111685f"
+    },
+    {
+      "local": "ef25c508478a7059f5756d5d38c16b1caf84e10d",
+      "published": "ef25c508478a7059f5756d5d38c16b1caf84e10d"
+    },
+    {
+      "local": "db996d25dc63ccf1f17319ca9e102bb59a63a621",
+      "published": "8e9d6322a47de6751c466bb1aa1d64138f5c06c6"
+    },
+    {
+      "local": "e2ad82052dacd543306833b2b922b2e1e0b8dcc2",
+      "published": "069372588bad13242009bf0be8fa55dad8ec718f"
+    },
+    {
+      "local": "a21279a5f0d7fd4bed6333b979fbd610f8260512",
+      "published": "13c2a8f30c51b2212bc3d187e1f2fdc572de87d8"
+    },
+    {
+      "local": "fd361d46a6ef5f1799b7a07f04524d588269893c",
+      "published": "2e6da2731305c9d9abb94a079b8710e734598df3"
+    },
+    {
+      "local": "c1ef9cbf40d43f9bfa4c917a325a96bd8fdd3a28",
+      "published": "29d883f8b591e2f34ccb2196aacdbca95df36d80"
+    },
+    {
+      "local": "b3dbe21a9b873d998f64077db4f34fcbd5099b89",
+      "published": "ac60bfd1dfbb0dd46b10862bdb35b3b59ddf9e3c"
+    },
+    {
+      "local": "06b96923b3c41b10179245d70f9104c44102b411",
+      "published": "492aa7ccd7fb0a164045097e79bb8b7d7559c961"
+    },
+    {
+      "local": "53a779e7f1d81c279bde050c023f2ad7aedb2b58",
+      "published": "68cd1eabccd0148c625f8ecefe2b546a241223df"
+    },
+    {
+      "local": "8612517679197ff775f85742578c154e9fee38b9",
+      "published": "e7f80998acc09021a84c86e979fe637022440d6e"
+    },
+    {
+      "local": "f33ad888e7cff57ac3337347340de577bb2d51c6",
+      "published": "329f15b3cc2d1560f130712656c4b1c08f7d7f35"
+    },
+    {
+      "local": "4209a66938b57b01e5b06a30c623b30ac2d24572",
+      "published": "c0cb026a526bf90dc8c8152d29e54d88ed66c4e7"
+    },
+    {
+      "local": "02fa8c5df199c7b301ebf653c5a624ca2683b55f",
+      "published": "d9a54c6c11280dfc4c0f58f5577819bf652e9234"
+    },
+    {
+      "local": "35c2fd1facd556896beb02b80e638b65ed565d9b",
+      "published": "c291178b77d218ab0464bfc4efdcb76637121a8a"
+    },
+    {
+      "local": "3cf29d339e942a915ad92b24d91dbc782f19ddc1",
+      "published": "7f892517de22c464181f362f5fd0315813f9b6d6"
+    },
+    {
+      "local": "3839447f8acf8773a7e34d4780fad8ba9cf0947c",
+      "published": "c723bb536fc92c49779082413578afe49496a944"
+    },
+    {
+      "local": "6c1bf7b978594fca8984c4b5bfa84de78df19160",
+      "published": "9b3689e4c23c42d89195b2e31c3f47fe4901bc2d"
+    }
+  ],
+  "note": "This receipt covers all composed source ancestors. The enclosing documentation commit is intentionally not self-referential. Current PR and review-branch refs identify the final documentation head."
+}

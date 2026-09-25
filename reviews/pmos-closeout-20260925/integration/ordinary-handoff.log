@@ -1,0 +1,3 @@
+CURRENT HANDOFF HEAD: test-only-f10-positive sha256:0ae9165abdbf2c882965a45764b347ef0f744930119e191cc22d58d6ba6a1738 (retain independently)
+CURRENT HANDOFF HEAD: test-only-f10-broken-candidate sha256:eacd186606c9de0f2d3d8d2f278b7496a27b5a9471be9b1374ff416c11207aeb (retain independently)
+CURRENT HANDOFF: PASS — TEST-ONLY RELEASE_READY / HALTED / CONTRACT_BLOCKED

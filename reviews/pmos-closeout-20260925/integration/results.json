@@ -1,0 +1,107 @@
+{
+  "source_commit": "02fa8c5df199c7b301ebf653c5a624ca2683b55f",
+  "source_tree": "e96e59c0b11fbcbb2bce49319f431405c849e469",
+  "checks": {
+    "installer": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/test_install.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_lines": 12
+    },
+    "validator": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/test_validation_regressions.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_lines": 14
+    },
+    "beacon": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_beacon_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_lines": 12
+    },
+    "quality-gate": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/pr_quality_gate.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "output_lines": 425,
+      "source_commit": "6c1bf7b978594fca8984c4b5bfa84de78df19160",
+      "source_tree": "48c2954e0830387812b657c66f3e284132884a68"
+    },
+    "ordinary-handoff": {
+      "command": [
+        "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/bin/python",
+        "-B",
+        "tests/decision-to-contract/validate_contract.py",
+        "--evidence-dir",
+        "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/integration-evidence"
+      ],
+      "exit_code": 0,
+      "output_lines": 3
+    }
+  },
+  "handoff_source_comparison": {
+    "tests/decision-to-contract/validate_contract.py": {
+      "expected_worker_digest": "sha256:ae906e23ae655a56bac1644dff034772023508cec27649a0b0630d44567b8e0e",
+      "actual_integration_digest": "sha256:ae906e23ae655a56bac1644dff034772023508cec27649a0b0630d44567b8e0e",
+      "matches": true
+    },
+    "tests/decision-to-contract/test_handoff.py": {
+      "expected_worker_digest": "sha256:0046715b156a91a7183aea194660ff5113483271ed30e3bee1a2f28d069eb01d",
+      "actual_integration_digest": "sha256:0046715b156a91a7183aea194660ff5113483271ed30e3bee1a2f28d069eb01d",
+      "matches": true
+    },
+    "tests/decision-to-contract/test_retained_inspection.py": {
+      "expected_worker_digest": "sha256:d13e087f0f1ddc29ef0b08850785cfdb59e7b2bc8b81c17fe2f084b5053ea371",
+      "actual_integration_digest": "sha256:d13e087f0f1ddc29ef0b08850785cfdb59e7b2bc8b81c17fe2f084b5053ea371",
+      "matches": true
+    },
+    ".github/workflows/repository-audit.yml": {
+      "expected_worker_digest": "sha256:8e0baf8ca0da9fdae522a1b625c27816cfe12c2b82c9da063d0e8e76df3c003f",
+      "actual_integration_digest": "sha256:4eff7732c5679242d36bf997fd781f9ebef647f70fea28159b893e98a0566054",
+      "matches": false,
+      "interpretation": "Expected workflow composition: validator and filtered offline Beacon regression steps were added. Both existing dependency pins and all prior handoff steps are preserved; no full handoff discovery was executed."
+    }
+  },
+  "scope": "PMOS only. No broad handoff test discovery, restricted probes, collector sends, or model calls.",
+  "initial_quality_gate": {
+    "command": [
+      "python3",
+      "-B",
+      "tests/pr_quality_gate.py",
+      "--base-ref",
+      "origin/main"
+    ],
+    "exit_code": 1,
+    "output_lines": 3,
+    "reason": "Extra EOF blank line inherited from the existing Beacon installer; corrected without runtime behavior change."
+  },
+  "ordinary_evidence_archive": {
+    "path": "ordinary-fixtures.tar.gz",
+    "file_count": 29,
+    "sha256": "a060c8068ac4af02ce9c56aa213aeea0836bce84c7c41dbefa84357a44658fba"
+  }
+}
