@@ -18,6 +18,8 @@ jobs:
           python-version: '3.12'
       - name: Run offline repository audit
         run: python tests/audit_repository.py
+      - name: Run offline Beacon hook and runner tests
+        run: python -B -m unittest discover -s tests -p 'test_beacon_*.py' -v
       - name: Lint all skills
         run: |
           while IFS= read -r skill; do

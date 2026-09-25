@@ -15,3 +15,15 @@
 4. **Failing check first? Yes.** The existing diff check reproduces this exact RED; the deterministic PR quality gate runs the same check.
 5. **Independently revertible? Yes.** The one-line formatting correction has no runtime dependency.
 6. **Unrequested setting/dependency/extension? No.** No settings, dependencies, or interfaces are added.
+
+# BAR: run existing Beacon regression tests in CI
+
+1. **Already exists? Yes.** Reuse the existing repository-audit job and seven offline `test_beacon_*.py` tests.
+2. **Approved criterion or reproduced blocker? Yes.** The reproduced 126-versus-1 launcher regression already has a RED fixture, but the audit job never executes it.
+3. **Changes existing behavior? Yes.** The existing audit job will now fail when a Beacon hook or runner regression fails; no runtime behavior or other CI step changes.
+4. **Failing check first? Yes.** Before editing, parsing the audit workflow and asserting this exact filtered unittest command fails because the invocation is absent.
+5. **Independently revertible? Yes.** The single added workflow step and this evidence entry are independently revertible.
+6. **Unrequested setting/dependency/extension? No.** Python standard-library unittest is already available; no new job, dependency, action, pin, or integration surface.
+
+Validation: YAML parses and differs only by the intended step. The exact added command,
+`python -B -m unittest discover -s tests -p 'test_beacon_*.py' -v`, passes all seven tests.
