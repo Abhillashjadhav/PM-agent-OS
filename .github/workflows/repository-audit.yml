@@ -18,6 +18,8 @@ jobs:
           python-version: '3.12'
       - name: Run offline repository audit
         run: python tests/audit_repository.py
+      - name: Reject planted validation failures
+        run: python -m unittest discover -s tests -p test_validation_regressions.py -v
       - name: Lint all skills
         run: |
           while IFS= read -r skill; do
