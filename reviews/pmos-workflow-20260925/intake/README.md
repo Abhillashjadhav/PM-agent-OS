@@ -40,6 +40,13 @@ reviewed cases and run results exist. No skill source changed for this correctio
 Both skill lints and `git diff --check` passed again. This is specification
 consistency evidence, not a supervised model-run result.
 
+Cross-unit review also found fixture H's old "single pivot criterion" wording
+contradicted the corrected `ai-feature-go-no-go` rule. The fixture now ranks a
+primary blocker while preserving every independent blocker and the complete
+reversal set when needed; one fix must not falsely reverse multiple blockers.
+The PENDING run verdict is unchanged. This correction changes only the fixture
+and this evidence note; skill blobs are unchanged and `git diff --check` passes.
+
 ## Checks actually run
 
 - Both changed skills passed `tests/lint_skill.py` before and after the change.

@@ -39,7 +39,9 @@ INPUT H (full-lifecycle chain): "/pm take this from raw interviews to an eval-ga
 EXPECT the chain, each link gated before the next consumes it:
   1. interview-synthesizer → patterns (≥2 verbatim quotes each, zero invented)
   2. assumption-mapper on the GATED patterns → risk-ranked bets (tags + tests)
-  3. ai-feature-go-no-go → decision naming its single pivot criterion
+  3. ai-feature-go-no-go → decision ranking the primary blocker while retaining
+     every independent blocker and, when needed, the complete reversal set;
+     never claim a single fix reverses a decision with multiple independent blockers.
   4. (on GO) prd-to-eval / eval-engine → gates + rubric, disqualifiers never scored
   5. Only if actual outputs and human reviews are supplied, golden-dataset-builder
      curates cases with human verdicts and reasons, quarantining missing labels.
