@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/bin/python",
+    "-B",
+    "tests/decision-to-contract/validate_contract.py",
+    "--evidence-dir",
+    "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-evidence"
+  ],
+  "exit_code": 0
+}

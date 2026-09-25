@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_handoff.CurrentHandoffTests.test_default_entrypoint_exercises_current_runner_and_negative_controls",
+    "test_retained_inspection.RetainedInspectionTests.test_state_cause_and_call_count_come_from_terminal_ledger",
+    "test_retained_inspection.RetainedInspectionTests.test_cli_reads_existing_packets_and_computes_reader_anchor",
+    "test_retained_inspection.RetainedInspectionTests.test_expected_head_requires_read_only_inspection"
+  ],
+  "PYTHONPATH": "tests/decision-to-contract",
+  "exit_code": 0
+}
