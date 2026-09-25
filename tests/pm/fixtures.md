@@ -18,6 +18,8 @@ T11. "/pm build the launch checklist for the beta" (fires — Launch shipped, ro
 T12. "/pm run the retro on the March launch" (fires — routes to launch-retro)
 T13. "/pm we tweaked the prompt — safe to ship?" (fires — Iterate shipped, routes to regression-gatekeeper)
 T14. "/pm our judge disagrees with human reviewers" (fires — routes to judge-calibration-auditor)
+T15. "/pm I have a product idea; ask what is missing and prepare its engineering handoff" (prd-first before approval/conversion)
+T16. "/pm resume the existing Draft PRD" (resume prd-first; existence is not approval)
 
 SHOULD NOT FIRE:
 N1. "Fix the typo in README and push"                      (repo maintenance, not a product request)
@@ -84,4 +86,19 @@ INPUT I: "/pm turn this explicitly approved decision into a Production Engineeri
 EXPECT: route to decision-to-contract; require APPROVED status and approved_by; return only a compiler-accepted ID-keyed contract or CONTRACT_BLOCKED diagnostics. Never code, deploy, release, or infer an unregistered action.
 
 INPUT J: "/pm I have an idea for a product; turn it into a contract Engineering OS can build"
-EXPECT: route first to prd-first and ask its product-definition questions one at a time. Do not invoke decision-to-contract, publish a contract, or start engineering until the resulting PRD has an explicit accountable approval. After approval, route to decision-to-contract and collect only the remaining bounded contract truth.
+EXPECT: route first to prd-first; reuse supplied context and ask one unresolved product question at a time. Completion depends on covered behavior and required fields, not a fixed question count. Do not invoke decision-to-contract, publish a contract, or start engineering until the resulting PRD has an explicit accountable approval. After approval, route to decision-to-contract; publisher diagnostics return bounded questions and changed product meaning requires renewed approval.
+
+INPUT K: "/pm resume prds/planner.md and hand it to engineering"; the file is Draft,
+with a deadline-conflict decision still OPEN despite five prior answers.
+EXPECT: resume the next unresolved question; never treat file existence, five answers,
+an autonomous run, or "use sensible defaults" as approval. The router's two repair
+loops apply to correcting a failed deliverable, not to the number of owner questions.
+
+INPUT L: "/pm skip intake and make an engineering contract from this vague idea."
+EXPECT: explain the blocked required decisions and keep the engineering flow Draft.
+An explicitly requested ordinary disposable prototype can be handled separately,
+but its waiver and unapproved status cannot be reused as engineering approval.
+
+INPUT M: "/pm define this new AI product" with no model outputs or human labels.
+EXPECT: invoke existing metric/acceptance/guardrail skills only for missing work;
+do not auto-run golden-dataset-builder or invent observed cases/human verdicts.
