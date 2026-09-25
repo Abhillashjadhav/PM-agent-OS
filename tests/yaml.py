@@ -37,6 +37,8 @@ def _scalar(value: str):
         if not isinstance(parsed, str):
             raise YAMLError("quoted scalar must be a string")
         return parsed
+    if value.startswith(("[", "{")):
+        raise YAMLError("flow collections are not supported in scalar-only frontmatter")
     if value.startswith("#"):
         return None
     value = re.split(r"\s+#", value, maxsplit=1)[0].rstrip()
