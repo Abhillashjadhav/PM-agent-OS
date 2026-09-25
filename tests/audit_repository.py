@@ -62,6 +62,41 @@ def main() -> int:
         fail(errors, "inventory supporting_skills must be a list")
         supporting = []
 
+    for label, records, fields in (
+        ("skill", skills + supporting, ("name", "skill_path", "fixture_path")),
+        ("reviewer persona", personas, ("name", "path")),
+    ):
+        for field in fields:
+            values = [entry.get(field) for entry in records if isinstance(entry, dict)]
+            strings = [value for value in values if isinstance(value, str)]
+            if len(strings) != len(set(strings)):
+                fail(errors, f"{label} {field} values must be unique")
+
+    for entry in skills + supporting:
+        if isinstance(entry, dict):
+            expected_path = f".claude/skills/{entry.get('name')}/SKILL.md"
+            if entry.get("skill_path") != expected_path:
+                fail(errors, f"skill_path must identify the installed SKILL.md: {expected_path}")
+
+    # The installer copies every direct entry in these groups. Audit the same
+    # surface, so undeclared content cannot bypass validation and be installed.
+    declared_skills = {
+        str(Path(entry["skill_path"]).parent)
+        for entry in skills + supporting
+        if isinstance(entry, dict) and isinstance(entry.get("skill_path"), str)
+    }
+    declared_agents = {
+        entry["path"] for entry in personas
+        if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+    }
+    for group, declared in (("skills", declared_skills), ("agents", declared_agents)):
+        group_root = ROOT / ".claude" / group
+        actual = {str(path.relative_to(ROOT)) for path in group_root.iterdir()} if group_root.is_dir() else set()
+        for path in sorted(actual - declared):
+            fail(errors, f"unlisted installable {group} entry: {path}")
+        for path in sorted(declared - actual):
+            fail(errors, f"declared {group} entry missing from install surface: {path}")
+
     stage_totals = {stage: 0 for stage in EXPECTED_STAGE_TOTALS}
     for skill in skills:
         if not isinstance(skill, dict):
@@ -101,6 +136,8 @@ def main() -> int:
         metadata_name = metadata.get("name")
         if not isinstance(metadata_name, str) or not KEBAB_CASE.fullmatch(metadata_name):
             fail(errors, f"frontmatter name is not kebab-case for {skill_path}")
+        elif metadata_name != name:
+            fail(errors, f"frontmatter name {metadata_name!r} does not match inventory name {name!r}")
         if not isinstance(metadata.get("description"), str) or not metadata["description"].strip():
             fail(errors, f"frontmatter description missing for {skill_path}")
         if not re.search(r"^##\s+Limitations\s*$", text, re.MULTILINE):

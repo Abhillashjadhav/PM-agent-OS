@@ -1,0 +1,12 @@
+test_clean_install_refuses_overwrite_and_force_replaces (__main__.InstallerSafetyTests.test_clean_install_refuses_overwrite_and_force_replaces) ... ok
+test_dangling_reviewer_link_requires_force (__main__.InstallerSafetyTests.test_dangling_reviewer_link_requires_force) ... ok
+test_force_can_replace_leaf_link_to_source (__main__.InstallerSafetyTests.test_force_can_replace_leaf_link_to_source) ... ok
+test_force_replaces_dangling_reviewer_link_without_writing_referent (__main__.InstallerSafetyTests.test_force_replaces_dangling_reviewer_link_without_writing_referent) ... ok
+test_force_replaces_directory_link_without_changing_referent (__main__.InstallerSafetyTests.test_force_replaces_directory_link_without_changing_referent) ... ok
+test_source_target_is_rejected_before_modification (__main__.InstallerSafetyTests.test_source_target_is_rejected_before_modification) ... ok
+test_symlinked_group_into_source_is_rejected_before_modification (__main__.InstallerSafetyTests.test_symlinked_group_into_source_is_rejected_before_modification) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.686s
+
+OK
