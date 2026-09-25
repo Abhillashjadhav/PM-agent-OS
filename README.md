@@ -80,6 +80,8 @@ The `decision-to-contract` workflow preserves PMOS ownership of product intent w
 
 **First useful result:** either an unmodified, receipt-bound, compiler-accepted contract with approval identity and coverage counts, or `CONTRACT_BLOCKED` with exact diagnostics.
 
+Before this workflow, follow the [handoff setup guide](docs/HANDOFF.md) to install the separately pinned publisher, check its prerequisites, and run the draft, exact-digest approval, receipt verification and compilation steps. Ordinary PMOS skills do not require that dependency. A compiled contract is a handoff artifact; the engineering system still has to build and verify the product.
+
 ## What makes this different
 
 A generic prompt library gives you frameworks. PM-agent-OS tries to preserve the decision discipline around them:
