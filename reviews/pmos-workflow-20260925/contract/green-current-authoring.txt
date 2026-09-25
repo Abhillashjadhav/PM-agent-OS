@@ -1,0 +1,10 @@
+test_description_only_gate_is_rejected_by_current_compiler (__main__.CurrentAuthoringTests.test_description_only_gate_is_rejected_by_current_compiler) ... ok
+test_missing_product_truth_returns_questions_before_approval (__main__.CurrentAuthoringTests.test_missing_product_truth_returns_questions_before_approval) ... ok
+test_new_input_remains_draft_until_exact_test_digest_is_approved (__main__.CurrentAuthoringTests.test_new_input_remains_draft_until_exact_test_digest_is_approved) ... ok
+test_skill_example_publishes_and_compiles_with_supplied_truth (__main__.CurrentAuthoringTests.test_skill_example_publishes_and_compiles_with_supplied_truth) ... ok
+test_unregistered_action_remains_blocked_without_registry_extension (__main__.CurrentAuthoringTests.test_unregistered_action_remains_blocked_without_registry_extension) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.017s
+
+OK

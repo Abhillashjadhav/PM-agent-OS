@@ -1,0 +1,23 @@
+test_description_only_gate_is_rejected_by_current_compiler (__main__.CurrentAuthoringTests.test_description_only_gate_is_rejected_by_current_compiler) ... ok
+test_missing_product_truth_returns_questions_before_approval (__main__.CurrentAuthoringTests.test_missing_product_truth_returns_questions_before_approval) ... ok
+test_new_input_remains_draft_until_exact_test_digest_is_approved (__main__.CurrentAuthoringTests.test_new_input_remains_draft_until_exact_test_digest_is_approved) ... ok
+test_skill_example_publishes_and_compiles_with_supplied_truth (__main__.CurrentAuthoringTests.test_skill_example_publishes_and_compiles_with_supplied_truth) ... ERROR
+test_unregistered_action_remains_blocked_without_registry_extension (__main__.CurrentAuthoringTests.test_unregistered_action_remains_blocked_without_registry_extension) ... ok
+
+======================================================================
+ERROR: test_skill_example_publishes_and_compiles_with_supplied_truth (__main__.CurrentAuthoringTests.test_skill_example_publishes_and_compiles_with_supplied_truth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/contract-flow/tests/decision-to-contract/test_current_authoring.py", line 80, in test_skill_example_publishes_and_compiles_with_supplied_truth
+    compile_current(approved.contract)
+  File "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/contract-flow/tests/decision-to-contract/test_current_authoring.py", line 64, in compile_current
+    return compile_acceptance_plan(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/lib/python3.12/site-packages/pmpe/contracts/acceptance.py", line 764, in compile_acceptance_plan
+    raise AcceptanceCompileError(diagnostics)
+pmpe.contracts.acceptance.AcceptanceCompileError: RELEASE_GATE_UNBOUND:GATE-001
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.016s
+
+FAILED (errors=1)
