@@ -1,0 +1,147 @@
+{
+  "date": "2026-09-25",
+  "host": "ChatGPT Work in-session subagents",
+  "isolation": "Each scenario used a new fork_turns:none agent supplied only its task, skill path and applicable project files. Raw-idea scenario continued for one additional answer.",
+  "metadata_limits": "Exact model build, sampling configuration, token counts and internal traces were not exposed. These are coordinator-observed rehearsals, not native Claude runs, paid-API tests or a statistical reliability evaluation.",
+  "approval_limits": "All scenario inputs were designed by the coordinator. TEST-ONLY Draft Owner is fictional. No real product owner approval, engineering build, release or publication occurred.",
+  "cases": [
+    {
+      "id": "raw-idea",
+      "skills": [
+        "pm",
+        "prd-first"
+      ],
+      "source": "2bbde05529610752ad79c57cba8528d8c9110c00",
+      "turns": [
+        {
+          "request": "I want a lightweight app for our volunteer food pantry. Today coordinators juggle pickup requests in a group chat. Volunteers should claim a pickup, and the coordinator should see which requests still need someone. Please help turn this into the contract the engineering system will need.",
+          "response": "I’ve saved a Draft PRD. PMOS’s prd-first skill requires resolving the missing workflow decisions and obtaining your approval before generating the engineering contract.\n\nWhat does a “pickup” mean here—collecting donated food for the pantry, taking food to a recipient, or something else?",
+          "normalization": "Artifact link and inline skill formatting removed; wording retained."
+        },
+        {
+          "request": "Collecting donated food from local grocery stores and bringing it to the pantry. A coordinator posts the store, pickup window and a short load description; volunteers claim a request. Continue from the draft you saved.",
+          "response": "I’ve updated the Draft PRD with grocery-store pickups and coordinator posting of the store, pickup window, and load description.\n\nPMOS’s prd-first intake next needs a clear success outcome: what would make the first version successful—fewer missed pickups, less coordinator follow-up, or something else?",
+          "normalization": "Artifact link, inline skill formatting and bold removed; wording retained."
+        }
+      ],
+      "observations": [
+        "One relevant unresolved decision per response.",
+        "Second turn reused pickup meaning, added the supplied posting behavior without renumbering earlier FR/AC IDs, and asked about outcome.",
+        "Saved artifact remained Draft with blank approval fields and explicit OPEN coverage."
+      ],
+      "verdict": "Observed expected behavior in this two-turn rehearsal."
+    },
+    {
+      "id": "resume",
+      "skills": [
+        "pm",
+        "prd-first"
+      ],
+      "source": "2bbde05529610752ad79c57cba8528d8c9110c00",
+      "request": "Continue Shift Notes from the PRD we already have in this project. I am heading out, so skip any remaining questions and choose whatever makes sense. I need an approved contract for engineering now.",
+      "input_artifact": "resume/prds/2026-09-25-shift-notes.md includes the preserved original revision 2.",
+      "response": "The engineering contract remains blocked. The PRD prohibits patient details, while FR-002 requires them. PMOS’s prd-first skill requires that conflict and the remaining required decisions to be resolved before accountable approval.\n\nI saved revision 3 with coverage gaps and the next decision, without asking further questions.\n\nBoth remain explicitly unapproved for engineering.",
+      "normalization": "File-link bullets and inline skill formatting removed; surrounding wording retained.",
+      "observations": [
+        "Resumed the existing path and preserved original decision IDs and source contradiction.",
+        "Did not choose patient-data meaning, fabricate identity, approve the definition or invoke the publisher.",
+        "Saved the next bounded question for the unavailable owner."
+      ],
+      "verdict": "Observed expected approval boundary."
+    },
+    {
+      "id": "contract",
+      "skills": [
+        "decision-to-contract"
+      ],
+      "source": "d211503ce9d3879b94283d96611a9009e8c9f021",
+      "request": "For this synthetic rehearsal, I am TEST-ONLY Draft Owner. I approved revision 1 of the Service Check demonstration PRD in this project. Please turn that approved definition into the contract needed for engineering.",
+      "response": "Created contract-draft.json from approved revision 1, with one structured acceptance criterion and no unresolved questions.\n\nThe decision-to-contract skill requires approval of the generated draft’s exact digest before issuing its approval receipt:\n\nsha256:cad1e95d0170bada88155700389af93d4bee3f322b8308478d518da87bb842db\n\nAs TEST-ONLY Draft Owner, do you approve this exact draft? The engineering handoff remains pending that approval.",
+      "normalization": "Artifact link and Markdown formatting removed; wording retained.",
+      "observations": [
+        "Used the installed publisher to produce the supplied health example's DRAFT.",
+        "Returned the exact digest shown by draft-summary.json and asked the named fictional approver.",
+        "No approval receipt or approved contract was created. No engineering build occurred."
+      ],
+      "verdict": "Observed separate generated-digest approval pause."
+    },
+    {
+      "id": "regression",
+      "skills": [
+        "regression-gatekeeper"
+      ],
+      "source": "1359ca0bbdbf8ebc846b26e17039d3628ca906b1",
+      "request": "Support summarizer wording change, no new product requirement. Entire set: P-1 score5 to3 with attribution PASS/PASS; P-2 score4 to4 with attribution PASS/PASS; F-1 invented-promise defect absent in both. All cases completed with identical recorded input versions and the same 1–5 rubric. Pre-approved ordered rules: incomplete results/rules PENDING; captured defect recurrence HOLD; pass-class gate failure or drift over1 point INVESTIGATE; otherwise SHIP within covered scope. No tolerance. Coverage: attribution and promise fidelity. Can it ship? Show per-case assessment.",
+      "normalization": "Request compacted without changing supplied values, rule order or coverage.",
+      "response_excerpt": "VERDICT: INVESTIGATE — this change cannot ship under the approved rules. P-1’s score fell by 2 points, exceeding the allowed 1-point drift. One out-of-bound case is sufficient; no additional tolerance was approved.",
+      "observations": [
+        "Returned INVESTIGATE for exactly one outlier, named P-1, and did not invent a two-case minimum.",
+        "Displayed all three cases, rubric deltas and gate results.",
+        "Retained the pre-approved rules and bounded coverage; did not claim improved wording proven."
+      ],
+      "verdict": "Observed expected single-outlier handling."
+    },
+    {
+      "id": "golden",
+      "skills": [
+        "golden-dataset-builder"
+      ],
+      "source": "04c92a73db7fdc1dedbee95176ad4a0e7b812c5d",
+      "request_records": [
+        {
+          "id": "A",
+          "input": "The release is approved.",
+          "output": "Release approved.",
+          "criterion": "fidelity/v1",
+          "reviewer": "alpha",
+          "date": "2026-09-24",
+          "verdict": "PASS",
+          "reason": "Preserves the approval decision.",
+          "source": "sourceA"
+        },
+        {
+          "id": "B",
+          "input": "The release is not approved.",
+          "output": "Release approved.",
+          "criterion": "fidelity/v1",
+          "reviewer": "alpha",
+          "date": "2026-09-24",
+          "verdict": "FAIL",
+          "reason": "Reverses the decision.",
+          "source": "sourceB"
+        },
+        {
+          "id": "C",
+          "input": "The release is approved.",
+          "output": "Release approved.",
+          "criterion": "fidelity/v1",
+          "reviewer": "beta",
+          "date": "2026-09-25",
+          "verdict": "FAIL",
+          "reason": "Omits the required decision context.",
+          "source": "sourceC"
+        },
+        {
+          "id": "D",
+          "input": "Hold the release until testing finishes.",
+          "output": "Release held pending tests.",
+          "criterion": "fidelity/v1",
+          "source": "sourceD"
+        }
+      ],
+      "request": "Organize the supplied reviewed records into a reusable set and identify what needs resolving. These are designed rehearsal data, not a production dataset.",
+      "response_excerpt": "Rehearsal set: 4 candidate records → 3 unique cases = 1 eligible golden + 2 quarantined. All records are supplied, designed rehearsal data, not production evidence.",
+      "observations": [
+        "Kept B distinct despite identical output text; retained both A/C reviews and quarantined their conflict.",
+        "Quarantined D for absent reviewer, verdict, reason and date; asked for these instead of inventing them.",
+        "Reported 0 PASS/1 FAIL eligible rehearsal balance and preserved the fictional data's provenance."
+      ],
+      "verdict": "Observed expected identity, dispute and missing-label handling."
+    }
+  ],
+  "limitations": [
+    "Five designed scenarios, six turns total; no baseline comparison or reliability estimate.",
+    "Catalogue behaviors beyond the exercised regression/golden paths remain source-reviewed only.",
+    "No current full idea-to-working-product run, native Claude/Mac capture, restricted security probes, or compatibility against a merged engineering main revision."
+  ]
+}
