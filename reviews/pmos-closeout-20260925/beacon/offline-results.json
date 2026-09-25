@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "adapter_commit": "b32bdfee2c5b579b06b45ffc5bf14bee5fa3f614",
+  "source_commit": "e2ad82052dacd543306833b2b922b2e1e0b8dcc2",
+  "source_file_sha256": {
+    "scripts/run_with_beacon.py": "ca4912d839799e88e9bb2ab61d19144d99ac6467d98e6842c3856e013b91628b",
+    "scripts/beacon_hook.py": "73b543aa548a14b3668a7cedd3d2c498d62683e28f9853908c68c0a6ba85690c"
+  },
+  "adapter_file_sha256": {
+    "core.py": "d1dcfc4e012750cdc225e755dcedcc9410a55c1a881e679278f4b8db2e49a569",
+    "cli.py": "985a68d6cad00def6a7021c6018d1acebc470b9b20f48bc134935d1ebcc907f3"
+  },
+  "transport": "nudge_worker replaced with a local OSError fixture before PMOS code runs",
+  "collector_events_sent": 0,
+  "model_calls": 0,
+  "mac_native_capture": "UNVERIFIED",
+  "cases": [
+    {
+      "case": "runner_success_worker_unavailable",
+      "exit_code": 0,
+      "stdout": "ordinary command completed\n",
+      "stderr": "",
+      "queued_event_count": 3,
+      "actions": [
+        "session.started",
+        "command.executed",
+        "session.ended"
+      ],
+      "metadata": [
+        {},
+        {
+          "exit_code": 0
+        },
+        {
+          "duration_ms": 14,
+          "exit_code": 0
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "runner_failure_worker_unavailable",
+      "exit_code": 23,
+      "stdout": "ordinary command completed\n",
+      "stderr": "",
+      "queued_event_count": 3,
+      "actions": [
+        "session.started",
+        "command.executed",
+        "session.error"
+      ],
+      "metadata": [
+        {},
+        {
+          "exit_code": 23
+        },
+        {
+          "duration_ms": 14,
+          "exit_code": 23
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "runner_recording_disabled",
+      "exit_code": 23,
+      "stdout": "ordinary command completed\n",
+      "stderr": "",
+      "queued_event_count": 0,
+      "actions": [],
+      "metadata": [],
+      "pass": true
+    },
+    {
+      "case": "runner_state_unavailable",
+      "exit_code": 23,
+      "stdout": "ordinary command completed\n",
+      "stderr": "",
+      "queued_event_count": 0,
+      "actions": [],
+      "metadata": [],
+      "pass": true
+    },
+    {
+      "case": "runner_nonexecutable",
+      "exit_code": 126,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 2,
+      "actions": [
+        "session.started",
+        "session.error"
+      ],
+      "metadata": [
+        {},
+        {
+          "duration_ms": 2,
+          "error_type": "PermissionError"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "runner_missing_command",
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 3,
+      "actions": [
+        "session.started",
+        "command.failed",
+        "session.error"
+      ],
+      "metadata": [
+        {},
+        {
+          "exit_code": 127
+        },
+        {
+          "duration_ms": 2,
+          "exit_code": 127
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "hook_SessionStart",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 1,
+      "actions": [
+        "SessionStart"
+      ],
+      "metadata": [
+        {}
+      ],
+      "pass": true
+    },
+    {
+      "case": "hook_UserPromptSubmit",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 1,
+      "actions": [
+        "UserPromptSubmit"
+      ],
+      "metadata": [
+        {}
+      ],
+      "pass": true
+    },
+    {
+      "case": "hook_Stop",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 1,
+      "actions": [
+        "Stop"
+      ],
+      "metadata": [
+        {}
+      ],
+      "pass": true
+    },
+    {
+      "case": "hook_SessionEnd",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 1,
+      "actions": [
+        "SessionEnd"
+      ],
+      "metadata": [
+        {}
+      ],
+      "pass": true
+    },
+    {
+      "case": "hook_invalid",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 0,
+      "actions": [],
+      "metadata": [],
+      "pass": true
+    },
+    {
+      "case": "hook_oversized",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "queued_event_count": 0,
+      "actions": [],
+      "metadata": [],
+      "pass": true
+    }
+  ],
+  "all_pass": true
+}
