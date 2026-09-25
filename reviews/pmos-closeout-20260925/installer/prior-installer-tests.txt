@@ -1,0 +1,94 @@
+test_clean_install_refuses_overwrite_and_force_replaces (__main__.InstallerSafetyTests.test_clean_install_refuses_overwrite_and_force_replaces) ... ok
+test_dangling_reviewer_link_requires_force (__main__.InstallerSafetyTests.test_dangling_reviewer_link_requires_force) ... FAIL
+test_force_can_replace_leaf_link_to_source (__main__.InstallerSafetyTests.test_force_can_replace_leaf_link_to_source) ... FAIL
+test_force_replaces_dangling_reviewer_link_without_writing_referent (__main__.InstallerSafetyTests.test_force_replaces_dangling_reviewer_link_without_writing_referent) ... FAIL
+test_force_replaces_directory_link_without_changing_referent (__main__.InstallerSafetyTests.test_force_replaces_directory_link_without_changing_referent) ... FAIL
+test_source_target_is_rejected_before_modification (__main__.InstallerSafetyTests.test_source_target_is_rejected_before_modification) ... FAIL
+test_symlinked_group_into_source_is_rejected_before_modification (__main__.InstallerSafetyTests.test_symlinked_group_into_source_is_rejected_before_modification) ... FAIL
+
+======================================================================
+FAIL: test_dangling_reviewer_link_requires_force (__main__.InstallerSafetyTests.test_dangling_reviewer_link_requires_force)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 76, in test_dangling_reviewer_link_requires_force
+    self.assertEqual(result.returncode, 2, result.stderr)
+AssertionError: 0 != 2 :
+
+======================================================================
+FAIL: test_force_can_replace_leaf_link_to_source (__main__.InstallerSafetyTests.test_force_can_replace_leaf_link_to_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 129, in test_force_can_replace_leaf_link_to_source
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/tmp/pmos-install-test-pvrjbyfd/repository/scripts/install.py", line 108, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/tmp/pmos-install-test-pvrjbyfd/repository/scripts/install.py", line 97, in main
+    skill_count, agent_count = install(target, args.force)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pmos-install-test-pvrjbyfd/repository/scripts/install.py", line 78, in install
+    shutil.rmtree(destination)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 703, in _rmtree_safe_fd
+    onexc(func, path, err)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 680, in _rmtree_safe_fd
+    raise OSError("Cannot call rmtree on a symbolic link")
+OSError: [Errno None] None: PosixPath('/tmp/pmos-install-test-pvrjbyfd/claude-home/skills/pm')
+
+
+======================================================================
+FAIL: test_force_replaces_dangling_reviewer_link_without_writing_referent (__main__.InstallerSafetyTests.test_force_replaces_dangling_reviewer_link_without_writing_referent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 88, in test_force_replaces_dangling_reviewer_link_without_writing_referent
+    self.assertFalse(link.is_symlink())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_force_replaces_directory_link_without_changing_referent (__main__.InstallerSafetyTests.test_force_replaces_directory_link_without_changing_referent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 101, in test_force_replaces_directory_link_without_changing_referent
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/tmp/pmos-install-test-ip71rw85/repository/scripts/install.py", line 108, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/tmp/pmos-install-test-ip71rw85/repository/scripts/install.py", line 97, in main
+    skill_count, agent_count = install(target, args.force)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pmos-install-test-ip71rw85/repository/scripts/install.py", line 78, in install
+    shutil.rmtree(destination)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 703, in _rmtree_safe_fd
+    onexc(func, path, err)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 680, in _rmtree_safe_fd
+    raise OSError("Cannot call rmtree on a symbolic link")
+OSError: [Errno None] None: PosixPath('/tmp/pmos-install-test-ip71rw85/claude-home/skills/ai-feature-go-no-go')
+
+
+======================================================================
+FAIL: test_source_target_is_rejected_before_modification (__main__.InstallerSafetyTests.test_source_target_is_rejected_before_modification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 109, in test_source_target_is_rejected_before_modification
+    self.assertEqual(contents(self.source), before)
+AssertionError: {'set[280305 chars]t.\n'} != {'set[280305 chars]t.\n', 'skills/ai-feature-go-no-go/SKILL.md': [5166 chars].\n'}
+Diff is 625198 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_symlinked_group_into_source_is_rejected_before_modification (__main__.InstallerSafetyTests.test_symlinked_group_into_source_is_rejected_before_modification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pmos-installer-prior-x15kw888/repository/tests/test_install.py", line 118, in test_symlinked_group_into_source_is_rejected_before_modification
+    self.assertEqual(contents(self.source), before)
+AssertionError: {'set[280305 chars]t.\n'} != {'set[280305 chars]t.\n', 'skills/ai-feature-go-no-go/SKILL.md': [5166 chars].\n'}
+Diff is 625198 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.861s
+
+FAILED (failures=6)
