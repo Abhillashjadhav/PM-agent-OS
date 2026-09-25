@@ -41,9 +41,13 @@ EXPECT the chain, each link gated before the next consumes it:
   2. assumption-mapper on the GATED patterns → risk-ranked bets (tags + tests)
   3. ai-feature-go-no-go → decision naming its single pivot criterion
   4. (on GO) prd-to-eval / eval-engine → gates + rubric, disqualifiers never scored
-  5. golden-dataset-builder quarantines unlabeled cases → regression-gatekeeper:
-     the first prompt change gets a run plan + pre-committed rules, VERDICT: PENDING
-     until results exist.
+  5. Only if actual outputs and human reviews are supplied, golden-dataset-builder
+     curates cases with human verdicts and reasons, quarantining missing labels.
+     Raw transcripts alone are not those inputs: report the missing outputs/reviews
+     and prepare a collection plan; never fabricate cases, verdicts, or reasons.
+  6. regression-gatekeeper receives available evidence and a run plan with
+     pre-committed rules; the first prompt change remains VERDICT: PENDING until
+     the required reviewed cases and run results exist.
 EXPECT: no stage skipped silently, no ungated output feeding the next skill, and the
 final ship verdict conditional on the golden run — the whole OS's core rule, end to end.
 

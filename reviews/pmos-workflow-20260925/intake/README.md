@@ -29,6 +29,17 @@ skills. It distinguishes owner-designed examples from actual human-reviewed
 goldens, and product approval from generated-contract digest approval. Unsupported
 bindings remain engineering dependencies; no health-demo substitution is allowed.
 
+## Independent review correction
+
+The reviewer found that legacy `/pm` fixture H still unconditionally invoked
+`golden-dataset-builder` from raw interviews. That contradicted the conditional
+route and its requirement for actual outputs plus human verdicts/reasons. The
+fixture now makes curation conditional; absent inputs produce a collection plan
+and missing-input report. The prompt-change verdict stays PENDING until required
+reviewed cases and run results exist. No skill source changed for this correction.
+Both skill lints and `git diff --check` passed again. This is specification
+consistency evidence, not a supervised model-run result.
+
 ## Checks actually run
 
 - Both changed skills passed `tests/lint_skill.py` before and after the change.
