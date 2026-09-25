@@ -6,3 +6,7 @@
 4. **Rejecting check first? Yes.** Commit paired witnesses with the same outcome and differing pre-launch evidence before changing instructions. Specification reasoning only, not a model run.
 5. **Independently revertible? Yes.** Only this skill, its fixtures and this note change.
 6. **New unrequested surface? No.** No new launch policy, threshold, event or experiment is adopted.
+
+Consistency follow-up: align the existing staged-rollout counterexample with
+the same missing-evidence rule; neither the delay nor caught bug alone supplies
+the absent pre-launch tradeoff record. No additional instruction change needed.

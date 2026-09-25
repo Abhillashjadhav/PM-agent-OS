@@ -55,9 +55,10 @@ EXPECTED OUTPUT PROPERTIES:
 
 PLANTED-FAILURE CASE:
 A draft lesson "the 2-day delay shows our rollout process needs to be faster" —
-outcome-judging a good decision (the staged rollout caught the bug; speed was the
-tradeoff working as designed) — MUST be caught by the decision/outcome gate and
-rewritten to credit the mechanism while noting the schedule cost honestly.
+judging the prior decision solely from delay — MUST be caught by the
+decision/outcome gate. Report both the caught bug and schedule cost, cite the
+stated safety rationale, and leave the full decision-quality assessment
+UNDETERMINED without the contemporary risk/alternative record.
 
 # Hindsight witness
 
