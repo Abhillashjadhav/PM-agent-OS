@@ -24,12 +24,16 @@ def main() -> int:
             return 127
         except PermissionError:
             return 126
-    return adapter_main([
-        "run", "--workflow", "pmos", "--project-root",
-        str(Path(__file__).resolve().parents[1]), "--", *command,
-    ])
+    try:
+        return adapter_main([
+            "run", "--workflow", "pmos", "--project-root",
+            str(Path(__file__).resolve().parents[1]), "--", *command,
+        ])
+    except PermissionError:
+        # Match direct exec when the command cannot be launched. Do not retry:
+        # the adapter owns execution and may already have started the command.
+        return 126
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
