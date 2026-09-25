@@ -1,144 +1,187 @@
 ---
 name: prd-first
-description: Forces a written PRD before any code generation. Use this skill when the user says "build", "create app", "make me a", "vibe code", "let's build", "I want an app that", "spin up a", "prototype a", "ship a", or any phrasing that signals they want code generated from a high-level idea. Also use when the user references an existing project but the conversation has no PRD context (no /prds/ file referenced, no clear success metric). The skill blocks code generation until a 5-field PRD exists as a markdown file in the repo. Do NOT use when the user is asking factual questions, debugging existing code, editing a specific file they've named, or working in a repo where a PRD for this feature already exists at /prds/. Skip when user explicitly says "skip the PRD" or "just code it" — but flag the risk once before proceeding.
+description: "Turn a raw product idea or incomplete PRD into an explicitly approved product definition without guessing. Use when the user wants to build a new product, says 'I want an app', asks for an engineering contract, resumes an existing Draft PRD, or changes an approved product decision. Ask one relevant unresolved question at a time, preserve answers and open decisions, and check behavior coverage before approval. Also handle an explicitly waived ordinary prototype while keeping it unapproved for engineering. Do NOT use for factual questions, specified typo/bug fixes without new product decisions, or an unchanged complete approved definition already ready for decision-to-contract."
 ---
 
 # PRD-First Discipline
 
-The user (Abhillash) vibe-codes 10-15 apps and loses track of what each app is actually doing because Claude generates code from high-level intent without a written contract. This skill forces a 10-minute thinking pass before any code generation. The PRD is the contract; the code must satisfy it; future-Abhillash can read the file three months from now and remember why.
+Preserve what the owner intends. Ask only what is missing. A product definition
+is complete when its decisions and behavior are covered, not when a question
+count has been reached.
 
-## The hard rule
+## Verification gates — apply before the corresponding transition
 
-**No PRD, no code.** When the trigger fires, refuse to generate code or vibe-code prompts until a PRD exists as a markdown file in the repo at /prds/YYYY-MM-DD-<slug>.md. This is non-negotiable except when the user explicitly overrides with "skip the PRD" — in which case flag the risk once, then proceed.
+- **G1 — Grounded next question:** the question resolves one named OPEN decision,
+  is relevant to the requested behavior, and does not repeat an already supplied
+  answer. Ask one question, wait, and reuse the answer before choosing the next.
+- **G2 — Truth and draft integrity:** substantive decisions cite supplied context
+  or an owner answer. Keep proposals, assumptions and observed facts distinct.
+  Missing or contradictory product truth stays OPEN. Preserve stable IDs, owner
+  wording, prior decisions and the target project's canonical artifact paths.
+- **G3 — Complete product definition:** every requested behavior is mapped to an
+  included FR and acceptance intent, or to an explicit owner-approved exclusion.
+  Every required field in [FIELD_FLOW.md](references/FIELD_FLOW.md) has supplied
+  or owner-decided truth; no required OPEN question, vague default or TBD remains.
+  Check journey success, failure and permission boundaries before claiming coverage.
+- **G4 — Accountable approval:** G2/G3 pass, the owner sees the current PRD revision
+  and coverage summary, and explicitly approves it under their exact identity.
+  Contradictory approval labels fail; neither file existence nor prior approval
+  of a different revision counts. Unknown identity requires a question.
+- **G5 — Handoff boundary:** only the approved product definition enters
+  `decision-to-contract`. That skill validates supported bindings and publisher
+  fields, obtains separate exact-digest approval, and verifies the receipt.
+  A proposed, Draft or waived prototype never counts as an executable contract.
 
-## The 5-question protocol
+Questions and OPEN/Draft progress reports need G1/G2, not a fabricated G3/G4 pass.
+Request product approval only after G3. A strict engineering handoff needs all
+applicable gates. An explicitly waived ordinary prototype follows the separate
+path below and must not claim those engineering gates passed.
 
-Ask **one question at a time.** Wait for the answer. Do not batch. This matches the user's learning style (theory → quiz → build, one question at a time).
+## Hard rules
 
-Each question has a quality bar. If the answer is vague, ask one follow-up. Then move on — don't gold-plate.
+1. Never invent product facts, thresholds, exclusions, labels, approvals or an
+   approver to complete a template. An unanswered required decision is OPEN.
+2. No fixed interview or follow-up limit implies completion. If the owner cannot
+   decide, preserve the blocker and continue only independent resolved work.
+3. Reuse existing Drafts and answers. New meaning invalidates the affected current
+   approval; preserve the old revision and decision as history.
+4. Keep product-definition approval separate from approval of the exact generated
+   contract digest. Neither authorizes code, deployment or release through PMOS.
+5. Never manufacture observed examples or human verdicts. Designed reference cases
+   remain explicitly designed and require owner approval before use.
+6. A skipped intake, an absent owner or an autonomous task description cannot
+   replace product approval on the engineering path.
 
-**Question 1 — Problem:**
-> What hurts today, and for whom?
+## 1. Recover context and choose the path
 
-Quality bar: a specific pain, not a feature wish. "I want a dashboard" is a feature; "I'm losing 30 minutes a day reconciling Stripe payouts against orders" is a problem. If they answer with a feature, ask: "What's the underlying pain that makes you want that?"
+Identify the target product project from the user's context; ask if it is unclear.
+Read its existing `prds/` artifact and root `DECISIONS.md` before repeating intake.
+A Draft is a resumption point, not an exclusion from this skill. Reuse stable IDs;
+append new ones without renumbering or silently replacing the existing artifact.
 
-**Question 2 — User:**
-> Who specifically uses this, and what's their current alternative?
+Use strict engineering intake when an executable contract or engineering handoff
+is requested. An unchanged complete approved definition can go directly to
+`decision-to-contract`; changed or missing product truth returns here.
 
-Quality bar: a real person (you, your team, a known segment) and a named alternative ("I do it in a spreadsheet now", "we use Notion but it doesn't sync"). If "everyone" — push back: "Pick the one user whose problem we're solving first."
+For an ordinary prototype explicitly waived by the user, record the exact waiver,
+current intent and OPEN decisions in a Draft artifact and root `DECISIONS.md`.
+Label it **ordinary prototype — unapproved for engineering**. An ordinary prototype
+prompt may reference that Draft without claiming product or contract approval.
+Do not silently switch an engineering request to this path. Later handoff resumes
+strict intake; it does not reuse the waiver as approval.
 
-**Question 3 — Success:**
-> One metric, one number, one timeframe — when do we know this worked?
+## 2. Build the decision and coverage view
 
-Quality bar: measurable. "Faster reconciliation" fails. "Reconcile a day's payouts in under 3 minutes by end of week 2" passes. If they can't name a number, accept a binary: "Does the thing I described in Q1 still happen on Friday? Yes/No."
+Read [FIELD_FLOW.md](references/FIELD_FLOW.md) for engineering intake. It maps owner
+truth to all existing publisher-input fields and the existing specialist skills.
+Do not add another publisher or ask the user to design its JSON syntax.
 
-**Question 4 — Scope cuts:**
-> What are we explicitly NOT building in v1?
+Record one stable `Q-*` per unresolved question and `DEC-*` per resolved decision.
+For each decision retain owner wording, source reference, affected fields and
+FR/AC IDs, and whether it supersedes an earlier decision. Use `OPEN`, `RESOLVED`
+and `SUPERSEDED` explicitly. If existing context disagrees, ask which decision
+controls rather than silently choosing the newest document.
 
-Quality bar: at least 3 things named. This is the most important question. If they say "nothing, build it all", push back hard: "Name three things you're cutting. Vibe-coded apps die from scope creep, not from missing features."
+Walk each included user journey: who acts, what information enters, what action
+occurs, what outcome the user receives, and what happens when input is missing,
+contradictory or rejected. Examine data access, authority and irreversible effects
+only where the journey makes them relevant. Do not import unrelated requirements.
 
-**Question 5 — Non-goals:**
-> What would make us call this a failure even if it ships?
+Track every requested behavior in a coverage table: source → owner decision →
+FR → acceptance intent → gate, or explicit exclusion. Count both omitted requests
+and uncovered FRs; covering only the FRs already written can hide missing behavior.
 
-Quality bar: at least one named failure mode. Examples: "if it costs more than $5/month to run", "if I have to maintain it manually every week", "if non-technical users can't open it without help". This catches the class of bugs where you build the right thing correctly but it's still useless.
+## 3. Ask one unresolved question and update
 
-## What to do with the answers
+Choose the next missing decision by dependency, reusing answers already supplied:
 
-After all 5 questions answered, write the PRD to /prds/YYYY-MM-DD-<slug>.md using this exact template (indented with 4 spaces, since the file itself is markdown):
+1. Problem, primary user, current alternative and the owner's hypothesis.
+2. Intended outcome, outcome North Star, leading measures, guardrails and trade-offs.
+3. Included journeys, explicit exclusions and conflicting behavior choices.
+4. Relevant failure, data and permission boundaries.
+5. Observable acceptance, non-functional constraints and reference cases.
+6. Remaining risks, release-gate meaning and accountable approvals.
 
-    # PRD: <one-line name>
+This is an order for missing dependencies, not six compulsory questions. A specific
+conflict with an already known journey can be the first useful question. Explain
+what the answer changes; ask one decision at a time, not a disguised questionnaire.
+If an answer remains vague, narrow the question using the actual ambiguity. Do not
+cap follow-ups or convert "whatever makes sense" into a product decision.
 
-    **Date:** YYYY-MM-DD
-    **Status:** Draft | Approved | Built | Shipped | Killed
-    **Contract status:** DRAFT | APPROVED
-    **Approved by:** <exact accountable human identity; blank while Draft>
+After each answer, update the PRD, decision references and affected coverage rows.
+Run G1/G2, then recompute what is still OPEN. If the owner is unavailable, save the
+next question and blocked transition. Do not ask it repeatedly or mark it resolved.
+Route only actual missing specialist work using the field reference. Their proposals
+remain proposals until the owner decides; their outputs do not create approval.
 
-    ## Problem
-    <Q1 answer, 1-3 sentences>
+## 4. Persist in the target product project
 
-    ## User
-    <Q2 answer, 1-2 sentences. Name the user, name their alternative.>
+Keep the PRD under `prds/YYYY-MM-DD-<slug>.md` in the target product project, even
+when PMOS is installed globally. For a resumed feature, keep its existing path.
+Create only the required folder/artifact. Do not store product truth in the PMOS
+installation or source repository unless that repository is the target product.
 
-    ## Success metric
-    <Q3 answer. One sentence. Must contain a number or a binary yes/no.>
+Use this compact outline, expanding lists/tables for actual decisions:
 
-    ## Scope (v1)
-    - <thing 1>
-    - <thing 2>
-    - <thing 3>
+```markdown
+# PRD: <owner's product name>
+Date: <date>
+Revision: <stable revision>
+Status: Draft
+Contract status: DRAFT
+Approved by:
+Approval record: <blank until explicit approval; then source and approved revision>
+Canonical decisions: <relative link to root DECISIONS.md>
 
-    ## Out of scope (cut from v1)
-    - <cut 1>
-    - <cut 2>
-    - <cut 3>
+## Problem, user, current alternative and hypothesis
+## Intended outcome, North Star, leading metrics, guardrails and trade-offs
+## Included journeys and out-of-scope decisions
+## Functional requirements — FR IDs, observable behavior and capability
+## Acceptance intent — AC IDs, requirement references and owner-approved proof
+## Non-functional requirements — NFR IDs and explicit constraints
+## Release gates, rubric, reference cases, risks and required approvals
+## Publisher field coverage — field, source/decision, state and OPEN question
+## Behavior coverage — requested behavior, decision, FR, AC/gate or exclusion
+## Open questions — Q ID, dependency, affected fields, next question
+## Decision references and superseded history
+```
 
-    ## Non-goals (failure modes)
-    - <failure mode 1>
-    - <failure mode 2 if applicable>
+Root `DECISIONS.md` is the canonical decision log; the PRD links to relevant entries.
+Context memory points to that root file. If `context/DECISIONS.md` already exists,
+preserve and reference its entries, carry forward decisions with provenance, and
+record a pointer to the canonical root log. Resolve conflicting entries with the
+owner before treating either as current; never silently delete or overwrite them.
+An active task/planner register is separate and must not be moved by this skill.
 
-    ## Functional requirements
-    - **FR-001:** <one observable v1 behavior; add stable IDs in order>
+## 5. Check completeness, approval and downstream changes
 
-    ## Engineering acceptance contract (required for PEOS handoff)
-    - **AC-001**
-      - requirement_refs: [FR-001]
-      - form: given_when_then
-      - given: [{path: service.running, operator: eq, value: true}]
-      - when: {action: health, arguments: {}}
-      - then: [{path: result.status, operator: eq, value: ok}]
+Run G3 against requested behavior and the complete field map. An owner-approved
+"not applicable" is usable only where the existing publisher permits it; never
+insert empty collections merely to hide missing truth. Unsupported executable
+bindings are engineering dependencies, not permission to invent a different product.
 
-    For a PEOS handoff, replace the example values only with fields the user explicitly approves. The current `barebones-1` PEOS template registers only `health`; if the handoff needs another action, keep the engineering contract Draft and record `ACTION_NOT_REGISTERED` rather than inventing a binding. An ordinary non-PEOS build may omit this section and is not restricted to the PEOS action registry; its product PRD may still be approved.
+When G3 passes, show the PRD revision, concise coverage and any external binding
+limits. Ask whether the accountable owner approves, edits or rejects this product
+definition. Wait. Once G4 passes, record agreeing `Status: Approved`,
+`Contract status: APPROVED`, exact `Approved by`, approved revision and approval
+source. These PRD labels mean product-definition approval for conversion; the
+publisher's generated contract still starts DRAFT and has its own digest approval.
 
-    ## Unresolved product-critical questions
-    - None | <question that blocks approval>
+Pass the approved definition and decision sources to `decision-to-contract`.
+Mapping or publisher diagnostics produce a bounded question or a BLOCKED engineering
+dependency. If resolving one changes product meaning, create a new Draft revision,
+reopen affected decisions/coverage, and obtain product approval again. Any changed
+published contract needs fresh exact-digest approval; never reuse a stale receipt.
 
-    ## Decisions log
-    (Append one line per architectural choice as we build. Format: "Chose X over Y because Z.")
-
-Show the user the PRD. Ask: "Approve, edit, or kill?" Wait for explicit approval before generating any code or vibe-code prompts.
-
-## After approval
-
-When the user approves the PRD, do four things:
-
-1. **Record accountable approval.** Change `Status` to `Approved`, change `Contract status` to `APPROVED`, and write the exact human identity into `Approved by`. If the identity is not known, ask; never infer it. Approval is invalid while a product-critical question remains unresolved.
-
-2. **Reference the PRD path in every subsequent code prompt.** The vibe-code prompt's first line must be: "Implement /prds/YYYY-MM-DD-<slug>.md. Code must satisfy the success metric and respect the scope cuts."
-
-3. **Create or update /DECISIONS.md in the repo root.** This is the running architectural log. Every meaningful choice (framework, library, schema, auth pattern, deployment target) gets one line appended. Format: "2026-05-24: Chose Supabase over Firebase because — auth + Postgres in one, free tier covers v1 user count."
-
-4. **At end of each coding session, ask the user one question:** "Anything we decided today that should go in DECISIONS.md?" Append what they say. This is how context compounds across sessions instead of evaporating.
-
-## Edge cases
-
-- **Existing repo, no /prds/ folder:** create it. Don't ask permission for the folder, ask permission for the PRD content.
-- **User says "I already know what I want, just build it":** push back ONCE. Say: "I'll build it, but you'll forget why we made these choices in a month. 10 minutes now saves 2 hours of re-reading code later. Want me to ask the 5 questions?" If they still refuse, proceed and flag in DECISIONS.md: "Skipped PRD per user request — risk: future debugging context loss."
-- **Tiny features (one-line tweak, bug fix):** PRD not required. Skill applies to *new things being built*, not edits to existing things.
-- **User answers vaguely on purpose:** don't fight them. Capture what they said, mark the PRD status as "Draft", proceed. The PRD is a living doc; vague v1 is better than no v1.
-- **Retrofitting a PRD for an existing vibe-coded app:** valid use case. Skip Question 4 (scope is already set) and Question 3 (success metric is "does it currently work" — binary yes). Focus on Q1, Q2, Q5 to recover lost context.
-
-## What this skill is NOT
-
-- Not a replacement for the user's judgment. The PRD is *their* document — Claude is a scribe, not the author.
-- Not a corporate PRD template with stakeholders, timelines, and OKRs. This is a personal thinking artifact.
-- Not enforced on every chat message. Only when the trigger words appear *and* code generation is the next likely step.
-- Not a research exercise. If the user can't answer Q3 because they genuinely don't know the metric yet, accept "I'll figure this out after I see it working" and mark the field as "TBD — define after first prototype."
+For an approved ordinary build, any subsequent implementation prompt references
+the target PRD path and revision. This skill does not itself execute engineering.
 
 ## Limitations
 
-- The PRD is a thinking contract, not a guarantee — a well-formed PRD can still describe the wrong product; the skill enforces the ritual, not the judgment.
-- Trigger detection is phrase-based; a build request worded unusually can slip past, and the user can always override with "skip the PRD" (flagged once, then honored).
-- The 5-question protocol assumes the user can answer interactively; in fully autonomous runs the task description itself must serve as the PRD-equivalent, noted in DECISIONS.md.
-- Applies to new things being built — it does not gate edits, bug fixes, or debugging of existing code.
-
-## The self-check before generating any code
-
-Before writing a single line of code or vibe-code prompt after the trigger fires, scan:
-
-1. Does a PRD file exist at /prds/YYYY-MM-DD-<slug>.md? If no → ask the 5 questions.
-2. Has the user explicitly approved it? If no → show the PRD, ask for approval.
-3. If this is an engineering handoff, are agreeing `Status: Approved` and `Contract status: APPROVED`, `Approved by`, `FR-*`, and compiler-shaped `AC-*` bindings present with no unresolved product-critical question? If no → complete those PM-owned fields or keep the PRD Draft.
-4. Does the prompt I'm about to write reference the PRD path? If no → add it as the first line.
-5. Is there a /DECISIONS.md in the repo root? If no → create it with a header.
-
-If all five pass, proceed. If not, stop and fix the gap.
+- These are host-agent instructions and conversation specifications, not an
+  independently enforced interview runtime or proof of model behavior.
+- Coverage depends on the supplied context and the journeys actually examined;
+  the reviewable map exposes gaps but cannot guarantee the product is correct.
+- Existing specialist skills and the external publisher can reject incomplete or
+  unsupported inputs. Their availability does not justify guessing missing truth.
+- Live supervised conversations and fresh product delivery need separate evidence.

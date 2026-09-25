@@ -1,6 +1,6 @@
 ---
 name: pm
-description: "The pm-agent-os orchestrator. Use when the user invokes /pm or hands over any product-management request — synthesizing interviews, mining feedback, mapping assumptions, tearing down a competitor, sizing an opportunity, framing jobs-to-be-done, planning research, or any multi-step product task spanning discovery, strategy, build, launch, or iterate. Classifies the request into lifecycle stage(s), invokes the matching stage skills in sequence, and blocks every output whose verification gate has not passed. Also use when the user asks to run any output past a reviewer persona — 'review as engineer/designer/executive/skeptic/customer/data-analyst/legal' — routing to the persona agents in .claude/agents/. Do NOT use for coding tasks, repo maintenance, PR reviews (/pr-review's job), or knowledge questions about PM concepts with no work item attached."
+description: "The pm-agent-os orchestrator. Use when the user invokes /pm, hands over a raw product idea, resumes a Draft PRD, requests an approved engineering contract, or asks for product-management work across discovery, strategy, build, launch and iteration. Route missing product decisions through prd-first, then approved intent through decision-to-contract; otherwise invoke the matching lifecycle skills and verify their outputs. Also route requested engineer/designer/executive/skeptic/customer/data-analyst/legal reviews to the existing persona agents. Do NOT use to execute coding, repo maintenance, PR reviews (/pr-review's job), or knowledge questions with no product work item. Defining a product to build is a product request; writing its implementation is not this skill's role."
 argument-hint: "<any product request — e.g. 'synthesize these 4 interviews' or 'size the market for X'>"
 ---
 
@@ -8,9 +8,13 @@ argument-hint: "<any product request — e.g. 'synthesize these 4 interviews' or
 
 Route → execute → verify → return. Nothing reaches the user unverified.
 
-## The one hard rule above all others
+## Verification gates — before delivery or a downstream transition
 
-**No output returns to the user until its verification gate passes.** Every stage skill defines binary gates in its own SKILL.md. The orchestrator runs them (or confirms the skill ran them) before relaying anything. A gate failure triggers repair, not delivery.
+- **G1 — Route matches the request:** use only an existing skill whose inputs fit the work; incomplete product intent routes to `prd-first`, including an existing Draft. Do not confuse an idea for a new product with a request to write code immediately.
+- **G2 — Output is gated:** run each invoked skill's own binary gates before relaying its deliverable or using it downstream. Intake questions, explicitly incomplete Drafts and blocker reports follow the intake skill's applicable gates; they are not approval or handoff-ready artifacts.
+- **G3 — Meaning and authority preserved:** missing decisions remain OPEN, source wording and provenance survive, and an accountable human approves the current product definition before engineering conversion. A separate exact-digest approval belongs to the generated contract.
+
+**No output returns to the user until its applicable verification gate passes.** A failed deliverable is repaired or reported blocked; it is never relabeled as approved.
 
 ## Stage routing table
 
@@ -24,13 +28,17 @@ Route → execute → verify → return. Nothing reaches the user unverified.
 
 ## Engineering handoff
 
-When the user asks to turn a raw or unapproved product idea into an engineering contract, route to `prd-first` before `decision-to-contract`. Complete its one-question-at-a-time product-definition flow, persist the PRD, and require explicit accountable approval. Only the gated approved PRD may enter `decision-to-contract`; that skill collects any remaining bounded ProductDecisionContract truth and uses the deterministic publisher. Do not send an unapproved idea directly to engineering.
+Give this route precedence over generic lifecycle classification for raw ideas, incomplete product definitions, existing Drafts and requested engineering contracts. Route to `prd-first`; reuse supplied answers and ask one relevant OPEN question at a time until requested behavior and required publisher fields are covered. Preserve the PRD in the target product project's `prds/` directory and use root `DECISIONS.md` as the canonical decision-log pointer. Do not finish because a fixed number of questions was answered.
 
-When the user supplies an explicitly approved product decision and asks to hand it to Production Engineering OS, route directly to `decision-to-contract`. Require approval identity and executable acceptance bindings. A publisher, loader, compiler, or engineering-admission rejection returns `CONTRACT_BLOCKED`; never convert rejected prose by guessing. PMOS does not code, deploy, release, or claim `RELEASE_READY`.
+Route specialist work only when a real gap needs it: outcome measures to `north-star-designer`, acceptance to `prd-to-eval`, rubric design to `eval-engine`, failure policy to `guardrail-designer`. Each skill needs its own valid inputs and gates; its proposal does not decide product meaning for the owner. Use `golden-dataset-builder` only with actual outputs and human verdicts/reasons, never as a mandatory generation step for a new product.
+
+Only the complete, explicitly approved current product definition enters `decision-to-contract`. An unchanged complete approved artifact may route there directly. Missing identity or product truth returns to intake. Publisher diagnostics become bounded questions or explicit engineering dependencies; a change to approved meaning needs renewed product approval. The generated contract separately requires exact-digest approval and an unchanged verified receipt before handoff.
+
+An engineering request has no defaults, skipped critical decisions or task-description approval shortcut. An explicitly waived ordinary prototype remains separately labeled Draft and unapproved for engineering; it cannot enter this route on the strength of that waiver. A publisher, loader, compiler or engineering-admission rejection returns `CONTRACT_BLOCKED`; never repair rejected semantics by guessing. PMOS does not code, deploy, release or claim `RELEASE_READY`.
 
 ## Step 1 — Classify
 
-Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Evals, judges, golden sets, failure capture, guardrails, loops, regression gates, model upgrades, eval-vs-experiment routing, drift monitoring, MCP migration → Iterate. If genuinely ambiguous between stages, ask ONE clarifying question — never a questionnaire.
+For work outside the product-definition route above, map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions/competitors/market-size/jobs/research questions → Discovery. Positioning, pricing, GTM, roadmap → Strategy. Specs, evals, prototypes, AI architecture, model routing, prompts, context files, token economics, latency UX → Build. Launch checklists, GTM briefs, status updates, announcements, retros → Launch. Evals, judges, golden sets, failure capture, guardrails, loops, regression gates, model upgrades, eval-vs-experiment routing, drift monitoring, MCP migration → Iterate. If genuinely ambiguous between stages, ask one routing question. This does not cap the subsequent product-definition questions.
 
 ## Step 2 — Route
 
@@ -40,7 +48,7 @@ Map the request to lifecycle stage(s). Signals: transcripts/feedback/assumptions
 
 ## Step 3 — Enforce gates
 
-Before relaying any stage skill output: run that skill's verification gates as written in its SKILL.md. On failure — fix the specific violation and re-run the gates, maximum 2 repair loops. Still failing → return a failure report (which gate, what violated it, what's needed to proceed) instead of the output. A failure report is a valid result; a gate-failing deliverable is not.
+Before relaying any stage skill output: run that skill's verification gates as written in its SKILL.md. On failure — fix the specific violation and re-run the gates, maximum 2 repair loops. Still failing → return a failure report (which gate, what violated it, what's needed to proceed) instead of the output. A failure report is a valid result; a gate-failing deliverable is not. This repair limit is not a limit on owner questions: intake remains OPEN until its actual decisions are resolved, or a blocker is saved for the owner.
 
 ## Persona review (on request)
 
@@ -52,12 +60,13 @@ Any output — from a stage skill or provided by the user — can be routed thro
 
 ## Hard rules
 
-1. No output returns to the user until its verification gate passes. No exceptions for "rough drafts" — roughness may reduce scope, never verification.
+1. No output returns to the user until its applicable verification gate passes. An intake Draft must preserve known truth and OPEN decisions; it must never masquerade as an approved deliverable.
 2. Never improvise a stage's gaps: all five stages ship, but a request no stage skill covers gets the honest no-skill line naming what the stage does ship — never generated output. A complete lifecycle is not a license to freelance.
 3. Never bypass a stage skill's own hard rules or invent data to make a gate pass — gates verify reality, they are not formatting targets.
 4. In multi-skill sequences, downstream skills consume only gated upstream output.
 5. Engineering handoff uses `decision-to-contract`; only a contract accepted unmodified by the Production Engineering OS compiler may be returned as executable.
 6. A raw idea cannot skip product definition or approval: route `prd-first` → accountable approval → `decision-to-contract` in that order.
+7. File existence, elapsed questions, owner absence and an ordinary prototype waiver are not engineering approval.
 
 ## Limitations
 
@@ -65,3 +74,4 @@ Any output — from a stage skill or provided by the user — can be routed thro
 - Classification is a judgment call; borderline requests (e.g. "is this worth building?" spans Discovery and Strategy) get one clarifying question.
 - Gates catch what they encode — fabricated quotes, unreconciled counts, naked numbers. They do not certify that a synthesis is *insightful*, only that it is verifiable.
 - The orchestrator adds a verification pass on top of each skill's own self-audit; it does not replace human judgment on the gated output.
+- These are host-agent instructions. Static lint and fixture specifications do not establish adaptive conversation quality or independent runtime enforcement.
