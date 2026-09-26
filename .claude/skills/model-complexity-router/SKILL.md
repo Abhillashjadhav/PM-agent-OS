@@ -27,22 +27,24 @@ Sum 0–8 → **0–2 Haiku · 3–5 Sonnet · 6–8 Opus.** Then the floor: if 
 
 ## Steps
 
-1. **Detect mode.** Direct model question → full breakdown (Step 3 format). Substantial task handoff with no model question → score silently, emit one compact line above the task response, never blocking the task. No concrete task at all → don't classify hypotheticals; ask for the task. One firing per distinct task.
+1. **Detect mode.** Direct model question → full breakdown (Output format below). Substantial task handoff with no model question → emit one compact scored line above the task response, never blocking the task. No concrete task at all → don't classify hypotheticals; ask for the task. One firing per distinct task.
 2. **Score the four axes** with a one-phrase basis each. The basis is what makes the score auditable — no bare digits.
 3. **Map and floor.** Sum → tier. Apply the floor only as defined. Show the arithmetic.
-4. **Emit.** Full form: task restatement, per-axis scores + bases, total, tier, ~cost delta vs. defaulting to the top tier (labeled approximation), and the two execution paths (switch via /model, or delegate). Compact form: `[Model check] score X/8 → <tier> — <one-phrase driver> · switch/delegate/continue`.
+4. **Emit.** Full form: task restatement, per-axis scores + bases, total, tier, ~cost delta vs. defaulting to the top tier (labeled approximation), and the two execution paths (switch via /model, or delegate). Compact form retains every axis and its short basis on one line: `[Model check] scope S (basis) + reasoning R (basis) + error E (basis) + context C (basis) = N/8 → <tier> · continue`. If the floor changes the mapped tier, show `Haiku → Sonnet (error floor)` without changing the sum. A total plus one driver alone fails G1 in either mode.
 5. **Gate pass.** Scores visible (G1), error cost counted once (G2 — re-add the four digits; if the shown total ≠ sum of shown axes, it double-counted), no switching claim (G3). Fix and re-run; maximum 2 repair loops, then report the failure.
 
 ## Output format
 
 ```
 TASK: rewrite pricing-page copy (customer-facing)
-SCORES: scope 0 (one page) · reasoning 1 (known patterns) · error-cost 2 (public, compounds) · context 0 → TOTAL 3/8
+SCORES: scope 0 (one page) · reasoning 1 (known patterns) · error-cost 2 (public, compounds) · context 0 (one prompt) → TOTAL 3/8
 TIER: Sonnet (map 3–5; floor n/a — map already ≥ Sonnet)
 COST: ~5x cheaper than defaulting to Opus [approximation from published per-MTok pricing]
 EXECUTE: /model sonnet — or delegate; I cannot switch the session myself.
 GATE CHECK: G1 pass (4 axes shown, 0+1+2+0=3) · G2 pass (floor checked once, not triggered) · G3 pass
 ```
+
+Compact example: `[Model check] scope 0 (one file) + reasoning 0 (mechanical) + error 0 (reversible) + context 0 (one prompt) = 0/8 → Haiku · continue`.
 
 ## Hard rules
 

@@ -13,7 +13,7 @@ T5. "Break down this competitor's product from their docs and changelog"
 SHOULD NOT FIRE:
 N1. "Which competitor should we worry about most?" with no material and no product named
     (needs research-brief first — nothing to tear down)
-N2. "Write our positioning against Linear"           (Strategy stage — not shipped)
+N2. "Write our positioning against Linear"           (positioning authoring, not competitor analysis; /pm checks actual supported scope)
 N3. "Is Notion a good company to work for?"          (not a product teardown)
 N4. "Scrape Linear's website for me"                 (data collection, not analysis)
 

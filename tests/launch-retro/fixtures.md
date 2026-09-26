@@ -33,11 +33,16 @@ EXPECTED OUTPUT PROPERTIES:
    derives from (the 39 nav tickets, the 2-day slip, the 0.45% spike). A lesson with
    no event ("we should communicate better") = gate failure.
 2. DECISION vs OUTCOME SEPARATED, per decision in the log:
-   - staged rollout: GOOD DECISION / GOOD OUTCOME — it caught the residency bug;
-     the 2-day slip was the mechanism working, not a failure.
-   - skipped tooltip: BAD DECISION / SURVIVABLE OUTCOME — 39 of 61 tickets are nav
-     confusion, the exact cost of the cut; outcome absorbed by support, decision
-     still wrong at that ticket volume.
+   - staged rollout: decision rationale is supported by the stated safety goal;
+     its full pre-launch tradeoff record is absent. Outcome: cohort 1 caught the
+     residency bug, fixed in 24h, and rollout finished two days late. Do not infer
+     decision quality solely from either the caught bug or the delay.
+   - skipped tooltip: decision quality UNDETERMINED from the supplied record —
+     the pre-launch navigation-risk evidence, support-cost estimate and alternatives
+     are absent. Outcome: 39 of 61 tickets concern navigation; support burden is
+     observed, but neither its survivability nor the tooltip cut's exact causal
+     cost is supplied. Ask for the contemporary decision evidence; do not grade
+     the decision BAD solely from the later ticket count.
    - +$10 pricing: GOOD OUTCOME (19% > 15% assumption, 60 days early) — but the
      retro must NOT inflate it to 'great pricing decision' without noting the
      assumption was beaten, not validated as optimal (maybe money left on table).
@@ -50,6 +55,26 @@ EXPECTED OUTPUT PROPERTIES:
 
 PLANTED-FAILURE CASE:
 A draft lesson "the 2-day delay shows our rollout process needs to be faster" —
-outcome-judging a good decision (the staged rollout caught the bug; speed was the
-tradeoff working as designed) — MUST be caught by the decision/outcome gate and
-rewritten to credit the mechanism while noting the schedule cost honestly.
+judging the prior decision solely from delay — MUST be caught by the
+decision/outcome gate. Report both the caught bug and schedule cost, cite the
+stated safety rationale, and leave the full decision-quality assessment
+UNDETERMINED without the contemporary risk/alternative record.
+
+# Hindsight witness
+
+BASE: use the supplied fixture unchanged. Expected: skipped-tooltip decision
+quality UNDETERMINED, observed outcome 39 navigation tickets, and a request for
+what was known before the cut. Reject “BAD at this volume” or “the exact cost of
+the cut”: both infer missing decision/causal evidence from the later outcome.
+
+CONTEMPORANEOUS-EVIDENCE VARIANT: add a pre-launch decision record stating that
+the owner required the known navigation problem fixed before release, the team
+had reproduced it in a usability study, and a verified tooltip fix was available
+within approved scope but was knowingly cut without revisiting that requirement.
+With the same 39-ticket outcome, a BAD decision-quality assessment may now cite
+that prior evidence and violated requirement. It must still not claim that all
+39 tickets are the tooltip's proven causal cost.
+
+Missing evidence may remain UNDETERMINED while the retro's process gates pass:
+the output must disclose the gap and next evidence needed, not invent a grade.
+These are specification witnesses, not recorded model retrospectives.

@@ -27,20 +27,41 @@ ticket volume 400/mo, 1.5 support FTEs. LLM cost immaterial at this volume."
 EXPECTED OUTPUT PROPERTIES:
 1. A single decision: GO / NO-GO (a conditional GO must state the exact condition —
    not "it depends" hedging).
-2. THE PIVOT CRITERION GATE: the decision names the SINGLE disqualifying or qualifying
-   criterion it turns on — for this fixture the expected pivot is error tolerance:
+2. THE DECISIVE-CRITERIA GATE: the decision names every independent blocker and
+   ranks a primary blocker — for this fixture the primary is error tolerance:
    unreviewed generative output in a regulated, payments-adjacent flow with near-zero
-   error tolerance = the disqualifier. A decision listing five co-equal reasons with
-   no named pivot = gate failure.
-3. Supporting factors are ranked BELOW the pivot and explicitly marked non-decisive
-   (CSAT risk, volume too low to need automation: 400/mo ÷ 1.5 FTE is not a
-   capacity crisis — arithmetic from input only).
-4. The output must state what change would reverse the decision (e.g. human-in-the-loop
-   review converts NO-GO to a scoped GO — a different feature, and the output says so).
+   error tolerance = the disqualifier. A decision hiding an independent blocker
+   as non-decisive, or listing unranked reasons without a decision, fails.
+3. Supporting factors are ranked below the blockers and marked non-decisive only
+   if they cannot independently prevent GO. Volume/FTE arithmetic alone does not
+   establish a capacity crisis or spare capacity without time-per-ticket evidence.
+4. The reversal line names the full required change set. Agent-reviewed drafts are
+   a different, smaller feature requiring evidence that review meets the stated
+   error bar; do not promise that adding a review step alone proves it GO-worthy.
 5. No fabricated context: no invented compliance rulings, competitor moves, or user
    demand. The decision argues from provided context only.
 
 PLANTED-FAILURE CASE:
 A draft returning "GO — with careful monitoring, phased rollout, and a feedback loop"
 (hedged GO that never names the criterion that would disqualify it) MUST be caught by
-the pivot-criterion gate: no single named criterion → rewrite or failure report.
+the decisive-criteria gate: no stated disqualifier or exact condition → rewrite
+or failure report.
+
+# Independent-blocker witness
+
+Input: the owner requires both accuracy ≥95% and cost ≤$0.10 per task. Supplied
+evaluation results are accuracy 90% and cost $0.20; the remaining required axes
+are explicitly satisfied. The owner ranks quality before economics.
+
+Expected: NO-GO. Primary blocker: accuracy; independent blocker: cost. The minimum
+reversal set must resolve BOTH requirements. Moving accuracy to 96% with cost
+unchanged is still NO-GO; moving cost to $0.08 with accuracy unchanged is still
+NO-GO. With supplied evidence of both 96% and $0.08, GO is justified within this
+stated scope. Before that evidence, GO-IF must name both pending conditions and
+must not imply present permission to ship. Neither blocker is “non-decisive.”
+
+UNKNOWN-AXIS: same results, but economics has no supplied limit. Expected: ask
+for the load-bearing limit or label the decision provisional; do not invent a
+budget or claim that fixing quality is a sufficient reversal set.
+
+These are specification witnesses, not recorded model decisions.

@@ -21,7 +21,8 @@ N4. "What is regression testing?"                    (knowledge question)
 FIXTURE INPUT:
 "Change: summarizer system prompt edited to produce shorter summaries (marketing
 asked). Golden set exists: 14 cases (9 pass-class, 5 fail-class incl. F-4521
-entity-invention). Proposed ship: Friday. No runs done yet."
+entity-invention). Proposed ship: Friday. No runs done yet. Owner-approved drift
+bound for this run: at most 1 point per case, with no case-count tolerance."
 
 EXPECTED OUTPUT PROPERTIES:
 1. THE RUN-BEFORE-VERDICT GATE: no ship verdict exists in the output until the
@@ -34,10 +35,12 @@ EXPECTED OUTPUT PROPERTIES:
    baseline outputs aren't stored), pass criteria per class (fail-class cases must
    still fail-catch: F-4521's assertion must still hold; pass-class cases must
    still pass their gates AND rubric scores within 1 point of baseline).
-3. Verdict rules pre-committed, before results: SHIP = zero gate regressions and
-   rubric drift within bounds · HOLD = any fail-class case now passes its bad
-   behavior through (the change reintroduced a captured failure) · INVESTIGATE =
-   pass-class gate flips or >1pt rubric drift on ≥2 cases.
+3. Verdict rules pre-committed, before results, with exhaustive precedence:
+   incomplete run/evidence → PENDING; otherwise any fail-class bad behavior
+   reintroduced → HOLD; otherwise any pass-class gate failure or any rubric
+   drift outside the approved bounds → INVESTIGATE; otherwise → SHIP within
+   the covered scope. A single >1pt drift case is enough for INVESTIGATE here.
+   Never invent a two-case threshold or renegotiate a bound from the results.
 4. The results table format is specified: per case — id, class, baseline result,
    new result, delta, verdict contribution. Aggregate claims without the per-case
    table = gate failure.
@@ -51,3 +54,29 @@ A draft concluding 'the edit only shortens output, low risk — ship Friday, run
 goldens next week as follow-up' — a ship verdict with zero run results — MUST be
 caught by the run-before-verdict gate and replaced with the run plan + PENDING
 verdict. Retroactive regression testing is the failure this skill exists to prevent.
+
+# Verdict-totality witnesses
+
+The following use complete, per-case baseline/new evidence for all 14 cases and
+the approved 1-point bound above unless explicitly stated otherwise.
+
+- ONE-OUTLIER: all binary gates pass; one pass-class case drops 2 points, every
+  other rubric delta is zero. Expected INVESTIGATE, naming that case. The old
+  “drift on ≥2 cases” rule leaves this result unclassified and is rejected.
+- BINARY-FAIL: one pass-class gate fails and all rubric deltas are within bound.
+  Expected INVESTIGATE; rubric tolerance never excuses a binary gate failure.
+- REINTRODUCED: one captured fail-class assertion fails and another case drifts
+  by 2 points. Expected HOLD, with both observations reported.
+- INCOMPLETE: only 13 of 14 cases have comparable baseline/new results. Expected
+  PENDING with the missing evidence identified; no ship verdict from the subset.
+  This remains PENDING if an observed case already reproduces bad behavior: name
+  that failure and block shipping, but do not claim a complete-run verdict yet.
+- WITHIN-BOUNDS: all gates pass and every rubric delta is at most 1 point.
+  Expected SHIP for covered regressions only; the new length requirement remains
+  uncovered, so this is not certification of that requirement.
+- EXPLICIT-TOLERANCE: the owner approved, before the run, that named case C-3 may
+  drift up to 2 points; all other cases retain the 1-point bound. C-3 alone drops
+  2 points and all gates pass. Expected SHIP within covered scope, citing the
+  prior approval; without that pre-run approval the same results INVESTIGATE.
+
+These are specification witnesses, not recorded model or golden-run results.

@@ -43,3 +43,19 @@ top. The gate must catch any path where error-cost influences the outcome twice:
 correct behavior is error cost in the sum once, floor applied only if the mapped tier
 came out Haiku. An output showing a score inflated beyond the four axis values, or a
 tier raised above the map+floor result, = harness failure.
+
+# Compact-mode witness
+
+T5/T6 use the same scoring contract as the full form: every compact recommendation
+must display all four named axes, a short basis for each, their arithmetic sum
+and the resulting tier on one line. Continue the task; do not claim a model switch.
+
+- For the local typo task F1: `[Model check] scope 0 (one file) + reasoning 0
+  (mechanical) + error 0 (reversible) + context 0 (one prompt) = 0/8 → Haiku · continue`.
+- For F3: scope 2 (architecture), reasoning 2 (tradeoffs), error 1 (rework),
+  context 2 (cross-file synthesis) → 7/8 → Opus; all four values/bases remain
+  visible in compact mode, even though the task proceeds without a switch.
+- Reject `[Model check] score 7/8 → Opus — migration design · continue`: the
+  total and a single driver cannot expose the four-axis scoring or verify its sum.
+
+These are source/specification witnesses, not recorded model recommendations.

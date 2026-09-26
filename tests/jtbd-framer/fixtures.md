@@ -12,7 +12,7 @@ T5. "Rewrite these feature requests as jobs"
 
 SHOULD NOT FIRE:
 N1. "What is jobs-to-be-done theory?"               (knowledge question)
-N2. "Write the PRD for meeting summaries"           (Build stage — not shipped)
+N2. "Write the PRD for meeting summaries"           (prd-first owns PRD intake/drafting; not job framing)
 N3. "Synthesize these interviews"                   (interview-synthesizer; it may FEED this skill)
 N4. "Prioritize these 10 features"                  (prioritization, not job framing)
 

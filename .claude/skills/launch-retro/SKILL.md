@@ -10,43 +10,46 @@ Lessons with receipts. Every lesson names the event it came from, and decisions 
 
 ## Verification gates (defined first; output is blocked until all pass)
 
-- **G1 — Observed-event citation:** every lesson cites the specific event(s) or number(s) it derives from. "We should communicate better" with no event fails; "39 of 61 tickets were nav confusion → the tooltip cut cost us" passes.
-- **G2 — Decision ≠ outcome:** each logged decision is graded twice — decision quality (given what was knowable then) and outcome quality (what happened) — and the grades are independent. A good decision with a bad outcome stays a good decision; a good outcome never retroactively blesses the decision that got lucky. Judging one by the other fails the gate.
+- **G1 — Observed-event citation:** every lesson cites the specific event(s) or number(s) it derives from. "We should communicate better" with no event fails; "39 of 61 tickets concerned navigation → estimate navigation support risk before future cuts" passes. An observed association does not establish the cut's exact causal cost.
+- **G2 — Decision ≠ outcome:** assess each logged decision twice — decision quality from evidence available then, outcome quality from what happened and any stated success bar. Cite separate bases. Missing contemporary evidence yields `UNDETERMINED` plus an evidence ask, not a forced GOOD/BAD grade. A good outcome never retroactively blesses a decision, and a bad outcome never proves it was bad.
 - **G3 — Open items surface:** undiagnosed near-misses and unexplained numbers appear as OPEN RISKS with owners/actions — a retro that only processes closed items is incomplete. No invented events, sentiments, or dynamics.
 
 ## Steps
 
 1. **Build the event ledger:** every event, number-vs-assumption, ticket cluster, decision, and near-miss from the input, each with its figure. This ledger is the citation universe for every lesson.
-2. **Grade each logged decision twice.** Decision: was it right given the information available at the time? Outcome: what actually happened? Write both grades with their basis. The four quadrants all occur — good/good (staged rollout catches the bug: the 2-day slip is the mechanism *working*), bad/survivable (skipped tooltip: 39 tickets are its exact invoice), good-outcome-unvalidated-decision (19% attach beat the 15% assumption — beaten ≠ optimal; note what wasn't learned, e.g. money on the table).
+2. **Assess each logged decision twice.** Decision: what evidence, alternatives, constraints and rationale were available before the choice? Outcome: what happened, against which stated bar? Separate those sources. If the earlier risk/tradeoff record is missing, say `UNDETERMINED` and ask for it. The staged rollout has a stated safety rationale; catching the bug and slipping two days are outcomes. The skipped tooltip has 39 later navigation tickets but no supplied prior risk estimate: that count alone proves neither BAD decision quality nor an exact causal cost. Beating the 15% attach assumption with 19% likewise does not establish optimal pricing.
 3. **Extract lessons from the ledger,** one event-citation each, each ending in a forward action: what changes next launch, concretely (cuts of tooltip-class items get a support-cost estimate *before* the cut).
 4. **Surface the open items.** The undiagnosed 3-hour spike at 0.45% is the most important line in the fixture retro — near-misses without a root cause get an owner and a diagnose-by action, never a shrug.
-5. **Gate pass.** Every lesson cited (G1), every decision double-graded independently (G2), open risks present with actions, nothing invented (G3). Fix and re-run; maximum 2 repair loops, then report the failure.
+5. **Gate pass.** Every lesson cited without overstated causality (G1), decision/outcome evidence separated with missing decision grades explicitly UNDETERMINED (G2), open risks present with actions, nothing invented (G3). Honest unknowns may pass these process gates; they do not certify the underlying decision. Fix and re-run; maximum 2 repair loops, then report the failure.
 
 ## Output format
 
 ```
 LAUNCH RETRO: AI summaries, day 30 (ledger: 6 events · 3 decisions · 1 near-miss)
-DECISIONS (graded twice)
-1. Staged rollout — DECISION: good (safety rationale) · OUTCOME: good — caught the EU
-   bug in cohort 1 [event: residency bug, fixed 24h]. The 2-day slip is the mechanism
-   working, not a process failure.
-2. Skipped onboarding tooltip — DECISION: bad at this volume · OUTCOME: survivable —
-   39/61 tickets are nav confusion [event: ticket breakdown]: the cut's exact cost.
-3. +$10/seat vs 15% assumption — OUTCOME: good (19% at day 30) · DECISION: unvalidated
-   — assumption beaten, optimality unknown; no price sensitivity was tested.
+DECISIONS (separate decision and outcome evidence)
+1. Staged rollout — DECISION: supported safety rationale [decision log]; full
+   tradeoff assessment UNDETERMINED without the prior risk/alternative record.
+   OUTCOME: EU bug caught in cohort 1, fixed in 24h; rollout finished 2 days late.
+2. Skipped onboarding tooltip — DECISION: UNDETERMINED. Ask for pre-launch nav-risk
+   evidence, expected support cost and alternatives considered before the cut.
+   OUTCOME: 39/61 tickets concerned navigation [ticket breakdown]; exact causal
+   attribution to the cut and support capacity impact remain unestablished.
+3. +$10/seat vs 15% assumption — OUTCOME: 19% at day 30 beats the stated assumption.
+   DECISION: UNDETERMINED — prior pricing evidence absent, optimality unknown;
+   no price-sensitivity evidence supplied.
 LESSONS (event-cited, forward-actionable)
 - Tooltip-class cuts get a support-ticket cost estimate before the cut [39/61 tickets] → add to launch-checklist template
 - Keep staged rollouts even under date pressure [bug caught in cohort 1]
 OPEN RISKS
 - 0.45% error spike, 3h, cohort 2 — UNDIAGNOSED, passed within 0.05% of rollback.
   Owner: eng. Action: root-cause by <date>; until then cohort criteria unchanged.
-GATE CHECK: G1 pass (n/n cited) · G2 pass (3/3 double-graded) · G3 pass (1 open risk actioned)
+GATE CHECK: G1 pass (n/n cited) · G2 pass (3/3 separately assessed; unknowns explicit) · G3 pass
 ```
 
 ## Hard rules
 
 1. No lesson without its event. The ledger is built first and every lesson points into it.
-2. Decisions are graded on what was knowable, outcomes on what happened — independently, always. Hindsight grading is the failure this skill exists to prevent.
+2. Decisions are graded on what was knowable, outcomes on what happened — independently, always. Missing decision evidence stays UNDETERMINED; a forced grade based on later results is hindsight grading.
 3. Near-misses outrank victories. An undiagnosed spike that almost tripped rollback gets more retro space than the metric that beat its assumption.
 4. Lessons end in actions. A lesson that doesn't change the next launch is an anecdote.
 
