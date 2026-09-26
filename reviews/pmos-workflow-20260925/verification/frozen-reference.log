@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "scope": "Static byte/blob/mode comparison only; no historical script executed.",
+  "verified_files": 33,
+  "errors": []
+}

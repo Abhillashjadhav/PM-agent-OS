@@ -1,0 +1,29 @@
+{
+  "note": "Git data publication preserves each local Git tree exactly; commit IDs differ because GitHub creates the publishing commit metadata. Causal fixture-before-instruction order is retained.",
+  "units": {
+    "references": {
+      "local": "aef04c1ec7dcb5e606d7b6e370f09202f782ac1c",
+      "published": "5aefeb53d30f199823ed109937934223a9101268"
+    },
+    "contract": {
+      "local": "d967a9f31e5c0ccacfdbdcd1b03fa172af4540d2",
+      "published": "dc0794ddb70b0c61c37bee86a805dd2b9004a269"
+    },
+    "setup": {
+      "local": "07f13ba96596f0970d0b1756dd105c356ce25497",
+      "published": "c1b419b04acea225257c026dd4656a516bba5525"
+    },
+    "intake": {
+      "local": "a46db859d8f506849cd1a16e854486372a127dae",
+      "published": "84fc96ae73574ab4c850101833379974f68c113c"
+    },
+    "architecture": {
+      "local": "d90dcab6d063c30e9fe4a291beadacbd04d8e41c",
+      "published": "8933155733405fd684d2ba82d4a7c3c9106bae87"
+    },
+    "catalogue": {
+      "local": "13c39108bdc590d75b6a8b1625338b669490e6f9",
+      "published": "9a00a80a2f4f86f53efaa5795f9fe89a501c541d"
+    }
+  }
+}

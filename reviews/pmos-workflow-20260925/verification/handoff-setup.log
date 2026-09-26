@@ -1,0 +1,11 @@
+test_malformed_install_metadata_has_actionable_diagnostic (__main__.HandoffSetupTests.test_malformed_install_metadata_has_actionable_diagnostic) ... ok
+test_missing_console_entry_point_is_not_accepted (__main__.HandoffSetupTests.test_missing_console_entry_point_is_not_accepted) ... ok
+test_missing_publisher_explains_handoff_setup (__main__.HandoffSetupTests.test_missing_publisher_explains_handoff_setup) ... ok
+test_reviewed_metadata_passes_without_loading_package_or_writing (__main__.HandoffSetupTests.test_reviewed_metadata_passes_without_loading_package_or_writing) ... ok
+test_same_package_version_at_other_commit_is_not_accepted (__main__.HandoffSetupTests.test_same_package_version_at_other_commit_is_not_accepted) ... ok
+test_unknown_install_provenance_is_not_accepted (__main__.HandoffSetupTests.test_unknown_install_provenance_is_not_accepted) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.910s
+
+OK

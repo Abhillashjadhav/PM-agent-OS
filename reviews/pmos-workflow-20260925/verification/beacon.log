@@ -1,0 +1,12 @@
+test_metadata_only_and_session_correlation (test_beacon_hook.HookTests.test_metadata_only_and_session_correlation) ... ok
+test_missing_adapter_and_invalid_input_do_not_block (test_beacon_hook.HookTests.test_missing_adapter_and_invalid_input_do_not_block) ... ok
+test_adapter_preserves_nonexecutable_status (test_beacon_runner.RunnerTests.test_adapter_preserves_nonexecutable_status) ... ok
+test_adapter_receives_only_existing_workflow_arguments (test_beacon_runner.RunnerTests.test_adapter_receives_only_existing_workflow_arguments) ... ok
+test_missing_adapter_preserves_command_io_and_status (test_beacon_runner.RunnerTests.test_missing_adapter_preserves_command_io_and_status) ... ok
+test_missing_adapter_preserves_startup_error_codes (test_beacon_runner.RunnerTests.test_missing_adapter_preserves_startup_error_codes) ... ok
+test_no_command_reports_usage (test_beacon_runner.RunnerTests.test_no_command_reports_usage) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.182s
+
+OK

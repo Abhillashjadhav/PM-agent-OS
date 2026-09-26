@@ -1,0 +1,76 @@
+{
+  "source": "be83ce1e2fdba15bc43d2c308f3d514c71dee74f",
+  "base": "4550580d5e93039a0f013a9465b7130468109d71",
+  "scope": "Selected PMOS installer, validator, offline Beacon, metadata setup, ordinary current authoring, static quality and frozen-byte checks only. No handoff broad discovery, archived reproduction execution, model, collector or PEOS source access.",
+  "checks": {
+    "installer": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/test_install.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "validator": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/test_validation_regressions.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "beacon": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_beacon_*.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "handoff-setup": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/test_handoff_setup.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "current-authoring": {
+      "command": [
+        "/workspace/scratch/b6efdedb2992/pmos-takeover-20260925/handoff-venv/bin/python",
+        "-B",
+        "tests/decision-to-contract/test_current_authoring.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "quality": {
+      "command": [
+        "python3",
+        "-B",
+        "tests/pr_quality_gate.py",
+        "--base-ref",
+        "4550580d5e93039a0f013a9465b7130468109d71"
+      ],
+      "exit_code": 0
+    },
+    "frozen-reference": {
+      "command": [
+        "python3",
+        "-B",
+        "reviews/pmos-workflow-20260925/references/check_reference_snapshot.py"
+      ],
+      "exit_code": 0
+    }
+  }
+}

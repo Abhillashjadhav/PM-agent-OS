@@ -1,0 +1,46 @@
+{
+  "raw-idea/DECISIONS.md": {
+    "sha256": "2c5f7505d8a67e4908b4245af0259732df03511f643dbb639b8a4bb55aaca6a4",
+    "bytes": 4693
+  },
+  "raw-idea/prds/2026-09-25-food-pantry-pickups-r1.md": {
+    "sha256": "ba4b3e569ea6004d5b8194db2537e85576e1c4f69ac5a3953625b78aba07582e",
+    "bytes": 13710
+  },
+  "raw-idea/prds/2026-09-25-food-pantry-pickups.md": {
+    "sha256": "ff3ea433f82515047927b634bafe365050e952f1941ae92c97c402d98fc1ea3f",
+    "bytes": 16363
+  },
+  "resume/DECISIONS.md": {
+    "sha256": "ece2ddb2707ebbc40033789042fce3f4ece975b29fa82dd2ad41563d8ca229ef",
+    "bytes": 3170
+  },
+  "resume/prds/2026-09-25-shift-notes.md": {
+    "sha256": "11f14883968e4f00de5d652f39bdb1627fe0d29232165eda3430838e65ec235d",
+    "bytes": 13842
+  },
+  "contract/DECISIONS.md": {
+    "sha256": "a1d26eb5461f543b166d476a6f450161114db9f6410e3a6a38da443da35d3054",
+    "bytes": 237
+  },
+  "contract/answers.json": {
+    "sha256": "f37c927b6460c02dbd423215bb71882b6b2ca7376014c73c8f3b9a5b0e211bcf",
+    "bytes": 2477
+  },
+  "contract/contract-draft/contract-draft.json": {
+    "sha256": "b78c65caa717698ac08362e1167e380a071423480a2ac6e5306b95d9273ace9b",
+    "bytes": 2063
+  },
+  "contract/contract-draft/draft-summary.json": {
+    "sha256": "90a0dc42eb5c12cad158c59108a0b13c03628be353e7dc758b757ba1cd195342",
+    "bytes": 222
+  },
+  "contract/contract-draft/source-map.json": {
+    "sha256": "410044c4431396fac34744578f3a41f2e112f61b5009225ea8071b4543706666",
+    "bytes": 818
+  },
+  "contract/prds/2026-09-25-service-check.md": {
+    "sha256": "2871be75e77274a521f18688baf62fecdcedff069d5615e30c7f56b428972149",
+    "bytes": 3053
+  }
+}
