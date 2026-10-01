@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ordinary authoring compatibility; no engineering run or model is invoked."""
+"""Documented-pin authoring and receipt-bound admission; no candidate or model runs."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import copy
 import json
 from pathlib import Path
 import re
+import tempfile
 import unittest
 
 from pmpe.barebones import default_template
@@ -15,7 +16,10 @@ from pmpe.contracts.authoring import (
     approve_contract_draft,
     build_contract_draft,
     verify_contract_approval,
+    write_json_atomic,
 )
+from pmpe.contracts.model import load_contract
+from pmpe.engineering.handoff import start_approved_run
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -98,6 +102,42 @@ class CurrentAuthoringTests(unittest.TestCase):
         for key, value in original.items():
             self.assertEqual(approved.contract[key], value, key)
         compile_current(approved.contract)
+
+    def test_documented_pin_admits_receipt_bound_current_fixture(self):
+        """A real synthetic contract follows the documented publisher seam."""
+        _, approved = approve_test_input(answers())
+        verify_contract_approval(
+            approved.contract, approved.receipt, expected_approver=TEST_ISSUER
+        )
+        compile_current(approved.contract)
+        with tempfile.TemporaryDirectory(prefix="pmos-current-handoff-") as directory:
+            root = Path(directory)
+            contract_path = root / "contract.json"
+            receipt_path = root / "receipt.json"
+            write_json_atomic(contract_path, approved.contract)
+            write_json_atomic(receipt_path, approved.receipt)
+            self.assertTrue(load_contract(contract_path).runnable)
+            run = start_approved_run(
+                contract_path=contract_path,
+                receipt_path=receipt_path,
+                expected_approver=TEST_ISSUER,
+                run_dir=root / "run",
+                agents_dir=ROOT / ".claude" / "agents",
+            )
+            self.assertEqual(run.status()["stage"], "assessment")
+
+    def test_historical_fixture_is_unbound_at_documented_pin(self):
+        historical = json.loads(
+            (ROOT / "tests/decision-to-contract/valid-contract.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        with self.assertRaises(AcceptanceCompileError) as failure:
+            compile_current(historical)
+        self.assertIn(
+            "RELEASE_GATE_UNBOUND",
+            {diagnostic.code for diagnostic in failure.exception.diagnostics},
+        )
 
     def test_missing_product_truth_returns_questions_before_approval(self):
         supplied = answers()

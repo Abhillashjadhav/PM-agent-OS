@@ -38,3 +38,21 @@ Scope: finish the existing PR #60 validation repair; PMOS only.
 
 Validation: YAML parses and differs only by the intended step. The exact added command,
 `python -B -m unittest discover -s tests -p 'test_beacon_*.py' -v`, passes all seven tests.
+
+# BAR: reconcile bounded recorded rehearsal evidence, 2026-09-30
+
+1. **Already exists? Yes, restructured.** Update the existing evidence overview to cite the retained five-scenario review packet, not a second evidence system.
+2. **Reproduced blocker? Yes.** `docs/VALIDATION.md` says no recorded behavioural evidence exists while `reviews/pmos-workflow-20260925/verification/README.md` indexes six fictional in-session turns.
+3. **Changes existing behavior? No.** Documentation only; no skill, compiler, approval, or runtime change.
+4. **Failing check first? Yes.** A before-edit assertion rejects the stale no-evidence claim; after edit audit and local links must pass.
+5. **Independently revertible? Yes.** One documentation-only unit pinned to PMOS main.
+6. **Unrequested setting/dependency/extension? No.** No setting, dependency, new product rule or permission.
+
+# BAR: distinguish historical and documented PEOS pin evidence, 2026-10-01
+
+1. **Already exists? Yes, extend it.** Reuse the existing `repository-audit` and `current-authoring` checks, fixtures and handoff documentation; add no publisher path.
+2. **Approved criterion or reproduced blocker? Yes.** The historical approved health fixture compiles at CI pin `5c0f9e3a` but fails at the documented setup pin `297a11d7` with `RELEASE_GATE_UNBOUND:GATE-001`; current CI does not exercise a receipt-bound admission with its documented pin.
+3. **Changes existing behavior? Yes, for evidence/CI only.** More stringent current-authoring CI could catch publisher drift. The historical fixture and its test remain pinned to their original revision, and no user contract or approved receipt is rewritten.
+4. **Failing check first? Yes.** Before editing, a bounded regression check finds no documented-pin receipt-bound admission assertion in `test_current_authoring.py`; a direct compile of the historical contract at that pin fails with `RELEASE_GATE_UNBOUND`.
+5. **Independently revertible? Yes.** The focused test and truthful documentation are a local PMOS compatibility-evidence unit; release pin adoption remains a separate decision.
+6. **Unrequested setting/dependency/extension? No.** Both exact existing pins and existing public PEOS APIs are reused; no new runtime setting or dependency.
