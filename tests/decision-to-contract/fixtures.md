@@ -29,9 +29,11 @@ Expected result: the Production Engineering OS compiler rejects it with `CRITERI
 
 ## Boundary
 
-The historical `validate_contract.py` entry point and its original pinned compiler
+The historical `validate_contract.py` entry point and merged `5c0f9e3a` compiler
 preserve the deterministic answers → draft → approval → loader → compiler →
-engineering-admission seam. Do not change `valid-answers.json`,
+engineering-admission seam. The documented `297a11d7` publisher rejects this
+historical contract's unbound required `GATE-001` with `RELEASE_GATE_UNBOUND`.
+Do not change `valid-answers.json`,
 `valid-contract.json`, or `valid-approval-receipt.json` to make a newer compiler
 accept this historical record.
 
@@ -60,9 +62,10 @@ These cases specify expected host-agent behavior; they are not recorded model ru
 explicit `GATE-001.acceptance_criterion_refs: [AC-001]`. It is not an owner-approved
 product contract and must never replace the historical fixture.
 
-Run only `test_current_authoring.py` with the already pinned current dependency
-`297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6`. The focused test calls the existing
-public authoring, receipt and compiler APIs. It never invokes an engineering run,
+Run `scripts/check_handoff.py` and `test_current_authoring.py` with the documented
+dependency `297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6`. The focused test calls
+the existing public authoring, receipt, compiler and engineering-admission APIs.
+It starts only a synthetic receipt-bound run at `assessment`; it never invokes a
 candidate, model, service, forged ledger, bytecode probe or context recheck.
 
 Required results:
@@ -78,6 +81,10 @@ Required results:
 4. A description-only gate is rejected with `RELEASE_GATE_UNBOUND`.
 5. `create_task` in the frozen action registry is rejected with
    `ACTION_NOT_REGISTERED`; the skill must not relabel the product as `health`.
+6. The TEST-ONLY approved health record verifies, compiles and starts a
+   receipt-bound engineering run at `assessment`, without executing a candidate.
+7. The historical approved record is rejected by the documented pin with
+   `RELEASE_GATE_UNBOUND`; that earlier record remains unchanged.
 
 Existing trusted-test and template-proof forms require supplied, existing trusted
 bindings. Their availability does not authorize PMOS to write an evaluator or
@@ -85,7 +92,8 @@ invent a proof. A requested bundle route remains an external dependency unless
 its exact public interface and required inputs are available; no guessed command
 or flag is an acceptable substitute.
 
-These checks establish ordinary authoring compatibility only. Supervised question
+These checks establish bounded current-fixture admission compatibility only.
+Supervised question
 selection, semantic mapping, approval pauses and fresh user-product delivery need
 their own behavioral evidence. They do not replace the historical task-store
 demonstration or the previously screened security rechecks.

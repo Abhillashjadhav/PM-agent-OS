@@ -22,6 +22,17 @@ merged into the engineering repository's main branch; this is not a claim that
 the latest engineering code is compatible. Keep this pin until a replacement has
 been reviewed. PMOS's installer does not install the publisher automatically.
 
+This setup pin is the one used by the `current-authoring` CI job. Its TEST-ONLY
+health fixture exercises draft issuance, receipt verification, current acceptance
+compilation and receipt-bound engineering admission. The separate
+`repository-audit` job retains PEOS `5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9`
+only for a historical approved-contract fixture. That older fixture has a
+description-only required `GATE-001`; this setup pin rejects it with
+`RELEASE_GATE_UNBOUND`. Do not use the historical job as evidence that the older
+approved contract is compatible with this installation or silently remove its
+gate. The two CI jobs intentionally test distinct contract records and pins;
+the supported release baseline still needs an explicit decision.
+
 `HANDOFF_SETUP_OK` means the selected Python environment records that exact Git
 revision and the `pmpe` console entry point. The check reads installation metadata
 only: it performs no network calls, imports no publisher code and writes nothing.
@@ -135,6 +146,7 @@ does not prove a current build completed. Do not invent a general build command 
 promise release readiness for an unsupported product. Report the unsupported
 binding and leave that engineering dependency open.
 
-The verified checks for this guide exercised one health fixture through authoring,
-receipt verification and current compilation. They did not run a product, a live
-model interview or the restricted adversarial handoff probes.
+The verified checks for this guide exercised one TEST-ONLY health fixture through
+authoring, receipt verification, current compilation and receipt-bound admission
+to the `assessment` stage. They did not run a candidate, product, live model
+interview or the restricted adversarial handoff probes.

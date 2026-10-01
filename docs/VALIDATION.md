@@ -16,19 +16,21 @@ Fixtures are **specifications**, not executed behavioural tests. Their presence 
 
 ## 3. Executable cross-repository compatibility
 
-`tests/decision-to-contract/validate_contract.py` runs committed PMOS answers through a pinned revision of the real Production Engineering OS authoring publisher, approval verifier, canonical contract loader, acceptance compiler, and engineering admission API. CI requires deterministic reproduction of the approved health contract and receipt, a receipt-bound engineering run to start without artifact rewriting, and a prose-only planted failure to be rejected with `CRITERION_FORM_INVALID`.
+The `repository-audit` CI job installs PEOS `5c0f9e3a8f2c66b212c5e1adfb373e4fd2681bf9` and runs `tests/decision-to-contract/validate_contract.py`. It deterministically reproduces a **historical** approved health contract and receipt, verifies them, compiles that contract, starts a receipt-bound engineering run at `assessment`, and rejects a prose-only planted failure with `CRITERION_FORM_INVALID`.
 
-This proves one deterministic end-to-end handoff boundary. It does not prove live-model authoring quality, arbitrary-product coverage, or a real-provider engineering run.
+The separate `current-authoring` CI job installs the [documented handoff pin](HANDOFF.md), PEOS `297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6`, checks its installation provenance, and runs `test_current_authoring.py` against a distinct TEST-ONLY health contract with an explicit `GATE-001` binding. Its synthetic receipt verifies, the real current compiler accepts the contract, and receipt-bound admission starts at `assessment`. The same compiler correctly rejects the historical contract's unbound required gate with `RELEASE_GATE_UNBOUND`.
+
+These are two bounded, revision-specific compatibility results, not one interchangeable admission proof. The documented pin is unmerged; selecting a supported release baseline remains open. Neither job proves live-model authoring quality, arbitrary-product coverage, a candidate run, or real-provider engineering.
 
 ## 4. Recorded behavioural model-run evidence
 
-Recorded behavioural evidence would consist of committed, reproducible model-run artifacts that identify the runtime/model, input, configuration, output, evaluation method, and result. No such evidence is currently committed in this repository.
+The [2026-09-25 verification packet](../reviews/pmos-workflow-20260925/verification/README.md) records five designed fresh-agent scenarios across six turns against a bounded assembled PMOS snapshot. Its [run record](../reviews/pmos-workflow-20260925/verification/forward-runs.json) and [artifact index](../reviews/pmos-workflow-20260925/verification/forward-artifacts/manifest.json) retain the tasks, normalized responses or marked excerpts, observations, source versions, and output hashes. These were fictional ChatGPT Work in-session rehearsals, not native Claude Code sessions or real product approvals.
 
-Accordingly, this repository does not claim behavioural execution coverage, model-performance results, or independent runtime enforcement.
+Exact model-build, sampling, and token metadata were unavailable, and the packet has no reliability estimate or baseline comparison. It is evidence for those five narrow observations, not behavioural coverage of the full catalogue, model-performance results, end-to-end product delivery, or independent runtime enforcement.
 
 ## Runtime scope
 
-Claude Code is the currently validated host runtime. Other runtime portability is not certified. A skill's verification gates are instructions interpreted and enforced by the host agent; they are not an independent runtime or a guarantee that an agent will execute them.
+Claude Code is the intended host runtime. Mechanical installation and offline checks have been validated, but the recorded rehearsals do not establish native Claude behaviour. Other runtime portability is not certified. A skill's verification gates are instructions interpreted and enforced by the host agent; they are not an independent runtime or a guarantee that an agent will execute them.
 
 ## Pull-request quality gate
 

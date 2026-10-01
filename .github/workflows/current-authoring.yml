@@ -18,5 +18,7 @@ jobs:
           python-version: '3.12'
       - name: Install the existing reviewed publisher snapshot
         run: python -m pip install 'git+https://github.com/Abhillashjadhav/production-engineering-os.git@297a11d79e5d1e1eda1f8f94b7bec3046c41a0d6'
-      - name: Check ordinary authoring compatibility
+      - name: Check documented publisher provenance
+        run: python scripts/check_handoff.py
+      - name: Check documented-pin authoring and receipt-bound admission
         run: python -B tests/decision-to-contract/test_current_authoring.py -v
