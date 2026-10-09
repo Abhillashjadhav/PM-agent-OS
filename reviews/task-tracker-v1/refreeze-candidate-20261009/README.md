@@ -25,16 +25,21 @@ That refusal is correct behaviour under the approved execution profile
 ## What the candidate is
 
 `freeze-manifest.candidate.json` is the approved manifest with exactly those five
-`sha256` values replaced by the current bytes (listed in `changed-entries.json`), its
-`status` set to `CANDIDATE_REFREEZE_UNAPPROVED`, and the approval quote blanked.
+`sha256` values replaced by the bytes at the locked baseline (listed in
+`changed-entries.json`), recomputed from git object bytes at PEOS `e8a929d` and PMOS
+`0652843` (recorded under `refreeze_basis.baseline`), its `status` set to
+`CANDIDATE_REFREEZE_UNAPPROVED`, and the approval quote blanked. An earlier candidate
+(`sha256:20e67cca…`, 2026-10-09 morning) bound the identical artifact set; only its
+metadata text differed. This file supersedes it; there is one candidate.
 No contract, criterion, evaluator, binding, profile, receipt or plan value changed;
 the compiled-plan digest recomputed on current code is identical to the frozen one
 (`sha256:1dad520ebc6ac6973aeb23d80fe5c98d67e3d8a5fa20d902f56d45a180777b28`).
 
-Candidate canonical digest (RFC 8785 over the candidate manifest):
+Candidate canonical digest (RFC 8785 over the candidate manifest; identifies the exact
+artifact set and baseline the owner is asked to approve):
 
 ```
-sha256:20e67cca5a1745cf5d7244019a1ccdebf3b9d4e29cc69fbaf016f2f469f6a4c0
+sha256:82f6365cd895892c4cb9fadd279f82e2755cc62bed2c60d95f49233d4c1c7f42
 ```
 
 Dry run on 2026-10-09 against PEOS branch `claude/pmos-peos-completion-ds46x1` and
@@ -43,8 +48,11 @@ unchanged (PEOS evidence `runs/07-current-code-refreeze-dryrun/`). A dry run is 
 
 ## The one step that needs the owner
 
-Review the five changed files, then approve the exact digest above in writing. After
-that approval, and only then:
+Review the five changed files, then approve the exact digest above in writing. The active
+freeze digest written in step 2 is derived from the manifest *after* the approval quote and
+timestamp are recorded, so it will differ from the candidate digest; the artifact set it
+binds is identical and is reported back with the exact `--freeze-digest` value. After that
+approval, and only then:
 
 1. copy `freeze-manifest.candidate.json` over `../freeze-manifest.json`, set `status`
    to `OWNER_CONFIRMED_FROZEN`, record the approval quote and timestamp;
