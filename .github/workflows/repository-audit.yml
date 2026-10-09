@@ -24,6 +24,8 @@ jobs:
         run: python -B -m unittest discover -s tests -p 'test_beacon_*.py' -v
       - name: Reject planted validation failures
         run: python -m unittest discover -s tests -p test_validation_regressions.py -v
+      - name: Check the frozen task-tracker packet for approval-bound drift
+        run: python -B tests/test_task_tracker_freeze.py -v
       - name: Lint all skills
         run: |
           while IFS= read -r skill; do
