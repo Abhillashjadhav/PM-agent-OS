@@ -34,6 +34,19 @@ The bundle digest uses existing RFC 8785 `canonical_digest` over the manifest;
 individual file entries use SHA-256 over raw bytes. The digest records the confirmed review bundle; the owner conversation supplies
 approval, not a cryptographic signature.
 
+## Status on 2026-10-09
+
+The frozen journey still reproduces at its pinned commits (PEOS `f7669c2`, PMOS `9d55bf6`):
+replay 14/14 and a second live in-session build reached `RELEASE_READY` (PEOS
+`docs/evidence/task-tracker-completion-20261009/`). Against current `main` of either
+repository the entry refuses before execution with `APPROVAL_BOUND_ARTIFACT_CHANGED`,
+because five approval-bound bytes changed after the freeze (this repository's
+`decision-to-contract/SKILL.md` and four PEOS source files). That refusal is the intended
+behaviour. `tests/test_task_tracker_freeze.py` now reproduces the PMOS side of the drift and
+stays RED until the owner approves the re-freeze described in
+[refreeze-candidate-20261009/README.md](refreeze-candidate-20261009/README.md). The frozen
+artifacts below are unchanged by this note.
+
 ## Historical proposal validation
 
 The existing publisher returned `DRAFT_READY_FOR_APPROVAL`; the canonical loader
