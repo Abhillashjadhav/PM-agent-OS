@@ -1,0 +1,248 @@
+{
+  "active_digest": "sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e2322c7e463ef9a6e37f2",
+  "baseline_full_shas": {
+    "PM-agent-OS": "0652843f02b5fbd5734331ffe5c00675a7b40b6b",
+    "production-engineering-os": "e8a929df0feca124005dfc84f1b5bebdd207eab9"
+  },
+  "candidate_82f6_digest": "sha256:82f6365cd895892c4cb9fadd279f82e2755cc62bed2c60d95f49233d4c1c7f42",
+  "corrected_digest": "sha256:5f3ea231fb7148f99d2005264fd36747c2ed72a8e30d59d519e539e2742e710a",
+  "rows": [
+    {
+      "active": {
+        "AC-013": "strictly sequential; each process exits before the next starts",
+        "AC-014": "critical; invalid title followed by valid ID 1 and exactly one task",
+        "contract_grid_evaluator_prepared_manifest": "PASS",
+        "criteria": 14,
+        "full_document_criterion_sections": 14
+      },
+      "active_eq_corrected": true,
+      "candidate_82f6": {
+        "AC-013": "strictly sequential; each process exits before the next starts",
+        "AC-014": "critical; invalid title followed by valid ID 1 and exactly one task",
+        "contract_grid_evaluator_prepared_manifest": "PASS",
+        "criteria": 14,
+        "full_document_criterion_sections": 14
+      },
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": {
+        "AC-013": "strictly sequential; each process exits before the next starts",
+        "AC-014": "critical; invalid title followed by valid ID 1 and exactly one task",
+        "contract_grid_evaluator_prepared_manifest": "PASS",
+        "criteria": 14,
+        "full_document_criterion_sections": 14
+      },
+      "field": "agreement_before_recording"
+    },
+    {
+      "active": "Owner also requested whole-document regeneration from the amended grid and agreement before digest recording. No criterion or evaluator meaning changed.",
+      "active_eq_corrected": false,
+      "candidate_82f6": "UNAPPROVED CANDIDATE recomputed 2026-10-09 (Stage A) over PEOS e8a929d and PMOS 0652843 from git object bytes. Not approval.",
+      "candidate_eq_corrected": false,
+      "class": "approval_metadata",
+      "corrected": "UNAPPROVED CANDIDATE recomputed 2026-10-09 (Stage A) over PEOS e8a929df0feca124005dfc84f1b5bebdd207eab9 and PMOS 0652843f02b5fbd5734331ffe5c00675a7b40b6b from git object bytes. Not approval.",
+      "field": "approval_context"
+    },
+    {
+      "active": "sha256:501e0fd5eae05bceffeef928d1b731173dd8be87c988340f2761575d29b7e80e",
+      "active_eq_corrected": true,
+      "candidate_82f6": "sha256:501e0fd5eae05bceffeef928d1b731173dd8be87c988340f2761575d29b7e80e",
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": "sha256:501e0fd5eae05bceffeef928d1b731173dd8be87c988340f2761575d29b7e80e",
+      "field": "approved_contract_digest"
+    },
+    {
+      "active": "sha256:ad0978c8e3780f11ec40d06395653d2c45ce100449ca8c7edea56bac6593ee1f",
+      "candidate_82f6": "sha256:f14623cb4da6ecd9efe67324c2475d96715d12049e470bfe333e4dd953c21c26",
+      "class": "artifact",
+      "corrected": "sha256:f14623cb4da6ecd9efe67324c2475d96715d12049e470bfe333e4dd953c21c26",
+      "field": "artifacts[PM-agent-OS:.claude/skills/decision-to-contract/SKILL.md].sha256"
+    },
+    {
+      "active": "sha256:9895b6cc792ab960a34761e9fda545d52be62772aa7a327dc8cf9da6768ac0b7",
+      "candidate_82f6": "sha256:ab3e4f4bb2222497adf4a4d966b85054a4e90ec3aacde96f5189febd856b870a",
+      "class": "artifact",
+      "corrected": "sha256:ab3e4f4bb2222497adf4a4d966b85054a4e90ec3aacde96f5189febd856b870a",
+      "field": "artifacts[production-engineering-os:src/pmpe/barebones.py].sha256"
+    },
+    {
+      "active": "sha256:09116350f8a69cd053688e4ac6c42ff8514b173d3c69c1af86cc1903f04739cb",
+      "candidate_82f6": "sha256:8917eb8227fdf143fe89c750232a53518fa0739f92516b9058c3f62f17cf1fe1",
+      "class": "artifact",
+      "corrected": "sha256:8917eb8227fdf143fe89c750232a53518fa0739f92516b9058c3f62f17cf1fe1",
+      "field": "artifacts[production-engineering-os:src/pmpe/cli/barebones_cmd.py].sha256"
+    },
+    {
+      "active": "sha256:07204c0021fb2c5ea7e8ade41533979e5fbb259d0d65621fda1fe7247edc8e1c",
+      "candidate_82f6": "sha256:4490079b4c36e607ceb0200dcbfc18145cf4cf36f7b3497046a8612bc693fd02",
+      "class": "artifact",
+      "corrected": "sha256:4490079b4c36e607ceb0200dcbfc18145cf4cf36f7b3497046a8612bc693fd02",
+      "field": "artifacts[production-engineering-os:src/pmpe/contracts/acceptance.py].sha256"
+    },
+    {
+      "active": "sha256:27c1d087abc02b6136fcebbe3552b7b4cc7c8522f276d2709c22f2b584fdc14c",
+      "candidate_82f6": "sha256:093448d6ea7bc656ce5720c8bea3cb0638523a8d758763df7eaeb593261f6d71",
+      "class": "artifact",
+      "corrected": "sha256:093448d6ea7bc656ce5720c8bea3cb0638523a8d758763df7eaeb593261f6d71",
+      "field": "artifacts[production-engineering-os:src/pmpe/evals/real_behavior_drift_eval.py].sha256"
+    },
+    {
+      "active": "Recorded owner conversation approval; publicly forgeable receipt and root tampering remain known limitations; not an external signature.",
+      "active_eq_corrected": true,
+      "candidate_82f6": "Recorded owner conversation approval; publicly forgeable receipt and root tampering remain known limitations; not an external signature.",
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": "Recorded owner conversation approval; publicly forgeable receipt and root tampering remain known limitations; not an external signature.",
+      "field": "authority_limit"
+    },
+    {
+      "active": "Abhillash Jadhav",
+      "active_eq_corrected": true,
+      "candidate_82f6": "Abhillash Jadhav",
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": "Abhillash Jadhav",
+      "field": "owner"
+    },
+    {
+      "active": "Confirmed — freeze the amended grid and proceed.",
+      "active_eq_corrected": false,
+      "candidate_82f6": "NONE — awaiting owner approval",
+      "candidate_eq_corrected": true,
+      "class": "approval_metadata",
+      "corrected": "NONE — awaiting owner approval",
+      "field": "owner_approval_quote"
+    },
+    {
+      "active": "sha256:1dad520ebc6ac6973aeb23d80fe5c98d67e3d8a5fa20d902f56d45a180777b28",
+      "active_eq_corrected": true,
+      "candidate_82f6": "sha256:1dad520ebc6ac6973aeb23d80fe5c98d67e3d8a5fa20d902f56d45a180777b28",
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": "sha256:1dad520ebc6ac6973aeb23d80fe5c98d67e3d8a5fa20d902f56d45a180777b28",
+      "field": "plan_digest"
+    },
+    {
+      "active": "sha256:4eaa1d95828f3e1fbf2a9646eb25ec3185c5b4669e5ac98c4668756b958468b6",
+      "active_eq_corrected": true,
+      "candidate_82f6": "sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711",
+      "candidate_eq_corrected": false,
+      "class": "provenance",
+      "corrected": "sha256:4eaa1d95828f3e1fbf2a9646eb25ec3185c5b4669e5ac98c4668756b958468b6",
+      "field": "previous_review_bundle_digest"
+    },
+    {
+      "active": "2026-09-18T15:22:13.171142+00:00",
+      "active_eq_corrected": true,
+      "candidate_82f6": "2026-09-18T15:22:13.171142+00:00",
+      "candidate_eq_corrected": true,
+      "class": "approval_metadata",
+      "corrected": "2026-09-18T15:22:13.171142+00:00",
+      "field": "recorded_at"
+    },
+    {
+      "active": "<absent>",
+      "active_eq_corrected": false,
+      "candidate_82f6": {
+        "baseline": {
+          "PM-agent-OS": "0652843",
+          "production-engineering-os": "e8a929d"
+        },
+        "changed_entries": [
+          {
+            "baseline": "sha256:f14623cb4da6ecd9efe67324c2475d96715d12049e470bfe333e4dd953c21c26",
+            "frozen": "sha256:ad0978c8e3780f11ec40d06395653d2c45ce100449ca8c7edea56bac6593ee1f",
+            "path": ".claude/skills/decision-to-contract/SKILL.md",
+            "repository": "PM-agent-OS"
+          },
+          {
+            "baseline": "sha256:ab3e4f4bb2222497adf4a4d966b85054a4e90ec3aacde96f5189febd856b870a",
+            "frozen": "sha256:9895b6cc792ab960a34761e9fda545d52be62772aa7a327dc8cf9da6768ac0b7",
+            "path": "src/pmpe/barebones.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:8917eb8227fdf143fe89c750232a53518fa0739f92516b9058c3f62f17cf1fe1",
+            "frozen": "sha256:09116350f8a69cd053688e4ac6c42ff8514b173d3c69c1af86cc1903f04739cb",
+            "path": "src/pmpe/cli/barebones_cmd.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:4490079b4c36e607ceb0200dcbfc18145cf4cf36f7b3497046a8612bc693fd02",
+            "frozen": "sha256:07204c0021fb2c5ea7e8ade41533979e5fbb259d0d65621fda1fe7247edc8e1c",
+            "path": "src/pmpe/contracts/acceptance.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:093448d6ea7bc656ce5720c8bea3cb0638523a8d758763df7eaeb593261f6d71",
+            "frozen": "sha256:27c1d087abc02b6136fcebbe3552b7b4cc7c8522f276d2709c22f2b584fdc14c",
+            "path": "src/pmpe/evals/real_behavior_drift_eval.py",
+            "repository": "production-engineering-os"
+          }
+        ],
+        "previous_freeze_digest": "sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e2322c7e463ef9a6e37f2"
+      },
+      "candidate_eq_corrected": false,
+      "class": "provenance",
+      "corrected": {
+        "baseline": {
+          "PM-agent-OS": "0652843f02b5fbd5734331ffe5c00675a7b40b6b",
+          "production-engineering-os": "e8a929df0feca124005dfc84f1b5bebdd207eab9"
+        },
+        "changed_entries": [
+          {
+            "baseline": "sha256:f14623cb4da6ecd9efe67324c2475d96715d12049e470bfe333e4dd953c21c26",
+            "frozen": "sha256:ad0978c8e3780f11ec40d06395653d2c45ce100449ca8c7edea56bac6593ee1f",
+            "path": ".claude/skills/decision-to-contract/SKILL.md",
+            "repository": "PM-agent-OS"
+          },
+          {
+            "baseline": "sha256:ab3e4f4bb2222497adf4a4d966b85054a4e90ec3aacde96f5189febd856b870a",
+            "frozen": "sha256:9895b6cc792ab960a34761e9fda545d52be62772aa7a327dc8cf9da6768ac0b7",
+            "path": "src/pmpe/barebones.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:8917eb8227fdf143fe89c750232a53518fa0739f92516b9058c3f62f17cf1fe1",
+            "frozen": "sha256:09116350f8a69cd053688e4ac6c42ff8514b173d3c69c1af86cc1903f04739cb",
+            "path": "src/pmpe/cli/barebones_cmd.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:4490079b4c36e607ceb0200dcbfc18145cf4cf36f7b3497046a8612bc693fd02",
+            "frozen": "sha256:07204c0021fb2c5ea7e8ade41533979e5fbb259d0d65621fda1fe7247edc8e1c",
+            "path": "src/pmpe/contracts/acceptance.py",
+            "repository": "production-engineering-os"
+          },
+          {
+            "baseline": "sha256:093448d6ea7bc656ce5720c8bea3cb0638523a8d758763df7eaeb593261f6d71",
+            "frozen": "sha256:27c1d087abc02b6136fcebbe3552b7b4cc7c8522f276d2709c22f2b584fdc14c",
+            "path": "src/pmpe/evals/real_behavior_drift_eval.py",
+            "repository": "production-engineering-os"
+          }
+        ],
+        "previous_freeze_digest": "sha256:1dd281e55cc20ce1861e3bed55799617191f38c5cc4e2322c7e463ef9a6e37f2"
+      },
+      "field": "refreeze_basis"
+    },
+    {
+      "active": "sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711",
+      "active_eq_corrected": true,
+      "candidate_82f6": "sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711",
+      "candidate_eq_corrected": true,
+      "class": "protected",
+      "corrected": "sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711",
+      "field": "review_bundle_digest"
+    },
+    {
+      "active": "OWNER_CONFIRMED_FROZEN",
+      "active_eq_corrected": false,
+      "candidate_82f6": "CANDIDATE_REFREEZE_UNAPPROVED",
+      "candidate_eq_corrected": true,
+      "class": "approval_metadata",
+      "corrected": "CANDIDATE_REFREEZE_UNAPPROVED",
+      "field": "status"
+    }
+  ]
+}

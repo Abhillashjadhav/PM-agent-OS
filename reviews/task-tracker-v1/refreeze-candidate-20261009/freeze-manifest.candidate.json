@@ -6,7 +6,7 @@
     "criteria": 14,
     "full_document_criterion_sections": 14
   },
-  "approval_context": "UNAPPROVED CANDIDATE recomputed 2026-10-09 (Stage A) over PEOS e8a929d and PMOS 0652843 from git object bytes. Not approval.",
+  "approval_context": "UNAPPROVED CANDIDATE recomputed 2026-10-09 (Stage A) over PEOS e8a929df0feca124005dfc84f1b5bebdd207eab9 and PMOS 0652843f02b5fbd5734331ffe5c00675a7b40b6b from git object bytes. Not approval.",
   "approved_contract_digest": "sha256:501e0fd5eae05bceffeef928d1b731173dd8be87c988340f2761575d29b7e80e",
   "artifacts": [
     {
@@ -1104,12 +1104,12 @@
   "owner": "Abhillash Jadhav",
   "owner_approval_quote": "NONE \u2014 awaiting owner approval",
   "plan_digest": "sha256:1dad520ebc6ac6973aeb23d80fe5c98d67e3d8a5fa20d902f56d45a180777b28",
-  "previous_review_bundle_digest": "sha256:fbfe73637ec326330d3107aac1d43b023fc7c5473fe3ef7dfcede7e4d07af711",
+  "previous_review_bundle_digest": "sha256:4eaa1d95828f3e1fbf2a9646eb25ec3185c5b4669e5ac98c4668756b958468b6",
   "recorded_at": "2026-09-18T15:22:13.171142+00:00",
   "refreeze_basis": {
     "baseline": {
-      "PM-agent-OS": "0652843",
-      "production-engineering-os": "e8a929d"
+      "PM-agent-OS": "0652843f02b5fbd5734331ffe5c00675a7b40b6b",
+      "production-engineering-os": "e8a929df0feca124005dfc84f1b5bebdd207eab9"
     },
     "changed_entries": [
       {
